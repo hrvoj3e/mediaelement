@@ -1,7 +1,7 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Czech
+ * Romanian
  *
  * @author
  *   Jalios (Twitter: @Jalios)
@@ -13,63 +13,61 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.cs === undefined) {
-		exports.cs = {
-			"mejs.plural-form": 8,
+((exports => {
+	if (exports.ro === undefined) {
+		exports.ro = {
+			"mejs.plural-form": 5,
 
 			// me-shim
-			"mejs.download-file": "Stáhnout soubor",
+			"mejs.download-file": "Descarcă fişierul",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Vypnout režim celá obrazovka",
-			"mejs.fullscreen-on": "Na celou obrazovku",
-			"mejs.download-video": "Stáhnout video",
+			"mejs.fullscreen-off": "Opreşte ecranul complet",
+			"mejs.fullscreen-on": "Treci la ecran complet",
+			"mejs.download-video": "Descarcă fişierul video",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Celá obrazovka",
+			"mejs.fullscreen": "Ecran complet",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Přehrát",
-			"mejs.pause": "Pozastavit",
+			"mejs.play": "Redare",
+			"mejs.pause": "Pauză",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Zavřít",
+			"mejs.close": "Închide",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Posuvný běžec nastavení času",
-			"mejs.time-help-text": "Použijte tlačítka se šipkami doleva / doprava pro posun o jednu vteřinu, tlačítka se šipkami nahoru / dolů pro posun o deset vteřin.",
+			"mejs.time-slider": "Cursor timp",
+			"mejs.time-help-text": "Utilizează tastele săgeată Stânga/Dreapta pentru a avansa o secundă şi săgeţile Sus/Jos pentru a avansa zece secunde.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Zpět o %1 vteřin",
+			"mejs.time-skip-back": "Sari înapoi %1 secunde",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Titulky",
-			"mejs.none": "Žádný",
+			"mejs.captions-subtitles": "Legende/Subtitrări",
+			"mejs.none": "Niciunul",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Vypnout/zapnout zvuk",
-			"mejs.volume-help-text": "Použijte tlačítka se šipkami nahoru / dolů pro zesílení nebo zeslabení hlasitosti.",
-			"mejs.unmute": "Zapnout zvuk",
-			"mejs.mute": "Vypnout zvuk",
-			"mejs.volume-slider": "Posuvný běžec nastavení hlasitosti",
+			"mejs.mute-toggle": "Comutare dezactivare sunet",
+			"mejs.volume-help-text": "Utilizează tastele de săgeată Sus/Jos pentru a creşte/micşora volumul",
+			"mejs.unmute": "Cu sunet",
+			"mejs.mute": "Fără sunet",
+			"mejs.volume-slider": "Cursor volum",
 
 			// mep-player
-			"mejs.video-player": "Přehrávač videa",
-			"mejs.audio-player": "Přehrávač hudby",
+			"mejs.video-player": "Player video",
+			"mejs.audio-player": "Player audio",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
 			//"mejs.ad-skip-info": "Skip in %1 second(s)",
 
 			// mediaelementplayer-feature-sourcechooser
-			//"mejs.source-chooser": "Source Chooser",
+			//"mejs.source-chooser": "Source Chooser"
 
 			// mediaelementplayer-feature-stop
 			//"mejs.stop": "Stop"
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

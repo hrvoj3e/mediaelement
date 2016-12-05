@@ -1,11 +1,11 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Italian
+ * Slovak
  *
  * @author
  *   Jalios (Twitter: @Jalios)
- *   Sascha "SoftCreatR" Greuel
+ *   Sascha Greuel (Twitter: @SoftCreatR)
  *
  * @see
  *   mediaelement-i18n.js
@@ -13,56 +13,54 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.it === undefined) {
-		exports.it = {
-			"mejs.plural-form": 1,
+((exports => {
+	if (exports.sk === undefined) {
+		exports.sk = {
+			"mejs.plural-form": 8,
 
 			// me-shim
-			"mejs.download-file": "Scaricare il file",
+			"mejs.download-file": "Prevziať súbor",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Disattivare lo schermo intero",
-			"mejs.fullscreen-on": "Attivare lo schermo intero",
-			"mejs.download-video": "Scaricare il video",
+			"mejs.fullscreen-off": "Vypnúť celú obrazovku",
+			"mejs.fullscreen-on": "Prejsť na celú obrazovku",
+			"mejs.download-video": "Prevziať video",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Schermo intero",
+			"mejs.fullscreen": "Celá obrazovka",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Eseguire",
-			"mejs.pause": "Pausa",
+			"mejs.play": "Prehrať",
+			"mejs.pause": "Pozastaviť",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Chiudere",
+			"mejs.close": "Zavrieť",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Barra di scorrimento",
-			"mejs.time-help-text": "Utilizzare i tasti Freccia sinistra/Freccia destra per avanzare di un secondo, Freccia Su/Giù per avanzare dieci secondi.",
+			"mejs.time-slider": "Posúvač času",
+			"mejs.time-help-text": "Klávesmi so šípkou doľava/doprava posuniete o jednu sekundu, šípkami nahor/ nadol posuniete o desať sekúnd.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Riavvolgere %1 secondi",
+			"mejs.time-skip-back": "Preskočiť dozadu o %1 s.",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Acquisizioni/sottotitoli",
-			"mejs.none": "Nessuno",
+			"mejs.captions-subtitles": "Skryté titulky/Titulky",
+			"mejs.none": "Žiadne",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Toggle muto",
-			"mejs.volume-help-text": "Utilizzare i tasti Freccia Su/Giù per aumentare o diminuire il volume.",
-			"mejs.unmute": "Disattivare muto",
-			"mejs.mute": "Muto",
-			"mejs.volume-slider": "Barra del volume",
+			"mejs.mute-toggle": "Prepínač stlmenia",
+			"mejs.volume-help-text": "Klávesmi so šípkou nahor/nadol zvýšite alebo znížite hlasitosť.",
+			"mejs.unmute": "Zrušiť stlmenie",
+			"mejs.mute": "Stlmiť",
+			"mejs.volume-slider": "Posúvač hlasitosti",
 
 			// mep-player
-			"mejs.video-player": "Lettore Video",
-			"mejs.audio-player": "Lettore Audio",
+			"mejs.video-player": "Prehrávač videa",
+			"mejs.audio-player": "Prehrávač zvuku",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

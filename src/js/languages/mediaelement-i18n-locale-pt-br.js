@@ -1,10 +1,10 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Russian
+ * Brazilian (Portuguese)
  *
  * @author
- *   Jalios (Twitter: @Jalios)
+ *   Armando Meziat (Twitter: @odnamrataizem)
  *   Sascha Greuel (Twitter: @SoftCreatR)
  *
  * @see
@@ -13,56 +13,54 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.ru === undefined) {
-		exports.ru = {
-			"mejs.plural-form": 7,
+((exports => {
+	if (exports["pt-BR"] === undefined) {
+		exports["pt-BR"] = {
+			"mejs.plural-form": 2,
 
 			// me-shim
-			"mejs.download-file": "Скачать файл",
+			"mejs.download-file": "Baixar arquivo",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Выключить широкий экран",
-			"mejs.fullscreen-on": "Перейти к широкому экрану",
-			"mejs.download-video": "Скачать видео",
+			"mejs.fullscreen-off": "Sair da tela inteira",
+			"mejs.fullscreen-on": "Ir para tela inteira",
+			"mejs.download-video": "Baixar vídeo",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Широкий экран",
+			"mejs.fullscreen": "Tela inteira",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Воспроизвести",
-			"mejs.pause": "Пауза",
+			//"mejs.play": "Play",
+			//"mejs.pause": "Pause",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Закрыть",
+			"mejs.close": "Fechar",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Слайдер времени",
-			"mejs.time-help-text": "Используйте Левую/Правую клавиши со стрелками, чтобы продвинуться на одну секунду, клавиши со стрелками Вверх/Вниз, чтобы продвинуться на десять секунд.",
+			//"mejs.time-slider": "Time Slider",
+			//"mejs.time-help-text": "Use Left/Right Arrow keys to advance one second, Up/Down arrows to advance ten seconds.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Пропустить назад %1 секунд",
+			//"mejs.time-skip-back": "Skip back %1 second(s)",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Титры/Субтитры",
-			"mejs.none": "Нет",
+			"mejs.captions-subtitles": "Legendas",
+			"mejs.none": "Sem legendas",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Без звука",
-			"mejs.volume-help-text": "Используйте клавиши со стрелками Вверх/Вниз, чтобы увеличить или уменьшить громкость.",
-			"mejs.unmute": "Отменить выключение звука",
-			"mejs.mute": "Отключить звук",
-			"mejs.volume-slider": "Слайдер громкости",
+			"mejs.mute-toggle": "Alternar silêncio",
+			//"mejs.volume-help-text": "Use Up/Down Arrow keys to increase or decrease volume.",
+			"mejs.unmute": "Tirar silêncio",
+			"mejs.mute": "Silenciar",
+			//"mejs.volume-slider": "Volume Slider",
 
 			// mep-player
-			"mejs.video-player": "Видеоплеер",
-			"mejs.audio-player": "Аудиоплеер",
+			//"mejs.video-player": "Video Player",
+			//"mejs.audio-player": "Audio Player",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

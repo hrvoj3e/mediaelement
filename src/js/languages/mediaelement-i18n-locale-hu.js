@@ -1,7 +1,7 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Slovak
+ * Hungarian
  *
  * @author
  *   Jalios (Twitter: @Jalios)
@@ -13,56 +13,54 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.sk === undefined) {
-		exports.sk = {
-			"mejs.plural-form": 8,
+((exports => {
+	if (exports.hu === undefined) {
+		exports.hu = {
+			"mejs.plural-form": 1,
 
 			// me-shim
-			"mejs.download-file": "Prevziať súbor",
+			"mejs.download-file": "Fájl letöltése",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Vypnúť celú obrazovku",
-			"mejs.fullscreen-on": "Prejsť na celú obrazovku",
-			"mejs.download-video": "Prevziať video",
+			"mejs.fullscreen-off": "Teljes képernyő kikapcsolása",
+			"mejs.fullscreen-on": "Átlépés teljes képernyős módra",
+			"mejs.download-video": "Videó letöltése",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Celá obrazovka",
+			"mejs.fullscreen": "Teljes képernyő",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Prehrať",
-			"mejs.pause": "Pozastaviť",
+			"mejs.play": "Lejátszás",
+			"mejs.pause": "Szünet",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Zavrieť",
+			"mejs.close": "Bezárás",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Posúvač času",
-			"mejs.time-help-text": "Klávesmi so šípkou doľava/doprava posuniete o jednu sekundu, šípkami nahor/ nadol posuniete o desať sekúnd.",
+			"mejs.time-slider": "Idő csúszka",
+			"mejs.time-help-text": "Használja a Bal/Jobb nyíl gombokat az egy másodperces léptetéshez, a Fel/Le nyíl gombokat a tíz másodperces léptetéshez.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Preskočiť dozadu o %1 s.",
+			"mejs.time-skip-back": "Ugrás vissza %1 másodperccel",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Skryté titulky/Titulky",
-			"mejs.none": "Žiadne",
+			"mejs.captions-subtitles": "Képaláírás/Feliratok",
+			"mejs.none": "Nincs",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Prepínač stlmenia",
-			"mejs.volume-help-text": "Klávesmi so šípkou nahor/nadol zvýšite alebo znížite hlasitosť.",
-			"mejs.unmute": "Zrušiť stlmenie",
-			"mejs.mute": "Stlmiť",
-			"mejs.volume-slider": "Posúvač hlasitosti",
+			"mejs.mute-toggle": "Némítás kapcsolója",
+			"mejs.volume-help-text": "Használja a Fel/Le nyíl gombokat a hangerő növeléséhez vagy csökkentéséhez.",
+			"mejs.unmute": "Némítás feloldása",
+			"mejs.mute": "Némítás",
+			"mejs.volume-slider": "Hangerőcsúszka",
 
 			// mep-player
-			"mejs.video-player": "Prehrávač videa",
-			"mejs.audio-player": "Prehrávač zvuku",
+			"mejs.video-player": "Videolejátszó",
+			"mejs.audio-player": "Audiolejátszó",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

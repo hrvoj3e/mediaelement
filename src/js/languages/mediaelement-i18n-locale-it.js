@@ -1,7 +1,7 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Korean
+ * Italian
  *
  * @author
  *   Jalios (Twitter: @Jalios)
@@ -13,56 +13,54 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.ko === undefined) {
-		exports.ko = {
-			"mejs.plural-form": 0,
+((exports => {
+	if (exports.it === undefined) {
+		exports.it = {
+			"mejs.plural-form": 1,
 
 			// me-shim
-			"mejs.download-file": "파일 다운로드",
+			"mejs.download-file": "Scaricare il file",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "전체화면 해제",
-			"mejs.fullscreen-on": "전체화면 가기",
-			"mejs.download-video": "비디오 다운로드",
+			"mejs.fullscreen-off": "Disattivare lo schermo intero",
+			"mejs.fullscreen-on": "Attivare lo schermo intero",
+			"mejs.download-video": "Scaricare il video",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "전체화면",
+			"mejs.fullscreen": "Schermo intero",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "작동",
-			"mejs.pause": "정지",
+			"mejs.play": "Eseguire",
+			"mejs.pause": "Pausa",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "종료",
+			"mejs.close": "Chiudere",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "시간 슬라이더",
-			"mejs.time-help-text": "1초 전진하려면 좌/우측 화살표를 사용하시고 10초 전진하려면 위/아래 화살표를 사용하세요.",
+			"mejs.time-slider": "Barra di scorrimento",
+			"mejs.time-help-text": "Utilizzare i tasti Freccia sinistra/Freccia destra per avanzare di un secondo, Freccia Su/Giù per avanzare dieci secondi.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "1초 % 를 뒤로 건너뛰세요",
+			"mejs.time-skip-back": "Riavvolgere %1 secondi",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "캡션/자막",
-			"mejs.none": "없음",
+			"mejs.captions-subtitles": "Acquisizioni/sottotitoli",
+			"mejs.none": "Nessuno",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "음소거 전환",
-			"mejs.volume-help-text": "볼륨을 높이거나 낮추려면 위/아래 화살표를 이용하세요.",
-			"mejs.unmute": "음소거 해제",
-			"mejs.mute": "말 없는",
-			"mejs.volume-slider": "볼륨 슬라이더",
+			"mejs.mute-toggle": "Toggle muto",
+			"mejs.volume-help-text": "Utilizzare i tasti Freccia Su/Giù per aumentare o diminuire il volume.",
+			"mejs.unmute": "Disattivare muto",
+			"mejs.mute": "Muto",
+			"mejs.volume-slider": "Barra del volume",
 
 			// mep-player
-			"mejs.video-player": "비디오 플레이어",
-			"mejs.audio-player": "오디오 플레이어",
+			"mejs.video-player": "Lettore Video",
+			"mejs.audio-player": "Lettore Audio",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

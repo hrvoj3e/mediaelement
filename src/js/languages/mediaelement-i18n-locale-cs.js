@@ -1,10 +1,11 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Catalan
+ * Czech
  *
  * @author
- * 	Tongro
+ *   Jalios (Twitter: @Jalios)
+ *   Sascha Greuel (Twitter: @SoftCreatR)
  *
  * @see
  *   mediaelement-i18n.js
@@ -12,66 +13,64 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.ca === undefined) {
-		exports.ca = {
-			"mejs.plural-form": 1,
+((exports => {
+	if (exports.cs === undefined) {
+		exports.cs = {
+			"mejs.plural-form": 8,
 
 			// me-shim
-			"mejs.download-file": "Descarregar arxiu",
+			"mejs.download-file": "Stáhnout soubor",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Desconnectar pantalla completaa",
-			"mejs.fullscreen-on": "Anar a pantalla completa",
-			"mejs.download-video": "Descarregar vídeo",
+			"mejs.fullscreen-off": "Vypnout režim celá obrazovka",
+			"mejs.fullscreen-on": "Na celou obrazovku",
+			"mejs.download-video": "Stáhnout video",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Pantalla completa",
+			"mejs.fullscreen": "Celá obrazovka",
 
 			// mediaelementplayer-feature-jumpforward
-			// "mejs.time-jump-forward": ["Jump forward 1 second", "Jump forward %1 seconds"],
+			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Reproducció",
-			"mejs.pause": "Pausa",
+			"mejs.play": "Přehrát",
+			"mejs.pause": "Pozastavit",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Tancar",
+			"mejs.close": "Zavřít",
 
 			// mediaelementplayer-feature-progress
-			// "mejs.time-slider": "Time Slider",
-			// "mejs.time-help-text": "Use Left/Right Arrow keys to advance one second, Up/Down arrows to advance ten seconds.",
+			"mejs.time-slider": "Posuvný běžec nastavení času",
+			"mejs.time-help-text": "Použijte tlačítka se šipkami doleva / doprava pro posun o jednu vteřinu, tlačítka se šipkami nahoru / dolů pro posun o deset vteřin.",
 
 			// mediaelementplayer-feature-skipback
-			// "mejs.time-skip-back": ["Skip back 1 second", "Skip back %1 seconds"],
+			"mejs.time-skip-back": "Zpět o %1 vteřin",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Llegendes/Subtítols",
-			"mejs.none": "Ningú",
+			"mejs.captions-subtitles": "Titulky",
+			"mejs.none": "Žádný",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Alternar silenci",
-			// "mejs.volume-help-text": "Use Up/Down Arrow keys to increase or decrease volume.",
-			"mejs.unmute": "Reactivar silenci",
-			"mejs.mute": "Silenci",
-			// "mejs.volume-slider": "Volume Slider",
+			"mejs.mute-toggle": "Vypnout/zapnout zvuk",
+			"mejs.volume-help-text": "Použijte tlačítka se šipkami nahoru / dolů pro zesílení nebo zeslabení hlasitosti.",
+			"mejs.unmute": "Zapnout zvuk",
+			"mejs.mute": "Vypnout zvuk",
+			"mejs.volume-slider": "Posuvný běžec nastavení hlasitosti",
 
 			// mep-player
-			"mejs.video-player": "Reproductor de vídeo",
-			"mejs.audio-player": "Reproductor d'àudio",
+			"mejs.video-player": "Přehrávač videa",
+			"mejs.audio-player": "Přehrávač hudby",
 
 			// mediaelementplayer-feature-ads
-			"mejs.ad-skip": "Salta publicitat",
-			"mejs.ad-skip-info": ["Salta en 1 segon", "Salta en %1 segons"],
+			//"mejs.ad-skip": "Skip ad",
+			//"mejs.ad-skip-info": "Skip in %1 second(s)",
 
 			// mediaelementplayer-feature-sourcechooser
-			// "mejs.source-chooser": "Source Chooser",
+			//"mejs.source-chooser": "Source Chooser",
 
 			// mediaelementplayer-feature-stop
-			"mejs.stop": "Aturar"
+			//"mejs.stop": "Stop"
 
 			//mediaelementplayer-feature-speed
 			//"mejs.speed-rate" : "Speed Rate"
@@ -134,5 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
-
+})(mejs.i18n.locale.strings));

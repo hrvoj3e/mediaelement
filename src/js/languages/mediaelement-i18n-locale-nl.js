@@ -1,11 +1,12 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Polish
+ * Dutch
  *
  * @author
+ *   Leonard de Ruijter, Twitter: @LeonarddR
  *   Jalios (Twitter: @Jalios)
- *   Sascha Greuel (Twitter: @SoftCreatR)
+ *   Sascha "SoftCreatR" Greuel
  *
  * @see
  *   mediaelement-i18n.js
@@ -13,63 +14,61 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.pl === undefined) {
-		exports.pl = {
-			"mejs.plural-form": 9,
+((exports => {
+	if (exports.nl === undefined) {
+		exports.nl = {
+			"mejs.plural-form": 1,
 
 			// me-shim
-			"mejs.download-file": "Pobierz plik",
+			"mejs.download-file": "Bestand downloaden",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Wyłącz pełny ekran",
-			"mejs.fullscreen-on": "Przejdź na pełny ekran",
-			"mejs.download-video": "Pobierz wideo",
+			"mejs.fullscreen-off": "Volledig scherm uitschakelen",
+			"mejs.fullscreen-on": "Volledig scherm",
+			"mejs.download-video": "Video downloaden",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Pełny ekran",
+			"mejs.fullscreen": "Volledig scherm",
 
 			// mediaelementplayer-feature-jumpforward
-			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
+			"mejs.time-jump-forward": "%1 seconden vooruit springen",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Odtwarzaj",
-			"mejs.pause": "Wstrzymaj",
+			"mejs.play": "Afspelen",
+			"mejs.pause": "Pauzeren",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Zamknij",
+			"mejs.close": "Sluiten",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Suwak czasu",
-			"mejs.time-help-text": "Strzałki w lewo/w prawo powodują przewijanie o sekundę, strzałki w górę/w dół o dziesięć sekund.",
+			"mejs.time-slider": "Tijd schuifbalk",
+			"mejs.time-help-text": "Gebruik pijl naar links/rechts om per seconde te springen, pijl omhoog/omlaag om per tien seconden te springen.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Cofnij o %1 sek.",
+			"mejs.time-skip-back": "%1 seconden terug springen",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Podpisy/napisy",
-			"mejs.none": "Brak",
+			"mejs.captions-subtitles": "Bijschriften/ondertiteling",
+			"mejs.none": "Geen",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Przełączanie wyciszania",
-			"mejs.volume-help-text": "Aby zwiększyć lub zmniejszyć głośność, użyj strzałek w górę/w dół.",
-			"mejs.unmute": "Wyłącz wyciszenie",
-			"mejs.mute": "Wycisz",
-			"mejs.volume-slider": "Suwak głośności",
+			"mejs.mute-toggle": "Dempen schakelen",
+			"mejs.volume-help-text": "Gebruik pijl omhoog/omlaag om het volume te verhogen/verlagen.",
+			"mejs.unmute": "Dempen opheffen",
+			"mejs.mute": "Dempen",
+			"mejs.volume-slider": "Volume schuifbalk",
 
 			// mep-player
-			"mejs.video-player": "Odtwarzacz wideo",
-			"mejs.audio-player": "Odtwarzacz audio",
+			"mejs.video-player": "Videospeler",
+			"mejs.audio-player": "Audiospeler",
 
 			// mediaelementplayer-feature-ads
-			//"mejs.ad-skip": "Skip ad",
-			//"mejs.ad-skip-info": "Skip in %1 second(s)",
+			"mejs.ad-skip": "Ad overslaan",
+			"mejs.ad-skip-info": "Overslaan in %1 seconden",
 
 			// mediaelementplayer-feature-sourcechooser
-			//"mejs.source-chooser": "Source Chooser"
+			"mejs.source-chooser": "Bronkeuze"
 
 			// mediaelementplayer-feature-stop
 			//"mejs.stop": "Stop"
@@ -135,4 +134,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

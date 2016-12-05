@@ -1,7 +1,7 @@
 /*!
  * This is a i18n.locale language object.
  *
- * German
+ * Portuguese
  *
  * @author
  *   Jalios (Twitter: @Jalios)
@@ -13,63 +13,61 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.de === undefined) {
-		exports.de = {
+((exports => {
+	if (exports.pt === undefined) {
+		exports.pt = {
 			"mejs.plural-form": 1,
 
 			// me-shim
-			"mejs.download-file": "Datei herunterladen",
+			"mejs.download-file": "Descarregar o ficheiro",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Vollbildmodus beenden",
-			"mejs.fullscreen-on": "Vollbild",
-			"mejs.download-video": "Video herunterladen",
+			"mejs.fullscreen-off": "Desligar ecrã completo",
+			"mejs.fullscreen-on": "Ir para ecrã completo",
+			"mejs.download-video": "Descarregar o vídeo",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Vollbild",
+			"mejs.fullscreen": "Ecrã completo",
 
 			// mediaelementplayer-feature-jumpforward
-			"mejs.time-jump-forward": ["1 Sekunde vorspulen", "%1 Sekunden vorspulen"],
+			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Abspielen",
-			"mejs.pause": "Pause",
+			"mejs.play": "Reprodução",
+			"mejs.pause": "Pausa",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Schließen",
+			"mejs.close": "Fechar",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Zeitschieberegler",
-			"mejs.time-help-text": "Verwende die Pfeiltaste nach links/rechts, um eine Sekunde zu spulen, hoch/runter um zehn Sekunden zu spulen.",
+			"mejs.time-slider": "Deslizador do tempo",
+			"mejs.time-help-text": "Use as teclas das setas para a esquerda/direita para avançar um segundo, e as setas para cima/baixo para avançar dez segundos.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": ["1 Sekunde zurückspulen", "%1 Sekunden zurückspulen"],
+			"mejs.time-skip-back": "Retroceder %1 segundos",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Überschriften/Untertitel",
-			"mejs.none": "Keine",
+			"mejs.captions-subtitles": "Legendas",
+			"mejs.none": "Nenhum",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Stummschaltung umschalten",
-			"mejs.volume-help-text": "Verwende die Pfeiltaste nach oben/nach unten um die Lautstärke zu erhöhen oder zu verringern.",
-			"mejs.unmute": "Stummschaltung aufheben",
-			"mejs.mute": "Stummschalten",
-			"mejs.volume-slider": "Lautstärkeregler",
+			"mejs.mute-toggle": "Alternar silêncio",
+			"mejs.volume-help-text": "Use as teclas das setas para cima/baixo para aumentar ou diminuir o volume.",
+			"mejs.unmute": "Voltar ao som",
+			"mejs.mute": "Silêncio",
+			"mejs.volume-slider": "Deslizador do volume",
 
 			// mep-player
-			"mejs.video-player": "Video-Player",
-			"mejs.audio-player": "Audio-Player",
+			"mejs.video-player": "Leitor de vídeo",
+			"mejs.audio-player": "Leitor de áudio",
 
 			// mediaelementplayer-feature-ads
-			"mejs.ad-skip": "Werbung überspringen",
-			"mejs.ad-skip-info": ["Überspringen in 1 Sekunde", "Überspringen in %1 Sekunden"],
+			//"mejs.ad-skip": "Skip ad",
+			//"mejs.ad-skip-info": "Skip in %1 second(s)",
 
 			// mediaelementplayer-feature-sourcechooser
-			"mejs.source-chooser": "Quellenauswahl"
+			//"mejs.source-chooser": "Source Chooser"
 
 			// mediaelementplayer-feature-stop
 			//"mejs.stop": "Stop"
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

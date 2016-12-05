@@ -1,11 +1,10 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Chinese (Simplified)
+ * Catalan
  *
  * @author
- *   Jalios (Twitter: @Jalios)
- *   Sascha Greuel (Twitter: @SoftCreatR)
+ * 	Tongro
  *
  * @see
  *   mediaelement-i18n.js
@@ -13,66 +12,66 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
+((exports => {
 	"use strict";
 
-	if (exports["zh-CN"] === undefined) {
-		exports["zh-CN"] = {
-			"mejs.plural-form": 0,
+	if (exports.ca === undefined) {
+		exports.ca = {
+			"mejs.plural-form": 1,
 
 			// me-shim
-			"mejs.download-file": "下载文件",
+			"mejs.download-file": "Descarregar arxiu",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "关闭全屏",
-			"mejs.fullscreen-on": "转向全屏",
-			"mejs.download-video": "下载视频",
+			"mejs.fullscreen-off": "Desconnectar pantalla completaa",
+			"mejs.fullscreen-on": "Anar a pantalla completa",
+			"mejs.download-video": "Descarregar vídeo",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "全屏",
+			"mejs.fullscreen": "Pantalla completa",
 
 			// mediaelementplayer-feature-jumpforward
-			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
+			// "mejs.time-jump-forward": ["Jump forward 1 second", "Jump forward %1 seconds"],
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "播放",
-			"mejs.pause": "暂停",
+			"mejs.play": "Reproducció",
+			"mejs.pause": "Pausa",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "关闭",
+			"mejs.close": "Tancar",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "时间滑动棒",
-			"mejs.time-help-text": "使用作/右箭头快进1秒，使用上/下箭头快进10秒。",
+			// "mejs.time-slider": "Time Slider",
+			// "mejs.time-help-text": "Use Left/Right Arrow keys to advance one second, Up/Down arrows to advance ten seconds.",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "后退%1秒",
+			// "mejs.time-skip-back": ["Skip back 1 second", "Skip back %1 seconds"],
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "字幕/标题",
-			"mejs.none": "无",
+			"mejs.captions-subtitles": "Llegendes/Subtítols",
+			"mejs.none": "Ningú",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "静音切换",
-			"mejs.volume-help-text": "使用上/下箭头提高或降低音量。",
-			"mejs.unmute": "取消静音",
-			"mejs.mute": "静音",
-			"mejs.volume-slider": "音量选择键",
+			"mejs.mute-toggle": "Alternar silenci",
+			// "mejs.volume-help-text": "Use Up/Down Arrow keys to increase or decrease volume.",
+			"mejs.unmute": "Reactivar silenci",
+			"mejs.mute": "Silenci",
+			// "mejs.volume-slider": "Volume Slider",
 
 			// mep-player
-			"mejs.video-player": "视频播放器",
-			"mejs.audio-player": "音频播放器",
+			"mejs.video-player": "Reproductor de vídeo",
+			"mejs.audio-player": "Reproductor d'àudio",
 
 			// mediaelementplayer-feature-ads
-			//"mejs.ad-skip": "Skip ad",
-			//"mejs.ad-skip-info": "Skip in %1 second(s)",
+			"mejs.ad-skip": "Salta publicitat",
+			"mejs.ad-skip-info": ["Salta en 1 segon", "Salta en %1 segons"],
 
 			// mediaelementplayer-feature-sourcechooser
-			//"mejs.source-chooser": "Source Chooser"
+			// "mejs.source-chooser": "Source Chooser",
 
 			// mediaelementplayer-feature-stop
-			//"mejs.stop": "Stop"
+			"mejs.stop": "Aturar"
 
 			//mediaelementplayer-feature-speed
 			//"mejs.speed-rate" : "Speed Rate"
@@ -135,4 +134,5 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));
+

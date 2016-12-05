@@ -29,6 +29,27 @@ module.exports = function(grunt) {
 		jshint: {
 			all: ['Gruntfile.js', 'src/js/**/*.js']
 		},
+		browserify: {
+			dist: {
+				options: {
+					transform: [["babelify", {
+						presets: 'es2015',
+						sourceMapsAbsolute: true
+					}]]
+				},
+				files: {
+					"build/mediaelement.js": [
+						'src/js/core/header.js',
+						'src/js/core/namespace.js',
+						"src/js/utils/utility.js",
+						"src/js/utils/utility-dom.js",
+						"src/js/utils/feature.js",
+						"src/js/core/renderer.js",
+						"src/js/core/i18n.js",
+					]
+				}
+			}
+		},
 		concat: {
 			me: {
 				src: [
@@ -232,4 +253,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('html5only', ['jshint', 'concat', 'removelogging', 'uglify', 'postcss', 'copy', 'clean:temp']);
 	grunt.registerTask('html5debug', ['jshint', 'concat', 'uglify', 'postcss', 'copy', 'clean:temp']);
 
+	grunt.registerTask('babel', ['jshint', 'browserify', 'concat:me', 'removelogging', 'uglify:me']);
 };

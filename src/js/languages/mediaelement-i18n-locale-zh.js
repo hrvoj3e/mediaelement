@@ -1,12 +1,11 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Dutch
+ * Chinese (Traditional)
  *
  * @author
- *   Leonard de Ruijter, Twitter: @LeonarddR
  *   Jalios (Twitter: @Jalios)
- *   Sascha "SoftCreatR" Greuel
+ *   Sascha Greuel (Twitter: @SoftCreatR)
  *
  * @see
  *   mediaelement-i18n.js
@@ -14,63 +13,61 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.nl === undefined) {
-		exports.nl = {
-			"mejs.plural-form": 1,
+((exports => {
+	if (exports.zh === undefined) {
+		exports.zh = {
+			"mejs.plural-form": 0,
 
 			// me-shim
-			"mejs.download-file": "Bestand downloaden",
+			"mejs.download-file": "下載文件",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Volledig scherm uitschakelen",
-			"mejs.fullscreen-on": "Volledig scherm",
-			"mejs.download-video": "Video downloaden",
+			"mejs.fullscreen-off": "關閉全屏",
+			"mejs.fullscreen-on": "轉向全屏",
+			"mejs.download-video": "下載視頻",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Volledig scherm",
+			"mejs.fullscreen": "全屏",
 
 			// mediaelementplayer-feature-jumpforward
-			"mejs.time-jump-forward": "%1 seconden vooruit springen",
+			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Afspelen",
-			"mejs.pause": "Pauzeren",
+			"mejs.play": "播放",
+			"mejs.pause": "暫停",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Sluiten",
+			"mejs.close": "關閉",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Tijd schuifbalk",
-			"mejs.time-help-text": "Gebruik pijl naar links/rechts om per seconde te springen, pijl omhoog/omlaag om per tien seconden te springen.",
+			"mejs.time-slider": "時間滑動棒",
+			"mejs.time-help-text": "使用左/右箭頭快進1秒，上/下箭頭快進10秒。",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "%1 seconden terug springen",
+			"mejs.time-skip-back": "跳躍式迴繞%1秒",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Bijschriften/ondertiteling",
-			"mejs.none": "Geen",
+			"mejs.captions-subtitles": "字幕/標題",
+			"mejs.none": "沒有",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Dempen schakelen",
-			"mejs.volume-help-text": "Gebruik pijl omhoog/omlaag om het volume te verhogen/verlagen.",
-			"mejs.unmute": "Dempen opheffen",
-			"mejs.mute": "Dempen",
-			"mejs.volume-slider": "Volume schuifbalk",
+			"mejs.mute-toggle": "靜音切換",
+			"mejs.volume-help-text": "使用上/下箭頭提高或降低音量。",
+			"mejs.unmute": "取消靜音",
+			"mejs.mute": "靜音",
+			"mejs.volume-slider": "音量控制鍵",
 
 			// mep-player
-			"mejs.video-player": "Videospeler",
-			"mejs.audio-player": "Audiospeler",
+			"mejs.video-player": "視頻播放器",
+			"mejs.audio-player": "音頻播放器",
 
 			// mediaelementplayer-feature-ads
-			"mejs.ad-skip": "Ad overslaan",
-			"mejs.ad-skip-info": "Overslaan in %1 seconden",
+			//"mejs.ad-skip": "Skip ad",
+			//"mejs.ad-skip-info": "Skip in %1 second(s)",
 
 			// mediaelementplayer-feature-sourcechooser
-			"mejs.source-chooser": "Bronkeuze"
+			//"mejs.source-chooser": "Source Chooser"
 
 			// mediaelementplayer-feature-stop
 			//"mejs.stop": "Stop"
@@ -136,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));

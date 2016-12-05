@@ -1,11 +1,11 @@
 /*!
  * This is a i18n.locale language object.
  *
- * Portuguese
+ * Japanese
  *
  * @author
  *   Jalios (Twitter: @Jalios)
- *   Sascha Greuel (Twitter: @SoftCreatR)
+ *   Sascha "SoftCreatR" Greuel
  *
  * @see
  *   mediaelement-i18n.js
@@ -13,56 +13,54 @@
  * @params
  *  - exports - CommonJS, window ..
  */
-(function (exports) {
-	"use strict";
-
-	if (exports.pt === undefined) {
-		exports.pt = {
-			"mejs.plural-form": 1,
+((exports => {
+	if (exports.ja === undefined) {
+		exports.ja = {
+			"mejs.plural-form": 0,
 
 			// me-shim
-			"mejs.download-file": "Descarregar o ficheiro",
+			"mejs.download-file": "ファイルをダウンロードする",
 			// "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/",
 
 			// mediaelementplayer-feature-contextmenu
-			"mejs.fullscreen-off": "Desligar ecrã completo",
-			"mejs.fullscreen-on": "Ir para ecrã completo",
-			"mejs.download-video": "Descarregar o vídeo",
+			"mejs.fullscreen-off": "全画面をオフにする",
+			"mejs.fullscreen-on": "全画面にする",
+			"mejs.download-video": "動画をダウンロードする",
 
 			// mediaelementplayer-feature-fullscreen
-			"mejs.fullscreen": "Ecrã completo",
+			"mejs.fullscreen": "全画面",
 
 			// mediaelementplayer-feature-jumpforward
 			//"mejs.time-jump-forward": "Jump forward %1 second(s)",
 
 			// mediaelementplayer-feature-playpause
-			"mejs.play": "Reprodução",
-			"mejs.pause": "Pausa",
+			"mejs.play": "再生",
+			"mejs.pause": "一時停止",
 
 			// mediaelementplayer-feature-postroll
-			"mejs.close": "Fechar",
+			"mejs.close": "閉じる",
 
 			// mediaelementplayer-feature-progress
-			"mejs.time-slider": "Deslizador do tempo",
-			"mejs.time-help-text": "Use as teclas das setas para a esquerda/direita para avançar um segundo, e as setas para cima/baixo para avançar dez segundos.",
+			"mejs.time-slider": "タイムスライダー",
+			"mejs.time-help-text": "1秒進めるには左/右矢印をキーを、10秒進めるには上/下矢印を使います。",
 
 			// mediaelementplayer-feature-skipback
-			"mejs.time-skip-back": "Retroceder %1 segundos",
+			"mejs.time-skip-back": "%1秒スキップバックする",
 
 			// mediaelementplayer-feature-tracks
-			"mejs.captions-subtitles": "Legendas",
-			"mejs.none": "Nenhum",
+			"mejs.captions-subtitles": "キャプション/字幕",
+			"mejs.none": "なし",
 
 			// mediaelementplayer-feature-volume
-			"mejs.mute-toggle": "Alternar silêncio",
-			"mejs.volume-help-text": "Use as teclas das setas para cima/baixo para aumentar ou diminuir o volume.",
-			"mejs.unmute": "Voltar ao som",
-			"mejs.mute": "Silêncio",
-			"mejs.volume-slider": "Deslizador do volume",
+			"mejs.mute-toggle": "ミュートトグル",
+			"mejs.volume-help-text": "音量を上げたり下げたりするには、上/下矢印を使います。",
+			"mejs.unmute": "ミュートを解除",
+			"mejs.mute": "ミュート",
+			"mejs.volume-slider": "音量スライダー",
 
 			// mep-player
-			"mejs.video-player": "Leitor de vídeo",
-			"mejs.audio-player": "Leitor de áudio",
+			"mejs.video-player": "ビデオプレーヤー",
+			"mejs.audio-player": "オーディオプレーヤー",
 
 			// mediaelementplayer-feature-ads
 			//"mejs.ad-skip": "Skip ad",
@@ -135,4 +133,4 @@
 			// "mejs.yiddish": "Yiddish"
 		};
 	}
-}(mejs.i18n.locale.strings));
+})(mejs.i18n.locale.strings));
