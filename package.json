@@ -31,9 +31,10 @@
     "grunt-shell": "~1.1.1",
     "grunt-text-replace": "~0.3.12",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^3.1.2"
+    "mocha": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-register --require babel-polyfill --recursive test/specs"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register --require babel-polyfill --recursive test/specs",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   }
 }
