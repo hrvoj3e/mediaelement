@@ -154,7 +154,7 @@ module.exports = function(grunt) {
 			build: {
 				expand  : true,
 				cwd     : 'src/css/',
-				src     : ['*.png', '*.svg', '*.gif', '!*-simple*'],
+				src     : ['*.png', '*.svg', '*.gif', '*.css', '!*-simple*'],
 				dest    : 'build/',
 				flatten : true,
 				filter  : 'isFile'
