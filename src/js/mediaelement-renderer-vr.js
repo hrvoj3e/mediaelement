@@ -136,7 +136,7 @@
 				VrAPIReady = false,
 				vr = {},
 				vrPlayer = null,
-				paused = false,
+				paused = true,
 				volume = 1,
 				oldVolume = volume,
 				currentTime = 0,
@@ -282,8 +282,6 @@
 				mediaElement.vrPlayer = vrPlayer = _vrPlayer;
 
 				vrPlayer.on('ready', function() {
-
-					vrPlayer.pause();
 
 					// a few more events
 					events = ['mouseover', 'mouseout'];
