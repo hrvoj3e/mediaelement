@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Handle workflow when player looks for proper render to play current media.
  *
@@ -89,5 +91,3 @@ class Renderer {
 }
 
 export let renderer = new Renderer();
-
-// export default Renderer;

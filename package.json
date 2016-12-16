@@ -34,7 +34,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register --require babel-polyfill --recursive test/specs",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register --require babel-polyfill --recursive test/core",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   }
 }

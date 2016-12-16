@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 				},
 				files: {
 					"build/mediaelement.js": [
-						'src/js/core/header.js',
+						'src/js/header.js',
 						'src/js/core/namespace.js',
 						"src/js/utils/utility.js",
 						"src/js/utils/utility-dom.js",
