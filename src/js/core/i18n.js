@@ -20,7 +20,7 @@ i18n.language = (...args) => {
 			throw new Error('Language code must be a string value');
 		}
 
-		if (!typeof args[0].match(/^[a-z]{2}(\-[a-z]{2})?$/i)) {
+		if (!args[0].match(/^[a-z]{2}(\-[a-z]{2})?$/i)) {
 			throw new Error('Language code must have format `xx` or `xx-xx`');
 		}
 
@@ -31,8 +31,7 @@ i18n.language = (...args) => {
 		return i18n.lang;
 	}
 
-	const language = i18n.lang || 'en';
-	return /^(x\-)?[a-z]{2,}(\-\w{2,})?(\-\w{2,})?$/.exec(language) ? language : 'en';
+	return i18n.lang || 'en';
 };
 
 /**
@@ -315,7 +314,7 @@ i18n.t = (message, pluralParam) => {
 		};
 
 		// Fetch the localized version of the string
-		if (typeof i18n[language]) {
+		if (i18n[language] !== undefined) {
 			str = i18n[language][message];
 			if (typeof pluralParam === 'number') {
 				pluralForm = i18n[language]['mejs.plural-form'];

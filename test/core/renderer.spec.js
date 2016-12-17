@@ -52,6 +52,12 @@ describe('Renderers', () => {
 				renderer.renderers = 'foo';
 			};
 			expect(a).to.throw(Error);
+
+			let b = () => {
+				renderer.renderers = mockRenderer;
+			};
+
+			expect(b).to.not.throw(Error);
 		});
 	});
 

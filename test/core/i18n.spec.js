@@ -2,6 +2,7 @@
 
 import i18n from '../../src/js/core/i18n';
 import {ES as es} from '../../src/js/languages/es';
+import {KO as ko} from '../../src/js/languages/ko';
 import {expect} from 'chai';
 
 describe('i18n', () => {
@@ -23,6 +24,11 @@ describe('i18n', () => {
 			expect(() => {
 				i18n.language(12345);
 			}).to.throw(Error);
+
+
+			expect(() => {
+				i18n.language('x', {});
+			}).to.throw(Error);
 		});
 	});
 
@@ -38,13 +44,22 @@ describe('i18n', () => {
 			expect(i18n.t('This is test #%1', 53)).to.equal('This is test #53');
 		});
 
-		it('translate to a specific language (i.e., Spanish (es))', () => {
+		it('translate to a specific language', () => {
+
+			i18n.language('ko', ko);
+			expect(i18n.t('mejs.play')).to.equal('작동');
+
 			i18n.language('es', es);
 			expect(i18n.t('mejs.play')).to.equal('Reproducción');
 
 		});
 
 		it('pluralize a string properly in different languages', () => {
+
+			i18n.language('ko', ko);
+			expect(i18n.t('mejs.time-skip-back', 1)).to.equal('1초 를 뒤로 건너뛰세요');
+			expect(i18n.t('mejs.time-skip-back', 30)).to.equal('30초 를 뒤로 건너뛰세요');
+
 			i18n.language('en');
 			expect(i18n.t('mejs.time-jump-forward', 1)).to.equal('Jump forward 1 second');
 			expect(i18n.t('mejs.time-jump-forward', 30)).to.equal('Jump forward 30 seconds');
@@ -55,6 +70,12 @@ describe('i18n', () => {
 			expect(i18n.t('mejs.time-jump-forward', 30)).to.equal('Adelantar 30 segundos');
 			expect(i18n.t('mejs.fullscreen-off', 400)).to.equal('Desconectar pantalla completa');
 			expect(i18n.t('Hola', 400)).to.equal('Hola');
+
+
+			i18n.language('ar', {});
+			expect(i18n.t('This is a test', 1)).to.equal('This is a test');
+			expect(i18n.t('This is test #%1', 1)).to.equal('This is test #1');
+			expect(i18n.t('This is test #%1', 30)).to.equal('This is test #30');
 		});
 	});
 });

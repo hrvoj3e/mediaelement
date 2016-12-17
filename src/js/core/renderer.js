@@ -23,7 +23,7 @@ class Renderer {
 
 	set renderers(renderers) {
 
-		if (typeof renderers !== 'object') {
+		if (renderers !== null && typeof renderers !== 'object') {
 			throw new Error('renderers must be an array of objects.');
 		}
 
