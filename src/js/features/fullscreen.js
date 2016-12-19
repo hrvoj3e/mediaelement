@@ -452,7 +452,7 @@
 				.width('100%')
 				.height('100%');
 			} else {
-				t.container.find('iframe, embed, object')
+				t.container.find('iframe, embed, object, video')
 				.width('100%')
 				.height('100%');
 			}
@@ -516,7 +516,7 @@
 						.width(t.normalWidth)
 						.height(t.normalHeight);
 				} else {
-					t.container.find('iframe, embed, object')
+					t.container.find('iframe, embed, object, video')
 						.width(t.normalWidth)
 						.height(t.normalHeight);
 				}
