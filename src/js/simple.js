@@ -43,9 +43,9 @@ function getElementsByClassName(className, node, tag) {
 	let elsLen = els.length;
 
 	for (i = 0; i < elsLen; i++) {
-		if (els[i].className.indexOf(class_name) != -1) {
+		if (els[i].className.indexOf(class_name) > -1) {
 			teststr = "," + els[i].className.split(" ").join(",") + ",";
-			if (teststr.indexOf("," + class_name + ",") != -1) {
+			if (teststr.indexOf("," + class_name + ",") > -1) {
 				classElements[j] = els[i];
 				j++;
 			}
@@ -58,7 +58,9 @@ function getMousePosition(e) {
 	let x = 0,
 		y = 0;
 
-	if (!e) e = window.event;
+	if (!e) {
+		e = window.event;
+	}
 
 	if (e.pageX || e.pageY) {
 		x = e.pageX;
@@ -109,7 +111,7 @@ let fadeEffect = {
 		this.elem.si = setInterval(function(){fadeEffect.tween();}, 5);
 	},
 	tween:function(){
-		if (this.alpha == this.target) {
+		if (this.alpha === this.target) {
 			clearInterval(this.elem.si);
 		} else {
 			let value = Math.round(this.alpha + ((this.target - this.alpha) * 0.05)) + (1 * this.flag);
@@ -488,7 +490,7 @@ MediaElementPlayerSimple.prototype = {
 
 		function setDuration() {
 			let duration = mediaElement.duration;
-			if (isNaN(duration) || duration == Infinity) {
+			if (isNaN(duration) || duration === Infinity) {
 				duration = 0;
 			}
 			uiDuration.innerHTML = mejs.Utils.secondsToTimeCode(duration);
@@ -500,8 +502,9 @@ MediaElementPlayerSimple.prototype = {
 
 	createFullscreen: function(mediaElement, controls) {
 
-		if (!this.isVideo)
+		if (!this.isVideo) {
 			return;
+		}
 
 		let t = this,
 			uiFullscreenBtn = doc.createElement('input'),
