@@ -40,7 +40,8 @@ module.exports = function(grunt) {
 					'src/js/renderers/*.js',
 					'src/js/features/*.js',
 					'src/player.js',
-					'src/simple.js'
+					'src/simple.js',
+					'test/core/*.js'
 
 				]
 			}
@@ -59,10 +60,11 @@ module.exports = function(grunt) {
 				files: {
 					// core element
 					"tmp/mediaelement.js": [
-						'src/js/header.js',
 						'src/js/utils/legacy.js',
+						'src/js/core/mediaelement.js',
 						'src/js/renderers/html5.js',
-						'src/js/core/mediaelement.js'
+						'src/js/renderers/dailymotion.js',
+						'src/js/renderers/flv.js'
 					]
 				}
 			}
@@ -70,25 +72,26 @@ module.exports = function(grunt) {
 		concat: {
 			me: {
 				src: [
-					// 'src/js/mediaelement-header.js',
+					'src/js/header.js',
 					// 'src/js/mediaelement-namespace.js',
 					// 'src/js/mediaelement-utility.js',
 					// 'src/js/mediaelement-utility-oldie.js',
 					// 'src/js/mediaelement-core.js',
-					'src/js/mediaelement-renderer-html5.js',
-					'src/js/mediaelement-renderer-hls.js',
-					'src/js/mediaelement-renderer-mdash.js',
-					'src/js/mediaelement-renderer-flv.js',
-					'src/js/mediaelement-renderer-youtube-iframe.js',
-					'src/js/mediaelement-renderer-vimeo.js',
-					'src/js/mediaelement-renderer-dailymotion-iframe.js',
-					'src/js/mediaelement-renderer-facebook.js',
-					'src/js/mediaelement-renderer-soundcloud.js',
-					'src/js/mediaelement-renderer-flash.js',
-					'src/js/mediaelement-i18n.js',
-					'src/js/mediaelement-i18n-locale-en.js',
+					// 'src/js/mediaelement-renderer-html5.js',
+					// 'src/js/mediaelement-renderer-hls.js',
+					// 'src/js/mediaelement-renderer-mdash.js',
+					// 'src/js/mediaelement-renderer-flv.js',
+					// 'src/js/mediaelement-renderer-youtube-iframe.js',
+					// 'src/js/mediaelement-renderer-vimeo.js',
+					// 'src/js/mediaelement-renderer-dailymotion-iframe.js',
+					// 'src/js/mediaelement-renderer-facebook.js',
+					// 'src/js/mediaelement-renderer-soundcloud.js',
+					// 'src/js/mediaelement-renderer-flash.js',
+					// 'src/js/mediaelement-i18n.js',
+					// 'src/js/mediaelement-i18n-locale-en.js',
+					'tmp/mediaelement.js'
 				],
-				dest: 'build/mediaelement.js'
+				dest: 'tmp/mediaelement.js'
 			},
 			mep: {
 				src: [
@@ -124,7 +127,7 @@ module.exports = function(grunt) {
 		removelogging: {
 			dist: {
 				src: [
-					'build/mediaelement.js',
+					'tmp/mediaelement.js',
 					'build/mediaelementplayer.js',
 					'build/mediaelement-and-player.js'
 				]
@@ -136,9 +139,9 @@ module.exports = function(grunt) {
 		},
 		uglify: {
 			me: {
-				src	   : ['build/mediaelement.js'],
-				dest   : 'build/mediaelement.min.js',
-				banner : 'src/js/mediaelement-header.js'
+				src	   : ['tmp/mediaelement.js'],
+				dest   : 'tmp/mediaelement.min.js',
+				banner : 'src/js/header.js'
 			},
 			mep: {
 				src	   : ['build/mediaelementplayer.js'],
@@ -275,5 +278,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('html5only', ['jshint', 'concat', 'removelogging', 'uglify', 'postcss', 'copy', 'clean:temp']);
 	grunt.registerTask('html5debug', ['jshint', 'concat', 'uglify', 'postcss', 'copy', 'clean:temp']);
 
-	grunt.registerTask('babel', ['jshint', 'browserify']);
+	grunt.registerTask('babel', ['jshint', 'browserify', 'concat:me', 'removelogging', 'uglify:me',]);
 };

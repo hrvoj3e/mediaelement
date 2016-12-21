@@ -3,17 +3,19 @@
 import document from 'global/document';
 import {escapeHTML} from '../utils/general';
 
+/**
+ *
+ * @param {string} eventName
+ * @param {*} target
+ * @return {Event|Object}
+ */
 export function createEvent (eventName, target) {
 
 	if (typeof eventName !== 'string') {
 		throw new Error('Event name must be a string');
 	}
 
-	if (target instanceof HTMLElement === false) {
-		throw new Error('Event target must be an HTMLElement');
-	}
-
-	let event = null;
+	let event;
 
 	if (document.createEvent) {
 		event = document.createEvent('Event');
@@ -22,9 +24,46 @@ export function createEvent (eventName, target) {
 		event = {};
 		event.type = eventName;
 		event.target = target;
+		event.canceleable = true;
+		event.bubbable = false;
 	}
 
 	return event;
+}
+
+/**
+ *
+ * @param {Object} obj
+ * @param {String} type
+ * @param {Function} fn
+ */
+export function addEvent (obj, type, fn) {
+	if (obj.addEventListener) {
+		obj.addEventListener(type, fn, false);
+	} else if (obj.attachEvent) {
+		obj['e' + type + fn] = fn;
+		obj[type + fn] = function () {
+			obj['e' + type + fn](window.event);
+		};
+		obj.attachEvent('on' + type, obj[type + fn]);
+	}
+
+}
+
+/**
+ *
+ * @param {Object} obj
+ * @param {String} type
+ * @param {Function} fn
+ */
+export function removeEvent (obj, type, fn) {
+
+	if (obj.removeEventListener) {
+		obj.removeEventListener(type, fn, false);
+	} else if (obj.detachEvent) {
+		obj.detachEvent('on' + type, obj[type + fn]);
+		obj[type + fn] = null;
+	}
 }
 
 /**

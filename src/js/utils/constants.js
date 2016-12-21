@@ -1,3 +1,6 @@
+import window from 'global/window';
+import document from 'global/document';
+
 const NAV = window.navigator;
 const UA = NAV.userAgent.toLowerCase();
 
@@ -5,7 +8,7 @@ export const IS_IPAD = (UA.match(/ipad/i) !== null);
 export const IS_IPHONE = (UA.match(/iphone/i) !== null);
 export const IS_IOS = IS_IPHONE || IS_IPAD;
 export const IS_ANDROID = (UA.match(/android/i) !== null);
-export const IS_IE = (NAV.appName.toLowerCase().indexOf('microsoft') > -1 || NAV.appName.toLowerCase().match(/trident/gi) !== null);
+export const IS_IE = (NAV.appName.toLowerCase().includes('microsoft') || NAV.appName.toLowerCase().match(/trident/gi) !== null);
 export const IS_CHROME = (UA.match(/chrome/gi) !== null);
 export const IS_FIREFOX = (UA.match(/firefox/gi) !== null);
 export const HAS_TOUCH = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
@@ -31,10 +34,10 @@ export const SUPPORT_POINTER_EVENTS = (() => {
 })();
 
 // for IE
-let html5Elements = ['source', 'track', 'audio', 'video'];
+let html5Elements = ['source', 'track', 'audio', 'video'], video;
 
 for (let i = 0, il = html5Elements.length; i < il; i++) {
-	video = doc.createElement(html5Elements[i]);
+	video = document.createElement(html5Elements[i]);
 }
 
 // Test if Media Source Extensions are supported by browser

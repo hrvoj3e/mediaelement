@@ -69,7 +69,7 @@ describe('Renderers', () => {
 			let a = () => {
 				renderer.add(mockRenderer);
 			};
-			expect(a).to.not.throw(Error)
+			expect(a).to.not.throw(Error);
 
 		});
 
@@ -79,7 +79,7 @@ describe('Renderers', () => {
 			let b = () => {
 				renderer.add({});
 			};
-			expect(b).to.throw(Error)
+			expect(b).to.throw(Error);
 
 		});
 
@@ -101,13 +101,13 @@ describe('Renderers', () => {
 		it('selects a renderer based on media files', () => {
 
 			let a = renderer.select(mediaFiles);
-			expect(a).to.deep.equal({rendererName: 'mock', src: '/path/to/media/3'})
+			expect(a).to.deep.equal({rendererName: 'mock', src: '/path/to/media/3'});
 		});
 
 		it('selects a renderer based on media files from argument `renderers`', () => {
 
 			let a = renderer.select(mediaFiles, ['mock', 'dummy']);
-			expect(a).to.deep.equal({rendererName: 'mock', src: '/path/to/media/3'})
+			expect(a).to.deep.equal({rendererName: 'mock', src: '/path/to/media/3'});
 
 		});
 
