@@ -215,9 +215,9 @@ const FlashMediaElementRenderer = {
 					if (flash.flashApi !== null) {
 
 						// send call up to Flash ExternalInterface API
-						if (flash.flashApi['fire_' + methodName]) {
+						if (flash.flashApi[`fire_${methodName}`]) {
 							try {
-								flash.flashApi['fire_' + methodName]();
+								flash.flashApi[`fire_${methodName}`]();
 							} catch (e) {
 								console.log(e);
 							}
@@ -242,10 +242,10 @@ const FlashMediaElementRenderer = {
 		}
 
 		// add a ready method that Flash can call to
-		window['__ready__' + flash.id] = () => {
+		window[`__ready__${flash.id}`] = () => {
 
 			flash.flashReady = true;
-			flash.flashApi = document.getElementById('__' + flash.id);
+			flash.flashApi = document.getElementById(`__${flash.id}`);
 
 			let event = createEvent('rendererready', flash);
 			mediaElement.dispatchEvent(event);
@@ -259,14 +259,14 @@ const FlashMediaElementRenderer = {
 					let propName = stackItem.propName,
 						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
-					flash['set' + capName](stackItem.value);
+					flash[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					flash[stackItem.methodName]();
 				}
 			}
 		};
 
-		window['__event__' + flash.id] = (eventName, message) => {
+		window[`__event__${flash.id}`] = (eventName, message) => {
 
 			let event = createEvent(eventName, flash);
 			event.message = message || '';
@@ -280,14 +280,14 @@ const FlashMediaElementRenderer = {
 
 		let
 			autoplay = !!mediaElement.getAttribute('autoplay'),
-			flashVars = ['uid=' + flash.id, 'autoplay=' + autoplay],
+			flashVars = [`uid=${flash.id}`, `autoplay=${autoplay}`],
 			isVideo = mediaElement.originalNode !== null && mediaElement.originalNode.tagName.toLowerCase() === 'video',
 			flashHeight = (isVideo) ? mediaElement.originalNode.height : 1,
 			flashWidth = (isVideo) ? mediaElement.originalNode.width : 1;
 
 		if (flash.options.enablePseudoStreaming === true) {
-			flashVars.push('pseudostreamstart=' + flash.options.pseudoStreamingStartQueryParam);
-			flashVars.push('pseudostreamtype=' + flash.options.pseudoStreamingType);
+			flashVars.push(`pseudostreamstart=${flash.options.pseudoStreamingStartQueryParam}`);
+			flashVars.push(`pseudostreamtype=${flash.options.pseudoStreamingType}`);
 		}
 
 		mediaElement.appendChild(flash.flashWrapper);
@@ -314,23 +314,23 @@ const FlashMediaElementRenderer = {
 				settings.push('style="clip: rect(0 0 0 0); position: absolute;"');
 			}
 
-			specialIEContainer.outerHTML =
-				'<object ' + settings.join(' ') + '>' +
-				'<param name="movie" value="' + flash.options.pluginPath + flash.options.filename + '?x=' + (new Date()) + '" />' +
-				'<param name="flashvars" value="' + flashVars.join('&amp;') + '" />' +
-				'<param name="quality" value="high" />' +
-				'<param name="bgcolor" value="#000000" />' +
-				'<param name="wmode" value="transparent" />' +
-				'<param name="allowScriptAccess" value="always" />' +
-				'<param name="allowFullScreen" value="true" />' +
-				'<div>' + i18n.t('mejs.install-flash') + '</div>' +
-				'</object>';
+			specialIEContainer.outerHTML = `
+				<object ${settings.join(' ')}>
+				<param name="movie" value="${flash.options.pluginPath}${flash.options.filename}?x=${new Date()}" />' 
+				<param name="flashvars" value="${flashVars.join('&amp;')}" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#000000" />
+				<param name="wmode" value="transparent" />
+				<param name="allowScriptAccess" value="always" />
+				<param name="allowFullScreen" value="true" />
+				<div>${i18n.t('mejs.install-flash')}</div>
+				</object>`;
 
 		} else {
 
 			settings = [
-				'id="__' + flash.id + '"',
-				'name="__' + flash.id + '"',
+				`id="__${flash.id}"`,
+				`name="__${flash.id}"`,
 				'play="true"',
 				'loop="false"',
 				'quality="high"',
@@ -340,10 +340,10 @@ const FlashMediaElementRenderer = {
 				'allowFullScreen="true"',
 				'type="application/x-shockwave-flash"',
 				'pluginspage="//www.macromedia.com/go/getflashplayer"',
-				'src="' + flash.options.pluginPath + flash.options.filename + '"',
-				'flashvars="' + flashVars.join('&') + '"',
-				'width="' + flashWidth + '"',
-				'height="' + flashHeight + '"'
+				`src="${flash.options.pluginPath}${flash.options.filename}"`,
+				`flashvars="${flashVars.join('&')}"`,
+				`width="${flashWidth}"`,
+				`height="${flashHeight}"`
 			];
 
 			if (!isVideo) {
@@ -351,7 +351,7 @@ const FlashMediaElementRenderer = {
 			}
 
 			flash.flashWrapper.innerHTML =
-				'<embed ' + settings.join(' ') + '>';
+				`<embed ${settings.join(' ')}>`;
 		}
 
 		flash.flashNode = flash.flashWrapper.lastChild;

@@ -235,7 +235,7 @@ let DashNativeRenderer = {
 
 			for (let eventType in dashEvents) {
 				if (dashEvents.hasOwnProperty(eventType)) {
- 					dashPlayer.o\n(dashEvents[eventType], assignMdashEvents);
+ 					dashPlayer.on(dashEvents[eventType], assignMdashEvents);
 				}
 			}
 		};

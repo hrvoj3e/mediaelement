@@ -1,4 +1,5 @@
 import mejs from 'core/mejs';
+import {IS_FIREFOX} from 'utils/constants';
 
 // default player values
 mejs.MepDefaults = {
@@ -19,13 +20,9 @@ mejs.MepDefaults = {
 	// default if the user doesn't specify
 	defaultAudioHeight: 40,
 	// default amount to move back when back key is pressed
-	defaultSeekBackwardInterval: (media) => {
-		return (media.duration * 0.05);
-	},
+	defaultSeekBackwardInterval: (media) => media.duration * 0.05,
 	// default amount to move forward when forward key is pressed
-	defaultSeekForwardInterval: (media) => {
-		return (media.duration * 0.05);
-	},
+	defaultSeekForwardInterval: (media) => media.duration * 0.05,
 	// set dimensions via JS instead of CSS
 	setDimensions: true,
 	// width of audio player
@@ -101,7 +98,7 @@ mejs.MepDefaults = {
 			],
 			action: (player, media, key, event) => {
 
-				if (!mejs.MediaFeatures.isFirefox) {
+				if (!IS_FIREFOX) {
 					if (media.paused || media.ended) {
 						media.play();
 					} else {
@@ -222,7 +219,6 @@ mejs.MepDefaults = {
 };
 
 mejs.mepIndex = 0;
-
 mejs.players = {};
 
 /**
@@ -233,61 +229,64 @@ mejs.players = {};
  * @param {Object} o
  * @return {?MediaElementPlayer}
  */
-mejs.MediaElementPlayer = (node, o) => {
+export class MediaElementPlayer {
 
-	// enforce object, even without "new" (via John Resig)
-	if (!(this instanceof mejs.MediaElementPlayer)) {
-		return new mejs.MediaElementPlayer(node, o);
-	}
+	constructor (node, o) {
 
-	let t = this;
-
-	// these will be reset after the MediaElement.success fires
-	t.$media = t.$node = $(node);
-	t.node = t.media = t.$media[0];
-
-	if (!t.node) {
-		return null;
-	}
-
-	// check for existing player
-	if (typeof t.node.player != 'undefined') {
-		return t.node.player;
-	}
-
-
-	// try to get options from data-mejsoptions
-	if (o === undefined) {
-		o = t.$node.data('mejsoptions');
-	}
-
-	// extend default options
-	t.options = $.extend({}, mejs.MepDefaults, o);
-
-	if (!t.options.timeFormat) {
-		// Generate the time format according to options
-		t.options.timeFormat = 'mm:ss';
-		if (t.options.alwaysShowHours) {
-			t.options.timeFormat = 'hh:mm:ss';
+		// enforce object, even without "new" (via John Resig)
+		if (!(this instanceof mejs.MediaElementPlayer)) {
+			return new MediaElementPlayer(node, o);
 		}
-		if (t.options.showTimecodeFrameCount) {
-			t.options.timeFormat += ':ff';
+
+		let t = this;
+
+		// these will be reset after the MediaElement.success fires
+		t.$media = t.$node = $(node);
+		t.node = t.media = t.$media[0];
+
+		if (!t.node) {
+			return null;
 		}
+
+		// check for existing player
+		if (typeof t.node.player != 'undefined') {
+			return t.node.player;
+		}
+
+
+		// try to get options from data-mejsoptions
+		if (o === undefined) {
+			o = t.$node.data('mejsoptions');
+		}
+
+		// extend default options
+		t.options = $.extend({}, mejs.MepDefaults, o);
+
+		if (!t.options.timeFormat) {
+			// Generate the time format according to options
+			t.options.timeFormat = 'mm:ss';
+			if (t.options.alwaysShowHours) {
+				t.options.timeFormat = 'hh:mm:ss';
+			}
+			if (t.options.showTimecodeFrameCount) {
+				t.options.timeFormat += ':ff';
+			}
+		}
+
+		mejs.Utility.calculateTimeFormat(0, t.options, t.options.framesPerSecond || 25);
+
+		// unique ID
+		t.id = 'mep_' + mejs.mepIndex++;
+
+		// add to player array (for focus events)
+		mejs.players[t.id] = t;
+
+		// start up
+		t.init();
+
+		return t;
 	}
-
-	mejs.Utility.calculateTimeFormat(0, t.options, t.options.framesPerSecond || 25);
-
-	// unique ID
-	t.id = 'mep_' + mejs.mepIndex++;
-
-	// add to player array (for focus events)
-	mejs.players[t.id] = t;
-
-	// start up
-	t.init();
-
-	return t;
-};
+}
 
 /**
  * @constructor
@@ -1426,8 +1425,7 @@ mejs.MediaElementPlayer.prototype = {
 			loading.hide();
 			bigPlay.hide();
 			error.show();
-			error.find('.' + t.options.classPrefix + 'overlay-error')
-			.html("Error loading this resource");
+			error.find('.' + t.options.classPrefix + 'overlay-error').html(e.message);
 		}, false);
 
 		media.addEventListener('keydown', (e) => {
@@ -1647,6 +1645,7 @@ mejs.MediaElementPlayer.prototype = {
 		if (events.d) $(doc).unbind(events.d, callback);
 		if (events.w) $(window).unbind(events.w, callback);
 	};
+
 })();
 
 // turn into jQuery plugin
