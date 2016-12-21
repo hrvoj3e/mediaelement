@@ -167,7 +167,6 @@ const YouTubeApi = {
 
 		let parts = url.split('/');
 		parts[2] = parts[2].replace('.com', '-nocookie.com');
-		console.log(parts.join('/'));
 		return parts.join('/');
 	}
 };

@@ -415,8 +415,8 @@ if (hasFlash) {
 
 		url = url.toLowerCase();
 
-		if (url.startsWith('rtmp://')) {
-			if (url.indexOf('.mp3') > -1) {
+		if (url.startsWith('rtmp')) {
+			if (url.includes('.mp3')) {
 				return 'audio/rtmp';
 			} else {
 				return 'video/rtmp';

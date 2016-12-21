@@ -275,7 +275,8 @@ const FacebookRenderer = {
 						let fbEvents = ['startedPlaying', 'paused', 'finishedPlaying', 'startedBuffering', 'finishedBuffering'];
 						for (i = 0, il = fbEvents.length; i < il; i++) {
 							let event = fbEvents[i], handler = eventHandler[event];
-							if (!isObjectEmpty(handler) && typeof handler.removeListener === 'function') {
+							if (handler !== undefined && handler !== null &&
+								!isObjectEmpty(handler) && typeof handler.removeListener === 'function') {
 								handler.removeListener(event);
 							}
 						}
