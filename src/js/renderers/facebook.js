@@ -236,7 +236,7 @@ const FacebookRenderer = {
 
 			src = url;
 
-			fbDiv = doc.createElement('div');
+			fbDiv = document.createElement('div');
 			fbDiv.id = fbWrapper.id;
 			fbDiv.className = "fb-video";
 			fbDiv.setAttribute("data-href", url);

@@ -49,8 +49,8 @@ const SoundCloudApi = {
 	loadIframeApi: () => {
 		if (!SoundCloudApi.isSDKStarted) {
 
-			let head = doc.getElementsByTagName("head")[0] || document.documentElement,
-				script = doc.createElement("script"),
+			let head = document.getElementsByTagName("head")[0] || document.documentElement,
+				script = document.createElement("script"),
 				done = false;
 
 			script.src = 'https://w.soundcloud.com/player/api.js';
@@ -375,7 +375,7 @@ const SoundCloudIframeRenderer = {
 		};
 
 		// container for API API
-		scIframe = doc.createElement('iframe');
+		scIframe = document.createElement('iframe');
 		scIframe.id = sc.id;
 		scIframe.width = 10;
 		scIframe.height = 10;

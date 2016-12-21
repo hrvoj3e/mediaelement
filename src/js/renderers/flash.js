@@ -299,7 +299,7 @@ const FlashMediaElementRenderer = {
 		let settings = [];
 
 		if (IS_IE) {
-			let specialIEContainer = doc.createElement('div');
+			let specialIEContainer = document.createElement('div');
 			flash.flashWrapper.appendChild(specialIEContainer);
 
 			settings = [
