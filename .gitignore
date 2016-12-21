@@ -17,3 +17,4 @@ media/*
 src/flash/flex_sdk_*
 coverage
 npm-debug.log
+tmp

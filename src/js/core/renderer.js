@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 /**
- * Handle workflow when player looks for proper render to play current media.
  *
+ * Class to manage renderer selection and addition.
  * @class Renderer
  */
 class Renderer {
@@ -10,32 +10,6 @@ class Renderer {
 	constructor () {
 		this.renderers = {};
 		this.order = [];
-	}
-
-	set order(order) {
-
-		if (!Array.isArray(order)) {
-			throw new Error('order must be an array of strings.');
-		}
-
-		this._order = order;
-	}
-
-	set renderers(renderers) {
-
-		if (renderers !== null && typeof renderers !== 'object') {
-			throw new Error('renderers must be an array of objects.');
-		}
-
-		this._renderers = renderers;
-	}
-
-	get renderers() {
-		return this._renderers;
-	}
-
-	get order() {
-		return this._order;
 	}
 
 	/**
@@ -63,14 +37,12 @@ class Renderer {
 	 * @method select
 	 */
 	select (mediaFiles, renderers = []) {
-		let
-			t = this,
-			renderer,
-			rendererList = renderers.length ? renderers : t.order
-		;
 
-		for (let index of rendererList) {
-			renderer = t.renderers[index];
+		renderers = renderers.length ? renderers: this.order;
+
+		for (let key of renderers) {
+
+			let renderer = this.renderers[key];
 
 			if (renderer !== null && renderer !== undefined) {
 
@@ -87,6 +59,34 @@ class Renderer {
 		}
 
 		return null;
+	}
+
+	// Setters/getters
+
+	set order(order) {
+
+		if (!Array.isArray(order)) {
+			throw new Error('order must be an array of strings.');
+		}
+
+		this._order = order;
+	}
+
+	set renderers(renderers) {
+
+		if (renderers !== null && typeof renderers !== 'object') {
+			throw new Error('renderers must be an array of objects.');
+		}
+
+		this._renderers = renderers;
+	}
+
+	get renderers() {
+		return this._renderers;
+	}
+
+	get order() {
+		return this._order;
 	}
 }
 

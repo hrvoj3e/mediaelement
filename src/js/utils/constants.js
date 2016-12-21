@@ -84,34 +84,34 @@ if (hasTrueNativeFullScreen) {
 	} else if (hasMozNativeFullScreen) {
 		fullScreenEventName = 'mozfullscreenchange';
 
-	} else if (this.hasMsNativeFullScreen) {
+	} else if (hasMsNativeFullScreen) {
 		fullScreenEventName = 'MSFullscreenChange';
 	}
 
 	isFullScreen = (() =>  {
-		if (this.hasMozNativeFullScreen) {
+		if (hasMozNativeFullScreen) {
 			return document.mozFullScreen;
 
-		} else if (this.hasWebkitNativeFullScreen) {
+		} else if (hasWebkitNativeFullScreen) {
 			return document.webkitIsFullScreen;
 
-		} else if (this.hasMsNativeFullScreen) {
+		} else if (hasMsNativeFullScreen) {
 			return document.msFullscreenElement !== null;
 		}
 	})();
 
-	requestFullScreen = ((el) => {
+	requestFullScreen = (el) => {
 
-		if (this.hasWebkitNativeFullScreen) {
+		if (hasWebkitNativeFullScreen) {
 			el.webkitRequestFullScreen();
-		} else if (this.hasMozNativeFullScreen) {
+		} else if (hasMozNativeFullScreen) {
 			el.mozRequestFullScreen();
-		} else if (this.hasMsNativeFullScreen) {
+		} else if (hasMsNativeFullScreen) {
 			el.msRequestFullscreen();
 		}
-	})();
+	};
 
-	cancelFullScreen = (() => {
+	cancelFullScreen = () => {
 		if (hasWebkitNativeFullScreen) {
 			document.webkitCancelFullScreen();
 
@@ -122,17 +122,17 @@ if (hasTrueNativeFullScreen) {
 			document.msExitFullscreen();
 
 		}
-	})();
+	};
 }
 
 export const HAS_WEBKIT_NATIVE_FULLSCREEN = hasWebkitNativeFullScreen;
 export const HAS_MOZ_NATIVE_FULLSCREEN = hasMozNativeFullScreen;
 export const HAS_MS_NATIVE_FULLSCREEN = hasMsNativeFullScreen;
+export const HAS_IOS_FULLSCREEN = hasiOSFullScreen;
 
 export const HAS_TRUE_NATIVE_FULLSCREEN = hasTrueNativeFullScreen;
 export const NATIVE_FULLSCREEN_ENABLED = nativeFullScreenEnabled;
 
 export const FULLSCREEN_EVENT_NAME = fullScreenEventName;
 export const IS_FULLSCREEN = isFullScreen;
-export const REQUEST_FULLSCREEN = requestFullScreen;
-export const CANCEL_FULLSCREEN = cancelFullScreen;
+export {requestFullScreen, cancelFullScreen};

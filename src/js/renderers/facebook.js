@@ -21,7 +21,7 @@
 		}
 	});
 
-	var FacebookRenderer = {
+	let FacebookRenderer = {
 		name: 'facebook',
 
 		options: {
@@ -40,7 +40,7 @@
 		 * @return {Boolean}
 		 */
 		canPlayType: function (type) {
-			var mediaTypes = ['video/facebook', 'video/x-facebook'];
+			let mediaTypes = ['video/facebook', 'video/x-facebook'];
 
 			return mediaTypes.indexOf(type) > -1;
 		},
@@ -77,12 +77,12 @@
 				props = mejs.html5media.properties,
 				assignGettersSetters = function (propName) {
 
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					fbWrapper['get' + capName] = function () {
 
 						if (fbApi !== null) {
-							var value = null;
+							let value = null;
 
 							// figure out how to get youtube dta here
 							switch (propName) {
@@ -131,7 +131,7 @@
 							switch (propName) {
 
 								case 'src':
-									var url = typeof value === 'string' ? value : value[0].src;
+									let url = typeof value === 'string' ? value : value[0].src;
 
 									// Only way is to destroy instance and all the events fired,
 									// and create new one
@@ -154,7 +154,7 @@
 										fbApi.unmute();
 									}
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', fbWrapper);
+										let event = mejs.Utils.createEvent('volumechange', fbWrapper);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -162,7 +162,7 @@
 								case 'volume':
 									fbApi.setVolume(value);
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', fbWrapper);
+										let event = mejs.Utils.createEvent('volumechange', fbWrapper);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -223,8 +223,8 @@
 			 * @param {Array} events
 			 */
 			function sendEvents(events) {
-				for (var i = 0, il = events.length; i < il; i++) {
-					var event = mejs.Utils.createEvent(events[i], fbWrapper);
+				for (let i = 0, il = events.length; i < il; i++) {
+					let event = mejs.Utils.createEvent(events[i], fbWrapper);
 					mediaElement.dispatchEvent(event);
 				}
 			}
@@ -279,21 +279,21 @@
 							sendEvents(['mouseover', 'mouseout']);
 
 							// remove previous listeners
-							var fbEvents = ['startedPlaying', 'paused', 'finishedPlaying', 'startedBuffering', 'finishedBuffering'];
+							let fbEvents = ['startedPlaying', 'paused', 'finishedPlaying', 'startedBuffering', 'finishedBuffering'];
 							for (i = 0, il = fbEvents.length; i < il; i++) {
-								var event = fbEvents[i], handler = eventHandler[event];
+								let event = fbEvents[i], handler = eventHandler[event];
 								if (!mejs.Utility.isObjectEmpty(handler) && typeof handler.removeListener === 'function') {
 									handler.removeListener(event);
 								}
 							}
 
 							// do call stack
-							for (var i = 0, il = apiStack.length; i < il; i++) {
+							for (let i = 0, il = apiStack.length; i < il; i++) {
 
-								var stackItem = apiStack[i];
+								let stackItem = apiStack[i];
 
 								if (stackItem.type === 'set') {
-									var propName = stackItem.propName,
+									let propName = stackItem.propName,
 										capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 									fbWrapper['set' + capName](stackItem.value);
@@ -305,7 +305,7 @@
 							sendEvents(['rendererready', 'ready', 'loadeddata', 'canplay', 'progress']);
 							sendEvents(['loadedmetadata', 'timeupdate', 'progress']);
 
-							var timer;
+							let timer;
 
 							// Custom Facebook events
 							eventHandler.startedPlaying = fbApi.subscribe('startedPlaying', function () {
@@ -353,7 +353,7 @@
 				};
 
 				(function (d, s, id) {
-					var js, fjs = d.getElementsByTagName(s)[0];
+					let js, fjs = d.getElementsByTagName(s)[0];
 					if (d.getElementById(id)) {
 						return;
 					}
@@ -393,7 +393,7 @@
 			fbWrapper.startInterval = function () {
 				// create timer
 				fbWrapper.interval = setInterval(function () {
-					var event = mejs.Utils.createEvent('timeupdate', fbWrapper);
+					let event = mejs.Utils.createEvent('timeupdate', fbWrapper);
 					mediaElement.dispatchEvent(event);
 				}, 250);
 			};

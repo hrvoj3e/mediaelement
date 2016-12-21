@@ -25,7 +25,7 @@
 		}
 	});
 
-	var NativeFlv = {
+	let NativeFlv = {
 		/**
 		 * @type {Boolean}
 		 */
@@ -90,7 +90,7 @@
 			this.isMediaLoaded = true;
 
 			while (this.creationQueue.length > 0) {
-				var settings = this.creationQueue.pop();
+				let settings = this.creationQueue.pop();
 				this.createInstance(settings);
 			}
 		},
@@ -101,12 +101,12 @@
 		 * @param {Object} settings - an object with settings needed to instantiate FLV object
 		 */
 		createInstance: function (settings) {
-			var player = flvjs.createPlayer(settings.options);
+			let player = flvjs.createPlayer(settings.options);
 			win['__ready__' + settings.id](player);
 		}
 	};
 
-	var FlvNativeRenderer = {
+	let FlvNativeRenderer = {
 		name: 'native_flv',
 
 		options: {
@@ -143,7 +143,7 @@
 		 */
 		canPlayType: function (type) {
 
-			var mediaTypes = ['video/x-flv', 'video/flv'];
+			let mediaTypes = ['video/x-flv', 'video/flv'];
 
 			return mejs.MediaFeatures.hasMse && mediaTypes.indexOf(type) > -1;
 		},
@@ -174,7 +174,7 @@
 			var
 				props = mejs.html5media.properties,
 				assignGettersSetters = function (propName) {
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					node['get' + capName] = function () {
 						if (flvPlayer !== null) {
@@ -213,10 +213,10 @@
 				// do call stack
 				for (i = 0, il = stack.length; i < il; i++) {
 
-					var stackItem = stack[i];
+					let stackItem = stack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						node['set' + capName](stackItem.value);
@@ -239,7 +239,7 @@
 
 						node.addEventListener(eventName, function (e) {
 							// copy event
-							var event = doc.createEvent('HTMLEvents');
+							let event = doc.createEvent('HTMLEvents');
 							event.initEvent(e.type, e.bubbles, e.cancelable);
 							event.srcElement = e.srcElement;
 							event.target = e.srcElement;
@@ -257,9 +257,9 @@
 				}
 			};
 
-			var filteredAttributes = ['id', 'src', 'style'];
-			for (var j = 0, total = originalNode.attributes.length; j < total; j++) {
-				var attribute = originalNode.attributes[j];
+			let filteredAttributes = ['id', 'src', 'style'];
+			for (let j = 0, total = originalNode.attributes.length; j < total; j++) {
+				let attribute = originalNode.attributes[j];
 				if (attribute.specified && filteredAttributes.indexOf(attribute.name) === -1) {
 					node.setAttribute(attribute.name, attribute.value);
 				}
@@ -313,7 +313,7 @@
 				flvPlayer.destroy();
 			};
 
-			var event = mejs.Utils.createEvent('rendererready', node);
+			let event = mejs.Utils.createEvent('rendererready', node);
 			mediaElement.dispatchEvent(event);
 
 			return node;

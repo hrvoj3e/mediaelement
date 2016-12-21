@@ -44,7 +44,7 @@
 		 */
 		buildvast: function(player, controls, layers, media) {
 
-			var t = this;	
+			let t = this;
 			
 			// begin loading
 			if (t.options.vastAdTagUrl !== '') {
@@ -58,7 +58,7 @@
 		},
 	
 		vastSetupEvents: function() {
-			var t = this;
+			let t = this;
 			
 			
 			// START: preroll
@@ -66,7 +66,7 @@
 
 				if (t.vastAdTags.length > 0) {
 				
-					var adTag = t.vastAdTags[0];
+					let adTag = t.vastAdTags[0];
 					
 					// always fire this event
 					if (adTag.trackingEvents.start) {
@@ -76,7 +76,7 @@
 					// only do impressions once
 					if (!adTag.shown && adTag.impressions.length > 0) {
 						
-						for (var i=0, il=adTag.impressions.length; i<il; i++) {
+						for (let i=0, il=adTag.impressions.length; i<il; i++) {
 							t.adsLoadUrl(adTag.impressions[i]);
 						}
 					}
@@ -104,7 +104,7 @@
 		 */
 		vastSetAdTagUrl: function(url) {
 		
-			var t = this;		
+			let t = this;
 		
 			// set and reset
 			t.options.vastAdTagUrl = url;
@@ -117,7 +117,7 @@
 		 *
 		 */
 		vastLoadAdTagInfo: function() {
-			var t = this;
+			let t = this;
 			
 			// set this to stop playback
 			t.adsDataIsLoading = true;
@@ -131,7 +131,7 @@
 		 *
 		 */
 		loadAdTagInfoDirect: function() {
-			var t = this;
+			let t = this;
 			
 			$.ajax({
 				url: t.options.vastAdTagUrl,
@@ -152,7 +152,7 @@
 		 *
 		 */
 		loadAdTagInfoProxy: function() {
-			var t = this,
+			let t = this,
 				protocol = location.protocol,
 				hostname = location.hostname,
 				query = 'select * from xml where url="' + encodeURI(t.options.vastAdTagUrl) +'"',
@@ -178,7 +178,7 @@
 		 */
 		vastParseVastData: function(data) {
 			
-			var t = this;
+			let t = this;
 			
 			
 			// clear out data
@@ -187,7 +187,7 @@
 			
 			$(data).find('Ad').each(function(index, node) {
 					
-				var 
+				let
 					adNode = $(node),
 					
 					adTag = {					
@@ -212,7 +212,7 @@
 				});	
 				
 				adNode.find('Tracking').each(function(index, node) {
-					var trackingEvent = $(node);
+					let trackingEvent = $(node);
 				
 					adTag.trackingEvents[trackingEvent.attr('event')] = $.trim( trackingEvent.text() );
 					
@@ -220,7 +220,7 @@
 				
 		
 				adNode.find('MediaFile').each(function(index, node) {
-					var mediaFile = $(node),
+					let mediaFile = $(node),
 						type = mediaFile.attr('type');
 						
 					if (t.media.canPlayType(type).toString().replace(/no/,'').replace(/false/,'') !== '') {
@@ -247,7 +247,7 @@
 		 *
 		 */
 		vastLoaded: function() {
-			var t = this;
+			let t = this;
 			
 			t.vastAdTagIsLoaded = true;
 			t.vastAdTagIsLoading = false;
@@ -260,12 +260,12 @@
 		 *
 		 */
 		vastStartPreroll: function() {
-			var t = this;
+			let t = this;
 				
 			// if we have a media URL, then send it up to the ads plugin as a preroll
 			// load up the vast ads to be played before the selected media.
 			// Note: multiple preroll ads are supported.
-			var i = 0;
+			let i = 0;
 			while (i < t.vastAdTags.length) {
 				t.options.adsPrerollMediaUrl[i] = t.vastAdTags[i].mediaFiles[0].url;
 				t.options.adsPrerollAdUrl[i] = t.vastAdTags[i].clickThrough;

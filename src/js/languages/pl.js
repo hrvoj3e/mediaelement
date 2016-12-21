@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*!
  * This is a i18n.locale language object.

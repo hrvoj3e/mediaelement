@@ -37,10 +37,10 @@ function getElementsByClassName(className, node, tag) {
 		tag = '*';
 	}
 
-	var classElements = [];
-	var j = 0, teststr;
-	var els = node.getElementsByTagName(tag);
-	var elsLen = els.length;
+	let classElements = [];
+	let j = 0, teststr;
+	let els = node.getElementsByTagName(tag);
+	let elsLen = els.length;
 
 	for (i = 0; i < elsLen; i++) {
 		if (els[i].className.indexOf(class_name) != -1) {
@@ -55,7 +55,7 @@ function getElementsByClassName(className, node, tag) {
 }
 
 function getMousePosition(e) {
-	var x = 0,
+	let x = 0,
 		y = 0;
 
 	if (!e) e = window.event;
@@ -73,7 +73,7 @@ function getMousePosition(e) {
 }
 
 function getNodePosition(obj) {
-	var curleft = 0,
+	let curleft = 0,
 		curtop = 0;
 
 	if (obj.offsetParent) {
@@ -87,7 +87,7 @@ function getNodePosition(obj) {
 }
 
 function getStyle(idOrObj, styleProp) {
-	var obj = typeof idOrObj === 'string' ? document.getElementById(id) : idOrObj,
+	let obj = typeof idOrObj === 'string' ? document.getElementById(id) : idOrObj,
 		val;
 	if (obj.currentStyle) {
 		val = obj.currentStyle[styleProp];
@@ -99,7 +99,7 @@ function getStyle(idOrObj, styleProp) {
 
 
 // Fade effect from scriptiny.com
-var fadeEffect = {
+let fadeEffect = {
 	init:function(id, flag, target){
 		this.elem = doc.getElementById(id);
 		clearInterval(this.elem.si);
@@ -112,7 +112,7 @@ var fadeEffect = {
 		if (this.alpha == this.target) {
 			clearInterval(this.elem.si);
 		} else {
-			var value = Math.round(this.alpha + ((this.target - this.alpha) * 0.05)) + (1 * this.flag);
+			let value = Math.round(this.alpha + ((this.target - this.alpha) * 0.05)) + (1 * this.flag);
 			this.elem.style.opacity = value / 100;
 			this.elem.style.filter = 'alpha(opacity=' + value + ')';
 			this.alpha = value;
@@ -134,7 +134,7 @@ mejs.MediaElementPlayerSimpleDefaults = {
 
 function MediaElementPlayerSimple(idOrObj, options) {
 
-	var original = typeof(idOrObj) === 'string' ? doc.getElementById(idOrObj) : idOrObj,
+	let original = typeof(idOrObj) === 'string' ? doc.getElementById(idOrObj) : idOrObj,
 
 		id = original && original.id ? original.id : 'mejs_' + mejs.id++,
 
@@ -261,7 +261,7 @@ MediaElementPlayerSimple.prototype = {
 			}
 		}
 
-		var controlsTimeout = null;
+		let controlsTimeout = null;
 
 		function startControlsTimeout() {
 			clearControlsTimeout();
@@ -298,8 +298,8 @@ MediaElementPlayerSimple.prototype = {
 			combinedControlsWidth = 0,
 			controlsBoundaryWidth = controls.offsetWidth;
 
-		for (var i=0, il=controls.childNodes.length; i<il; i++) {
-			var control = controls.childNodes[i], horizontalSize;
+		for (let i=0, il=controls.childNodes.length; i<il; i++) {
+			let control = controls.childNodes[i], horizontalSize;
 
 			if (control.className.indexOf('ui-time-total') > -1) {
 				progress = control;
@@ -369,7 +369,7 @@ MediaElementPlayerSimple.prototype = {
 	},
 
 	createMute: function(mediaElement, controls) {
-		var uiMuteBtn = doc.createElement('input');
+		let uiMuteBtn = doc.createElement('input');
 
 		uiMuteBtn.className = 'ui-button ui-button-unmuted';
 		uiMuteBtn.type = 'button';
@@ -389,7 +389,7 @@ MediaElementPlayerSimple.prototype = {
 	},
 
 	createCurrentTime: function(mediaElement, controls) {
-		var uiCurrentTime = doc.createElement('span');
+		let uiCurrentTime = doc.createElement('span');
 
 		uiCurrentTime.className = 'ui-time';
 		uiCurrentTime.innerHTML = '00:00';
@@ -397,7 +397,7 @@ MediaElementPlayerSimple.prototype = {
 
 		mediaElement.addEventListener('timeupdate', function() {
 
-			var currentTime = mediaElement.currentTime;
+			let currentTime = mediaElement.currentTime;
 			if (!isNaN(currentTime)) {
 				uiCurrentTime.innerHTML = mejs.Utils.secondsToTimeCode(currentTime);
 			}
@@ -410,7 +410,7 @@ MediaElementPlayerSimple.prototype = {
 	},
 
 	createProgress: function(mediaElement, controls) {
-		var uiTimeBarTotal = doc.createElement('div'),
+		let uiTimeBarTotal = doc.createElement('div'),
 			uiTimeBarLoaded = doc.createElement('div'),
 			uiTimeBarCurrent = doc.createElement('div');
 
@@ -425,7 +425,7 @@ MediaElementPlayerSimple.prototype = {
 		uiTimeBarTotal.appendChild(uiTimeBarCurrent);
 
 		mediaElement.addEventListener('timeupdate', function() {
-			var outsideWidth = uiTimeBarTotal.offsetWidth,
+			let outsideWidth = uiTimeBarTotal.offsetWidth,
 				percent = mediaElement.currentTime / mediaElement.duration;
 
 			uiTimeBarCurrent.style.width = (outsideWidth * percent) + 'px';
@@ -441,7 +441,7 @@ MediaElementPlayerSimple.prototype = {
 
 		mediaElement.addEventListener('progress', function() {
 
-			var buffered = mediaElement.buffered,
+			let buffered = mediaElement.buffered,
 				duration = mediaElement.duration,
 				outsideWidth = uiTimeBarTotal.offsetWidth,
 				percent = 0;
@@ -480,14 +480,14 @@ MediaElementPlayerSimple.prototype = {
 	},
 
 	createDuration: function(mediaElement, controls) {
-		var uiDuration = doc.createElement('span');
+		let uiDuration = doc.createElement('span');
 
 		uiDuration.className = 'ui-time';
 		uiDuration.innerHTML = '00:00';
 		controls.appendChild(uiDuration);
 
 		function setDuration() {
-			var duration = mediaElement.duration;
+			let duration = mediaElement.duration;
 			if (isNaN(duration) || duration == Infinity) {
 				duration = 0;
 			}
@@ -503,7 +503,7 @@ MediaElementPlayerSimple.prototype = {
 		if (!this.isVideo)
 			return;
 
-		var t = this,
+		let t = this,
 			uiFullscreenBtn = doc.createElement('input'),
 			isFullscreen = false,
 			container = t.container,

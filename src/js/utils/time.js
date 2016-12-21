@@ -97,7 +97,7 @@ export function calculateTimeFormat (time, options, fps = 25) {
 		required = false,
 		format = options.timeFormat,
 		firstChar = format[0],
-		firstTwoPlaces = (format[1] == format[0]),
+		firstTwoPlaces = (format[1] === format[0]),
 		separatorIndex = firstTwoPlaces ? 2 : 1,
 		separator = format.length < separatorIndex ? format[separatorIndex] : ':',
 		hours = Math.floor(time / 3600) % 24,
@@ -113,7 +113,7 @@ export function calculateTimeFormat (time, options, fps = 25) {
 		;
 
 	for (let i = 0, len = lis.length; i < len; i++) {
-		if (format.indexOf(lis[i][1]) !== -1) {
+		if (format.indexOf(lis[i][1]) > -1) {
 			required = true;
 		}
 		else if (required) {
@@ -159,13 +159,13 @@ export function convertSMPTEtoSeconds (SMPTE) {
 
 	let
 		secs = 0,
-		decimalLen = (SMPTE.indexOf('.') != -1) ? SMPTE.split('.')[1].length : 0,
+		decimalLen = (SMPTE.indexOf('.') > -1) ? SMPTE.split('.')[1].length : 0,
 		multiplier = 1
 		;
 
 	SMPTE = SMPTE.split(':').reverse();
 
-	for (var i = 0; i < SMPTE.length; i++) {
+	for (let i = 0; i < SMPTE.length; i++) {
 		multiplier = 1;
 		if (i > 0) {
 			multiplier = Math.pow(60, i);

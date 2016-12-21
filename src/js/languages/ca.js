@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*!
  * This is a i18n.locale language object.
@@ -56,7 +56,7 @@ export const CA = {
 	// mediaelementplayer-feature-volume
 	"mejs.mute-toggle": "Alternar silenci",
 	// "mejs.volume-help-text": "Use Up/Down Arrow keys to increase or decrease volume.",
-	"mejs.unmute": "Reactivar silenci",
+	"mejs.unmute": "Reactilet silenci",
 	"mejs.mute": "Silenci",
 	// "mejs.volume-slider": "Volume Slider",
 

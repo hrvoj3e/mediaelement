@@ -33,10 +33,10 @@
 		 * @return {Boolean}
 		 */
 		hasPluginVersion: function (plugin, v) {
-			var pv = this.plugins[plugin];
+			let pv = this.plugins[plugin];
 			v[1] = v[1] || 0;
 			v[2] = v[2] || 0;
-			return (pv[0] > v[0] || (pv[0] == v[0] && pv[1] > v[1]) || (pv[0] == v[0] && pv[1] == v[1] && pv[2] >= v[2]));
+			return (pv[0] > v[0] || (pv[0] === v[0] && pv[1] > v[1]) || (pv[0] === v[0] && pv[1] === v[1] && pv[2] >= v[2]));
 		},
 
 		/**
@@ -64,7 +64,7 @@
 		 */
 		detectPlugin: function (pluginName, mimeType, activeX, axDetect) {
 
-			var version = [0, 0, 0],
+			let version = [0, 0, 0],
 				description,
 				i,
 				ax;
@@ -72,7 +72,7 @@
 			// Firefox, Webkit, Opera
 			if (typeof(this.nav.plugins) !== 'undefined' && typeof this.nav.plugins[pluginName] === 'object') {
 				description = this.nav.plugins[pluginName].description;
-				if (description && !(typeof this.nav.mimeTypes != 'undefined' && this.nav.mimeTypes[mimeType] && !this.nav.mimeTypes[mimeType].enabledPlugin)) {
+				if (description && !(typeof this.nav.mimeTypes !== 'undefined' && this.nav.mimeTypes[mimeType] && !this.nav.mimeTypes[mimeType].enabledPlugin)) {
 					version = description.replace(pluginName, '').replace(/^\s+/, '').replace(/\sr/gi, '.').split('.');
 					for (i = 0; i < version.length; i++) {
 						version[i] = parseInt(version[i].match(/\d+/), 10);
@@ -99,7 +99,7 @@
 	 */
 	mejs.PluginDetector.addPlugin('flash', 'Shockwave Flash', 'application/x-shockwave-flash', 'ShockwaveFlash.ShockwaveFlash', function (ax) {
 		// adapted from SWFObject
-		var version = [],
+		let version = [],
 			d = ax.GetVariable("$version");
 		if (d) {
 			d = d.split(" ")[1].split(",");
@@ -108,7 +108,7 @@
 		return version;
 	});
 
-	var FlashMediaElementRenderer = {
+	let FlashMediaElementRenderer = {
 
 		/**
 		 * Create the player instance and add all native events/methods/properties as possible
@@ -120,7 +120,7 @@
 		 */
 		create: function (mediaElement, options, mediaFiles) {
 
-			var flash = {},
+			let flash = {},
 				i,
 				il;
 
@@ -142,14 +142,14 @@
 					// add to flash state that we will store
 					flash.flashState[propName] = null;
 
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					flash['get' + capName] = function () {
 
 						if (flash.flashApi !== null) {
 
 							if (flash.flashApi['get_' + propName] !== undefined) {
-								var value = flash.flashApi['get_' + propName]();
+								let value = flash.flashApi['get_' + propName]();
 
 								// special case for buffered to conform to HTML5's newest
 								if (propName === 'buffered') {
@@ -241,16 +241,16 @@
 				flash.flashReady = true;
 				flash.flashApi = document.getElementById('__' + flash.id);
 
-				var event = mejs.Utils.createEvent('rendererready', flash);
+				let event = mejs.Utils.createEvent('rendererready', flash);
 				mediaElement.dispatchEvent(event);
 
 				// do call stack
-				for (var i = 0, il = flash.flashApiStack.length; i < il; i++) {
+				for (let i = 0, il = flash.flashApiStack.length; i < il; i++) {
 
-					var stackItem = flash.flashApiStack[i];
+					let stackItem = flash.flashApiStack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						flash['set' + capName](stackItem.value);
@@ -262,7 +262,7 @@
 
 			win['__event__' + flash.id] = function (eventName, message) {
 
-				var event = mejs.Utils.createEvent(eventName, flash);
+				let event = mejs.Utils.createEvent(eventName, flash);
 				event.message = message || '';
 
 				// send event from Flash up to the mediaElement
@@ -290,10 +290,10 @@
 				mediaElement.originalNode.style.display = 'none';
 			}
 
-			var settings = [];
+			let settings = [];
 
 			if (mejs.Features.isIE) {
-				var specialIEContainer = doc.createElement('div');
+				let specialIEContainer = doc.createElement('div');
 				flash.flashWrapper.appendChild(specialIEContainer);
 
 				settings = [
@@ -397,7 +397,7 @@
 		}
 	};
 
-	var hasFlash = mejs.PluginDetector.hasPluginVersion('flash', [10, 0, 0]);
+	let hasFlash = mejs.PluginDetector.hasPluginVersion('flash', [10, 0, 0]);
 
 	if (hasFlash) {
 
@@ -427,7 +427,7 @@
 		});
 
 		// VIDEO
-		var FlashMediaElementVideoRenderer = {
+		let FlashMediaElementVideoRenderer = {
 			name: 'flash_video',
 
 			options: {
@@ -446,7 +446,7 @@
 			 * @return {Boolean}
 			 */
 			canPlayType: function (type) {
-				var supportedMediaTypes = ['video/mp4', 'video/flv', 'video/rtmp', 'audio/rtmp', 'rtmp/mp4', 'audio/mp4'];
+				let supportedMediaTypes = ['video/mp4', 'video/flv', 'video/rtmp', 'audio/rtmp', 'rtmp/mp4', 'audio/mp4'];
 
 				return (hasFlash && supportedMediaTypes.indexOf(type) > -1);
 			},
@@ -457,7 +457,7 @@
 		mejs.Renderers.add(FlashMediaElementVideoRenderer);
 
 		// HLS
-		var FlashMediaElementHlsVideoRenderer = {
+		let FlashMediaElementHlsVideoRenderer = {
 			name: 'flash_hls',
 
 			options: {
@@ -471,7 +471,7 @@
 			 * @return {Boolean}
 			 */
 			canPlayType: function (type) {
-				var supportedMediaTypes = ['audio/hls', 'video/hls', 'application/x-mpegURL',
+				let supportedMediaTypes = ['audio/hls', 'video/hls', 'application/x-mpegURL',
 					'application/x-mpegurl', 'vnd.apple.mpegURL'];
 
 				return (supportedMediaTypes.indexOf(type) > -1);
@@ -482,7 +482,7 @@
 		mejs.Renderers.add(FlashMediaElementHlsVideoRenderer);
 
 		// M(PEG)-DASH
-		var FlashMediaElementMdashVideoRenderer = {
+		let FlashMediaElementMdashVideoRenderer = {
 			name: 'flash_mdash',
 
 			options: {
@@ -496,7 +496,7 @@
 			 * @return {Boolean}
 			 */
 			canPlayType: function (type) {
-				var supportedMediaTypes = ['application/dash+xml'];
+				let supportedMediaTypes = ['application/dash+xml'];
 
 				return (hasFlash && supportedMediaTypes.indexOf(type) > -1);
 			},
@@ -506,7 +506,7 @@
 		mejs.Renderers.add(FlashMediaElementMdashVideoRenderer);
 
 		// AUDIO
-		var FlashMediaElementAudioRenderer = {
+		let FlashMediaElementAudioRenderer = {
 			name: 'flash_audio',
 
 			options: {
@@ -520,7 +520,7 @@
 			 * @return {Boolean}
 			 */
 			canPlayType: function (type) {
-				var supportedMediaTypes = ['audio/mp3'];
+				let supportedMediaTypes = ['audio/mp3'];
 
 				return (hasFlash && supportedMediaTypes.indexOf(type) > -1);
 			},
@@ -530,7 +530,7 @@
 		mejs.Renderers.add(FlashMediaElementAudioRenderer);
 
 		// AUDIO - ogg
-		var FlashMediaElementAudioOggRenderer = {
+		let FlashMediaElementAudioOggRenderer = {
 			name: 'flash_audio_ogg',
 
 			options: {
@@ -544,7 +544,7 @@
 			 * @return {Boolean}
 			 */
 			canPlayType: function (type) {
-				var supportedMediaTypes = ['audio/ogg', 'audio/oga', 'audio/ogv'];
+				let supportedMediaTypes = ['audio/ogg', 'audio/oga', 'audio/ogv'];
 
 				return (hasFlash && supportedMediaTypes.indexOf(type) > -1);
 			},

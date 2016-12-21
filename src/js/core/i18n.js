@@ -1,13 +1,19 @@
-'use strict';
+"use strict";
 
 import mejs from './mejs';
 import {EN as en} from '../languages/en';
-import * as Utils from '../utils/general';
-
-let i18n = {};
+import {escapeHTML, isObjectEmpty} from '../utils/general';
 
 /**
- * Setter/getter
+ * Locale.
+ *
+ * This object manages translations with pluralization. Also deals with WordPress compatibility.
+ * @type {Object}
+ */
+let i18n = {lang: 'en', en: en};
+
+/**
+ * Language setter/getter
  *
  * @param {*} args  Can pass the language code and/or the translation strings as an Object
  * @return {string}
@@ -27,11 +33,11 @@ i18n.language = (...args) => {
 		args[1] = args[1] !== null && typeof args[1] === 'object' ? args[1] : {};
 
 		i18n.lang = args[0];
-		i18n[args[0]] = !Utils.isObjectEmpty(args[1]) ? args[1] : en;
+		i18n[args[0]] = !isObjectEmpty(args[1]) ? args[1] : en;
 		return i18n.lang;
 	}
 
-	return i18n.lang || 'en';
+	return i18n.lang;
 };
 
 /**
@@ -341,7 +347,7 @@ i18n.t = (message, pluralParam) => {
 			str = str.replace('%1', pluralParam);
 		}
 
-		return Utils.escapeHTML(str);
+		return escapeHTML(str);
 
 	}
 
@@ -350,10 +356,9 @@ i18n.t = (message, pluralParam) => {
 
 mejs.i18n = i18n;
 
-// i18n fixes for compatibility with WordPress
+// `i18n` compatibility workflow with WordPress
 if (typeof mejsL10n !== 'undefined') {
-	mejs.i18n.lang = mejsL10n.language;
-	mejs.i18n[mejsL10n.lang] = mejsL10n.strings;
+	mejs.i18n.language(mejsL10n.language, mejsL10n.strings);
 }
 
 export default i18n;

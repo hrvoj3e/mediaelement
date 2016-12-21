@@ -1,3 +1,5 @@
+import document from 'global/document';
+
 export function addProperty (obj, name, onGet, onSet) {
 
 	// wrapper functions
@@ -57,7 +59,9 @@ export function debounce (func, wait, immediate = false) {
 		let context = this, args = arguments;
 		let later = function () {
 			timeout = null;
-			if (!immediate) func.apply(context, args);
+			if (!immediate) {
+				func.apply(context, args);
+			}
 		};
 		let callNow = immediate && !timeout;
 		clearTimeout(timeout);
@@ -79,3 +83,43 @@ export function debounce (func, wait, immediate = false) {
 export function isObjectEmpty (instance) {
 	return ((Object.getOwnPropertyNames(instance).length > 0) ? false : true);
 }
+
+/**
+ *
+ * @param {String} className
+ * @param {HTMLElement} node
+ * @param {String} tag
+ * @return {HTMLElement[]}
+ */
+mejs.getElementsByClassName = (className, node, tag) => {
+
+	if (node === undefined || node === null) {
+		node = document;
+	}
+	if (node.getElementsByClassName !== undefined && node.getElementsByClassName !== null) {
+		return node.getElementsByClassName(className);
+	}
+	if (tag === undefined || tag === null) {
+		tag = '*';
+	}
+
+	let
+		classElements = [],
+		j = 0,
+		teststr,
+		els = node.getElementsByTagName(tag),
+		elsLen = els.length
+	;
+
+	for (i = 0; i < elsLen; i++) {
+		if (els[i].className.indexOf(className) > -1) {
+			teststr = "," + els[i].className.split(" ").join(",") + ",";
+			if (teststr.indexOf("," + className + ",") > -1) {
+				classElements[j] = els[i];
+				j++;
+			}
+		}
+	}
+
+	return classElements;
+};

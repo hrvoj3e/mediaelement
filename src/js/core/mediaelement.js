@@ -1,13 +1,15 @@
-'use strict';
-
-import mejs from './namespace';
-import utility from '../utils/utility';
-import renderer from './renderer';
+import window from 'global/window';
+import document from 'global/document';
+import mejs from './mejs';
+import {addProperty} from '../utils/general';
+import {getTypeFromFile, formatType} from '../utils/media';
+import {absolutizeUrl} from '../utils/dom';
+import {renderer} from './renderer';
 
 /**
- * MediaElement core
+ * Media Core
  *
- * This file is the foundation to create/render the media.
+ * This class is the foundation to create/render different media formats.
  * @class MediaElement
  */
 class MediaElement {
@@ -34,6 +36,8 @@ class MediaElement {
 			pluginPath: 'build/'
 		};
 
+		options = Object.assign(t.defaults, options);
+
 		// create our node (note: older versions of iOS don't support Object.defineProperty on DOM nodes)
 		t.mediaElement = document.createElement(options.fakeNodeName);
 		let id = idOrNode;
@@ -45,7 +49,7 @@ class MediaElement {
 			id = idOrNode.id;
 		}
 
-		id = id || `mejs_${$(Math.random().toString().slice(2))}`;
+		id = id || `mejs_${(Math.random().toString().slice(2))}`;
 
 		if (t.mediaElement.originalNode !== undefined && t.mediaElement.originalNode !== null &&
 			t.mediaElement.appendChild) {
@@ -65,7 +69,7 @@ class MediaElement {
 		t.mediaElement.renderers = {};
 		t.mediaElement.renderer = null;
 		t.mediaElement.rendererName = null;
-		t.mediaElement.options = Object.assign(t.defaults, options);
+		t.mediaElement.options = options;
 
 		// add properties get/set
 		const
@@ -96,7 +100,7 @@ class MediaElement {
 							}
 						};
 
-					utility.addProperty(t.mediaElement, propName, getFn, setFn);
+					addProperty(t.mediaElement, propName, getFn, setFn);
 
 					t.mediaElement[`get${capName}`] = getFn;
 					t.mediaElement[`set${capName}`] = setFn;
@@ -121,26 +125,26 @@ class MediaElement {
 				if (typeof value === 'string') {
 					mediaFiles.push({
 						src: value,
-						type: value ? utility.getTypeFromFile(value) : ''
+						type: value ? getTypeFromFile(value) : ''
 					});
 				} else {
 					for (i = 0, il = value.length; i < il; i++) {
 
-						let src = utility.absolutizeUrl(value[i].src),
+						let src = absolutizeUrl(value[i].src),
 							type = value[i].type;
 
 						mediaFiles.push({
 							src: src,
 							type: (type === '' || type === null || type === undefined) && src ?
-								utility.getTypeFromFile(src) : type
+								getTypeFromFile(src) : type
 						});
 
 					}
 				}
 
 				// find a renderer and URL match
-				renderInfo = renderer.selectRenderer(mediaFiles,
-					(options.renderers.length ? options.renderers : null));
+				renderInfo = renderer.select(mediaFiles,
+					(t.mediaElement.options.renderers.length ? t.mediaElement.options.renderers : []));
 
 				// Ensure that the original gets the first source found
 				t.mediaElement.originalNode.setAttribute('src', (mediaFiles[0].src || ''));
@@ -157,7 +161,7 @@ class MediaElement {
 				}
 
 				// turn on the renderer (this checks for the existing renderer already)
-				t.mediaElement.changeRenderer(renderInfo.rendererName, mediaFiles);
+				this.changeRenderer(renderInfo.rendererName, mediaFiles);
 
 				if (t.mediaElement.renderer === undefined || t.mediaElement.renderer === null) {
 					event = document.createEvent("HTMLEvents");
@@ -168,7 +172,7 @@ class MediaElement {
 			}
 		;
 
-		utility.addProperty(t.mediaElement, 'src', getSrc, setSrc);
+		addProperty(t.mediaElement, 'src', getSrc, setSrc);
 		t.mediaElement.getSrc = getSrc;
 		t.mediaElement.setSrc = setSrc;
 
@@ -248,9 +252,65 @@ class MediaElement {
 			};
 		}
 
-		t.findMediaFiles_();
+		if (t.mediaElement.originalNode !== null) {
+			let mediaFiles = [];
 
-		return t.create_();
+			switch (t.mediaElement.originalNode.nodeName.toLowerCase()) {
+
+				case 'iframe':
+					mediaFiles.push({
+						type: '',
+						src: t.mediaElement.originalNode.getAttribute('src')
+					});
+
+					break;
+
+				case 'audio':
+				case 'video':
+					let
+						n,
+						src,
+						type,
+						sources = t.mediaElement.originalNode.childNodes.length,
+						nodeSource = t.mediaElement.originalNode.getAttribute('src')
+						;
+
+					// Consider if node contains the `src` and `type` attributes
+					if (nodeSource) {
+						let node = t.mediaElement.originalNode;
+						mediaFiles.push({
+							type: formatType(nodeSource, node.getAttribute('type')),
+							src: nodeSource
+						});
+					}
+
+					// test <source> types to see if they are usable
+					for (let i = 0; i < sources; i++) {
+						n = t.mediaElement.originalNode.childNodes[i];
+						if (n.nodeType === Node.ELEMENT_NODE && n.tagName.toLowerCase() === 'source') {
+							src = n.getAttribute('src');
+							type = formatType(src, n.getAttribute('type'));
+							mediaFiles.push({type: type, src: src});
+						}
+					}
+					break;
+			}
+
+			if (mediaFiles.length > 0) {
+				t.mediaElement.src = mediaFiles;
+			}
+		}
+
+		if (t.mediaElement.options.success) {
+			t.mediaElement.options.success(this.mediaElement, this.mediaElement.originalNode);
+		}
+
+		// @todo: Verify if this is needed
+		// if (t.mediaElement.options.error) {
+		// 	t.mediaElement.options.error(this.mediaElement, this.mediaElement.originalNode);
+		// }
+
+		return t.mediaElement;
 	}
 
 	/**
@@ -304,10 +364,11 @@ class MediaElement {
 		// find the desired renderer in the array of possible ones
 		for (let index of rendererArray) {
 
-			if (rendererArray[index] === rendererName) {
+			if (index === rendererName) {
 
 				// create the renderer
-				newRendererType = renderer[rendererArray[index]];
+				const rendererList = renderer.renderers;
+				newRendererType = rendererList[index];
 
 				let renderOptions = Object.assign(newRendererType.options, t.mediaElement.options);
 				newRenderer = newRendererType.create(t.mediaElement, renderOptions, mediaFiles);
@@ -317,8 +378,8 @@ class MediaElement {
 				t.mediaElement.renderers[newRendererType.name] = newRenderer;
 				t.mediaElement.renderer = newRenderer;
 				t.mediaElement.rendererName = rendererName;
-				newRenderer.show();
 
+				newRenderer.show();
 
 				return true;
 			}
@@ -339,83 +400,8 @@ class MediaElement {
 			this.mediaElement.renderer.setSize(width, height);
 		}
 	}
-
-	/**
-	 *
-	 * @private
-	 */
-	findMediaFiles_ () {
-		
-		let t = this;
-
-		if (t.mediaElement.originalNode !== null) {
-			let mediaFiles = [];
-
-			switch (t.mediaElement.originalNode.nodeName.toLowerCase()) {
-
-				case 'iframe':
-					mediaFiles.push({
-						type: '',
-						src: t.mediaElement.originalNode.getAttribute('src')
-					});
-
-					break;
-
-				case 'audio':
-				case 'video':
-					let
-						n,
-						src,
-						type,
-						sources = t.mediaElement.originalNode.childNodes.length,
-						nodeSource = t.mediaElement.originalNode.getAttribute('src')
-					;
-
-					// Consider if node contains the `src` and `type` attributes
-					if (nodeSource) {
-						let node = t.mediaElement.originalNode;
-						mediaFiles.push({
-							type: utility.formatType(nodeSource, node.getAttribute('type')),
-							src: nodeSource
-						});
-					}
-
-					// test <source> types to see if they are usable
-					for (let i = 0; i < sources; i++) {
-						n = t.mediaElement.originalNode.childNodes[i];
-						if (n.nodeType == 1 && n.tagName.toLowerCase() === 'source') {
-							src = n.getAttribute('src');
-							type = utility.formatType(src, n.getAttribute('type'));
-							mediaFiles.push({type: type, src: src});
-						}
-					}
-					break;
-			}
-
-			if (mediaFiles.length > 0) {
-				t.mediaElement.src = mediaFiles;
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @private
-	 * @return {MediaElement}
-	 */
-	create_() {
-		let t = this;
-		if (t.options.success) {
-			t.options.success(this.mediaElement, this.mediaElement.originalNode);
-		}
-
-		// @todo: Verify if this is needed
-		// if (t.options.error) {
-		// 	t.options.error(this.mediaElement, this.mediaElement.originalNode);
-		// }
-
-		return this.mediaElement;
-	}
 }
+
+window.MediaElement = MediaElement;
 
 export default MediaElement;

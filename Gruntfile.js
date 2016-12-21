@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-text-replace');
 	grunt.loadNpmTasks("grunt-remove-logging");
+	grunt.loadNpmTasks('grunt-browserify');
 
 	var featureSources;
 
@@ -18,7 +19,7 @@ module.exports = function(grunt) {
 		featureList = featureList.split(',');
 		featureSources = [];
 		featureList.forEach(function(feature) {
-			var path = 'src/js/mediaelementplayer-feature-' + feature + '.js';
+			var path = 'src/js/features/' + feature + '.js';
 			if (grunt.file.isFile(path)) {
 				featureSources.push(path);
 			}
@@ -27,25 +28,41 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		jshint: {
-			all: ['Gruntfile.js', 'src/js/**/*.js']
+			options: {
+				jshintrc: '.jshintrc'
+			},
+			files: {
+				src: [
+					'Gruntfile.js',
+					'src/js/core/*.js',
+					'src/js/utils/*.js',
+					'src/js/languages/*.js',
+					'src/js/renderers/*.js',
+					'src/js/features/*.js',
+					'src/player.js',
+					'src/simple.js'
+
+				]
+			}
 		},
 		browserify: {
 			dist: {
 				options: {
-					transform: [["babelify", {
-						presets: 'es2015',
-						sourceMapsAbsolute: true
-					}]]
+					transform: [
+
+						["babelify", {
+							presets: 'es2015',
+							sourceMapsAbsolute: true
+						}]
+					]
 				},
 				files: {
-					"build/mediaelement.js": [
+					// core element
+					"tmp/mediaelement.js": [
 						'src/js/header.js',
-						'src/js/core/namespace.js',
-						"src/js/utils/utility.js",
-						"src/js/utils/utility-dom.js",
-						"src/js/utils/feature.js",
-						"src/js/core/renderer.js",
-						"src/js/core/i18n.js",
+						'src/js/utils/legacy.js',
+						'src/js/renderers/html5.js',
+						'src/js/core/mediaelement.js'
 					]
 				}
 			}
@@ -53,11 +70,11 @@ module.exports = function(grunt) {
 		concat: {
 			me: {
 				src: [
-					'src/js/mediaelement-header.js',
-					'src/js/mediaelement-namespace.js',
-					'src/js/mediaelement-utility.js',
-					'src/js/mediaelement-utility-oldie.js',
-					'src/js/mediaelement-core.js',
+					// 'src/js/mediaelement-header.js',
+					// 'src/js/mediaelement-namespace.js',
+					// 'src/js/mediaelement-utility.js',
+					// 'src/js/mediaelement-utility-oldie.js',
+					// 'src/js/mediaelement-core.js',
 					'src/js/mediaelement-renderer-html5.js',
 					'src/js/mediaelement-renderer-hls.js',
 					'src/js/mediaelement-renderer-mdash.js',
@@ -258,5 +275,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('html5only', ['jshint', 'concat', 'removelogging', 'uglify', 'postcss', 'copy', 'clean:temp']);
 	grunt.registerTask('html5debug', ['jshint', 'concat', 'uglify', 'postcss', 'copy', 'clean:temp']);
 
-	grunt.registerTask('babel', ['jshint', 'browserify', 'concat:me', 'removelogging', 'uglify:me']);
+	grunt.registerTask('babel', ['jshint', 'browserify']);
 };

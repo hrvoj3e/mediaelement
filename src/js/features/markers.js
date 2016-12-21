@@ -80,7 +80,7 @@
 		 * @param {$} controls
 		 */
 		setmarkers: function (controls) {
-			var t = this,
+			let t = this,
 				i = 0,
 				left;
 

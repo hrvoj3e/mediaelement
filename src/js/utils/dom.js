@@ -1,3 +1,8 @@
+"use strict";
+
+import document from 'global/document';
+import {escapeHTML} from '../utils/general';
+
 export function createEvent (eventName, target) {
 
 	if (typeof eventName !== 'string') {
@@ -15,9 +20,9 @@ export function createEvent (eventName, target) {
 		event.initEvent(eventName, true, false);
 	} else {
 		event = {};
+		event.type = eventName;
+		event.target = target;
 	}
-	event.type = eventName;
-	event.target = target;
 
 	return event;
 }
@@ -34,7 +39,7 @@ export function absolutizeUrl (url) {
 	}
 
 	let el = document.createElement('div');
-	el.innerHTML = '<a href="' + this.escapeHTML(url) + '">x</a>';
+	el.innerHTML = '<a href="' + escapeHTML(url) + '">x</a>';
 	return el.firstChild.href;
 }
 

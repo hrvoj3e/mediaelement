@@ -1,7 +1,9 @@
-'use strict';
+"use strict";
+
+import window from 'global/window';
 
 // Namespace
-let mejs = mejs || {};
+let mejs = {};
 
 // version number
 mejs.version = '3.0.0';
@@ -44,5 +46,7 @@ mejs.html5media = {
 		'video/mp4', 'video/webm', 'video/ogg'
 	]
 };
+
+window.mejs = mejs;
 
 export default mejs;

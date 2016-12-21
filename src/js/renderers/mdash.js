@@ -24,7 +24,7 @@
 		}
 	});
 
-	var NativeDash = {
+	let NativeDash = {
 		/**
 		 * @type {Boolean}
 		 */
@@ -87,7 +87,7 @@
 			this.isScriptLoaded = true;
 
 			while (this.creationQueue.length > 0) {
-				var settings = this.creationQueue.pop();
+				let settings = this.creationQueue.pop();
 				this.createInstance(settings);
 			}
 		},
@@ -99,12 +99,12 @@
 		 */
 		createInstance: function (settings) {
 
-			var player = dashjs.MediaPlayer().create();
+			let player = dashjs.MediaPlayer().create();
 			win['__ready__' + settings.id](player);
 		}
 	};
 
-	var DashNativeRenderer = {
+	let DashNativeRenderer = {
 		name: 'native_mdash',
 
 		options: {
@@ -119,7 +119,7 @@
 		 */
 		canPlayType: function (type) {
 
-			var mediaTypes = ['application/dash+xml'];
+			let mediaTypes = ['application/dash+xml'];
 			return mejs.MediaFeatures.hasMse && mediaTypes.indexOf(type) > -1;
 		},
 		/**
@@ -148,7 +148,7 @@
 			var
 				props = mejs.html5media.properties,
 				assignGettersSetters = function (propName) {
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					node['get' + capName] = function () {
 						if (dashPlayer !== null) {
@@ -193,10 +193,10 @@
 				// do call stack
 				for (i = 0, il = stack.length; i < il; i++) {
 
-					var stackItem = stack[i];
+					let stackItem = stack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						node['set' + capName](stackItem.value);
@@ -217,7 +217,7 @@
 						node.addEventListener(eventName, function (e) {
 							// copy event
 
-							var event = doc.createEvent('HTMLEvents');
+							let event = doc.createEvent('HTMLEvents');
 							event.initEvent(e.type, e.bubbles, e.cancelable);
 							event.srcElement = e.srcElement;
 							event.target = e.srcElement;
@@ -241,24 +241,24 @@
 				 * not using dashjs.MediaPlayer.events object
 				 * @see http://cdn.dashjs.org/latest/jsdoc/MediaPlayerEvents.html
 				 */
-				var assignMdashEvents = function (e, data) {
-					var event = mejs.Utils.createEvent(e, node);
+				let assignMdashEvents = function (e, data) {
+					let event = mejs.Utils.createEvent(e, node);
 					mediaElement.dispatchEvent(event);
 
 					if (e === 'error') {
 						console.error(e, data);
 					}
 				};
-				for (var eventType in dashEvents) {
+				for (let eventType in dashEvents) {
 					if (dashEvents.hasOwnProperty(eventType)) {
 						dashPlayer.on(dashEvents[eventType], assignMdashEvents);
 					}
 				}
 			};
 
-			var filteredAttributes = ['id', 'src', 'style'];
-			for (var j = 0, total = originalNode.attributes.length; j < total; j++) {
-				var attribute = originalNode.attributes[j];
+			let filteredAttributes = ['id', 'src', 'style'];
+			for (let j = 0, total = originalNode.attributes.length; j < total; j++) {
+				let attribute = originalNode.attributes[j];
 				if (attribute.specified && filteredAttributes.indexOf(attribute.name) === -1) {
 					node.setAttribute(attribute.name, attribute.value);
 				}
@@ -305,7 +305,7 @@
 				return node;
 			};
 
-			var event = mejs.Utils.createEvent('rendererready', node);
+			let event = mejs.Utils.createEvent('rendererready', node);
 			mediaElement.dispatchEvent(event);
 
 			return node;

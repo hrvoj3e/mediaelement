@@ -114,7 +114,7 @@
 						.appendTo(controls);
 
 
-			var subtitleCount = 0;
+			let subtitleCount = 0;
 			for (i=0; i<player.tracks.length; i++) {
 				kind = player.tracks[i].kind;
 				if (kind === 'subtitles' || kind === 'captions') {
@@ -126,7 +126,7 @@
 			if (t.options.toggleCaptionsButtonWhenOnlyOne && subtitleCount === 1){
 				// click
 				player.captionsButton.on('click',function() {
-					var trackId = 'none';
+					let trackId = 'none';
 					if (player.selectedTrack === null) {
 						trackId = player.tracks[0].trackId;
 					}
@@ -185,7 +185,7 @@
 			player.isLoadingTrack = false;
 
 			// add to list
-			var total = player.tracks.length;
+			let total = player.tracks.length;
 
 			for (i = 0; i < total; i++) {
 				kind = player.tracks[i].kind;
@@ -309,7 +309,7 @@
 		 *
 		 */
 		loadNextTrack: function() {
-			var t = this;
+			let t = this;
 
 			t.trackToLoad++;
 			if (t.trackToLoad < t.tracks.length) {
@@ -349,7 +349,7 @@
 					success: function(d) {
 
 						// parse the loaded file
-						if (typeof d == "string" && (/<tt\s+xml/ig).exec(d)) {
+						if (typeof d === "string" && (/<tt\s+xml/ig).exec(d)) {
 							track.entries = mejs.TrackFormatParser.dfxp.parse(d);
 						} else {
 							track.entries = mejs.TrackFormatParser.webvtt.parse(d);
@@ -357,7 +357,7 @@
 
 						after();
 
-						if (track.kind == 'chapters') {
+						if (track.kind === 'chapters') {
 							t.media.addEventListener('play', function() {
 								if (t.media.duration > 0) {
 									t.displayChapters(track);
@@ -365,7 +365,7 @@
 							}, false);
 						}
 
-						if (track.kind == 'slides') {
+						if (track.kind === 'slides') {
 							t.setupSlides(track);
 						}
 					},
@@ -383,10 +383,11 @@
 		 * @param {String} label
 		 */
 		enableTrackButton: function(track) {
-			var t = this, 
-					lang = track.srclang, 
-					label = track.label
-				;
+			var
+				t = this,
+				lang = track.srclang,
+				label = track.label
+			;
 
 			if (label === '') {
 				label = mejs.i18n.t(mejs.language.codes[lang]) || lang;
@@ -408,7 +409,7 @@
 		 * @param {String} trackId
 		 */
 		removeTrackButton: function(trackId) {
-			var t = this;
+			let t = this;
 
 			t.captionsButton.find('input[id=' + trackId + ']').closest('li').remove();
 
@@ -422,7 +423,7 @@
 		 * @param {String} label
 		 */
 		addTrackButton: function(trackId, lang, label) {
-			var t = this;
+			let t = this;
 			if (label === '') {
 				label = mejs.i18n.t(mejs.language.codes[lang]) || lang;
 			}
@@ -448,7 +449,7 @@
 		 *
 		 */
 		adjustLanguageBox:function() {
-			var t = this;
+			let t = this;
 			// adjust the size of the outer box
 			t.captionsButton.find('.' + t.options.classPrefix + 'captions-selector').height(
 				t.captionsButton.find('.' + t.options.classPrefix + 'captions-selector-list').outerHeight(true) +
@@ -467,8 +468,8 @@
 
 			// check if any subtitles
 			if (t.options.hideCaptionsButtonWhenEmpty) {
-				for (var i=0; i<t.tracks.length; i++) {
-					var kind = t.tracks[i].kind;
+				for (let i=0; i<t.tracks.length; i++) {
+					let kind = t.tracks[i].kind;
 					if ((kind === 'subtitles' || kind === 'captions') && t.tracks[i].isLoaded) {
 						hasSubtitles = true;
 						break;
@@ -487,8 +488,9 @@
 		 */
 		displayCaptions: function() {
 
-			if (this.tracks === undefined)
+			if (this.tracks === undefined) {
 				return;
+			}
 
 			var
 				t = this,
@@ -517,7 +519,7 @@
 		 * @param {HTMLElement} track
 		 */
 		setupSlides: function(track) {
-			var t = this;
+			let t = this;
 
 			t.slides = track;
 			t.slides.entries.imgs = [t.slides.entries.length];
@@ -534,7 +536,7 @@
 				return;
 			}
 
-			var t = this,
+			let t = this,
 				url = t.slides.entries[index].text,
 				img = t.slides.entries[index].imgs;
 
@@ -797,7 +799,7 @@
 						// grab all the (possibly multi-line) text that follows
 						text = lines[i];
 						i++;
-						while(lines[i] !== '' && i<lines.length){
+						while(lines[i] !== '' && i<lines.length) {
 							text = text + '\n' + lines[i];
 							i++;
 						}
@@ -835,7 +837,7 @@
 
 
 				if (styleNode.length) {
-					var attributes = styleNode.removeAttr("id").get(0).attributes;
+					let attributes = styleNode.removeAttr("id").get(0).attributes;
 					if (attributes.length) {
 						styles = {};
 						for (i = 0; i < attributes.length; i++) {
@@ -855,19 +857,31 @@
 						}
 					;
 
-					if (lines.eq(i).attr("begin")) _temp.start = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i).attr("begin"));
-					if (!_temp.start && lines.eq(i-1).attr("end")) _temp.start = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i-1).attr("end"));
-					if (lines.eq(i).attr("end")) _temp.stop = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i).attr("end"));
-					if (!_temp.stop && lines.eq(i+1).attr("begin")) _temp.stop = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i+1).attr("begin"));
+					if (lines.eq(i).attr("begin")) {
+						_temp.start = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i).attr("begin"));
+					}
+					if (!_temp.start && lines.eq(i-1).attr("end")) {
+						_temp.start = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i-1).attr("end"));
+					}
+					if (lines.eq(i).attr("end")) {
+						_temp.stop = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i).attr("end"));
+					}
+					if (!_temp.stop && lines.eq(i+1).attr("begin")) {
+						_temp.stop = mejs.Utility.convertSMPTEtoSeconds(lines.eq(i+1).attr("begin"));
+					}
 
 					if (styles) {
 						style = "";
-						for (var _style in styles) {
+						for (let _style in styles) {
 							style += _style + ":" + styles[_style] + ";";
 						}
 					}
-					if (style) _temp.style = style;
-					if (_temp.start === 0) _temp.start = 0.200;
+					if (style) {
+						_temp.style = style;
+					}
+					if (_temp.start === 0) {
+						_temp.start = 0.200;
+					}
 					_temp.text = $.trim(lines.eq(i).html()).replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a href='$1' target='_blank'>$1</a>");
 					entries.push(_temp);
 				}
@@ -888,7 +902,7 @@
 	};
 
 	// test for browsers with bad String.split method.
-	if ('x\n\ny'.split(/\n/gi).length != 3) {
+	if ('x\n\ny'.split(/\n/gi).length !== 3) {
 		// add super slow IE8 and below version
 		mejs.TrackFormatParser.split2 = function(text, regex) {
 			var

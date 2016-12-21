@@ -56,7 +56,7 @@ export const ES = {
 	// mediaelementplayer-feature-volume
 	"mejs.mute-toggle": "Alternar silencio",
 	"mejs.volume-help-text": "Use las flechas Arriba/Abajo para subir o bajar el volumen.",
-	"mejs.unmute": "Reactivar silencio",
+	"mejs.unmute": "Reactilet silencio",
 	"mejs.mute": "Silencio",
 	"mejs.volume-slider": "Control deslizante de volumen",
 

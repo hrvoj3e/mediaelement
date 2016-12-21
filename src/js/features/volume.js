@@ -45,10 +45,12 @@
 		buildvolume: function (player, controls, layers, media) {
 
 			// Android and iOS don't support volume controls
-			if ((mejs.MediaFeatures.isAndroid || mejs.MediaFeatures.isiOS) && this.options.hideVolumeOnTouchDevices)
+			if ((mejs.MediaFeatures.isAndroid || mejs.MediaFeatures.isiOS) && this.options.hideVolumeOnTouchDevices) {
 				return;
+			}
 
-			var t = this,
+			var
+				t = this,
 				mode = (t.isVideo) ? t.options.videoVolume : t.options.audioVolume,
 				mute = (mode === 'horizontal') ?
 
@@ -126,7 +128,7 @@
 							.attr('aria-label', mejs.i18n.t('mejs.mute'));
 					}
 
-					var volumePercentage = volume * 100 + '%';
+					let volumePercentage = volume * 100 + '%';
 
 					// position slider
 					if (mode === 'vertical') {
@@ -218,9 +220,9 @@
 			/**
 			 * @private
 			 */
-			var updateVolumeSlider = function () {
+			let updateVolumeSlider = function () {
 
-				var volume = Math.floor(media.volume * 100);
+				let volume = Math.floor(media.volume * 100);
 
 				volumeSlider.attr({
 					'aria-label': mejs.i18n.t('mejs.volume-slider'),
@@ -319,7 +321,7 @@
 			}
 
 			// shim gets the startvolume as a parameter, but we have to set it on the native <video> and <audio> elements
-			var isNative = t.media.rendererName !== null && t.media.rendererName.match(/(native|html5)/);
+			let isNative = t.media.rendererName !== null && t.media.rendererName.match(/(native|html5)/);
 
 			if (isNative) {
 				media.setVolume(player.options.startVolume);

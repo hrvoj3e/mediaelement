@@ -1,19 +1,4 @@
-export function set typeChecks (typeChecks) {
-
-	if (!Array.isArray(typeChecks)) {
-		throw new Error('`typeChecks` must be an array');
-	}
-
-	if (typeChecks.length) {
-		for (let element of typeChecks) {
-			if (typeof element !== 'function') {
-				throw new Error('Element in array must be a function');
-			}
-		}
-	}
-
-	this._typeChecks = typeChecks;
-}
+export let typeChecks = [];
 
 /**
  * Get the format of a specific media, based on URL and additionally its mime type
@@ -23,7 +8,7 @@ export function set typeChecks (typeChecks) {
  * @return {String}
  */
 export function formatType (url, type = '') {
-	return (url && !type) ? this.getTypeFromFile(url) : this.getMimeFromType(type);
+	return (url && !type) ? getTypeFromFile(url) : getMimeFromType(type);
 }
 
 /**
@@ -57,8 +42,21 @@ export function getTypeFromFile (url) {
 
 	let type;
 
+	// Validate `typeChecks` array
+	if (!Array.isArray(typeChecks)) {
+		throw new Error('`typeChecks` must be an array');
+	}
+
+	if (typeChecks.length) {
+		for (let type of types) {
+			if (typeof type !== 'function') {
+				throw new Error('Element in array must be a function');
+			}
+		}
+	}
+
 	// do type checks first
-	for (let check of this.typeChecks) {
+	for (let check of typeChecks) {
 		type = check(url);
 
 		if (type !== undefined && type !== null) {
@@ -68,8 +66,8 @@ export function getTypeFromFile (url) {
 
 	// the do standard extension check
 	let
-		ext = this.getExtension(url),
-		normalizedExt = this.normalizeExtension(ext)
+		ext = getExtension(url),
+		normalizedExt = normalizeExtension(ext)
 		;
 
 	return (/(mp4|m4v|ogg|ogv|webm|webmv|flv|wmv|mpeg|mov)/gi.test(ext) ? 'video' : 'audio') + '/' + normalizedExt;

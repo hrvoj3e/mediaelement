@@ -31,7 +31,7 @@
 		 * @param {HTMLElement} media
 		 */
 		buildcurrent: function(player, controls, layers, media) {
-			var t = this;
+			let t = this;
 
 			$('<div class="' + t.options.classPrefix + 'time" role="timer" aria-live="off">' +
 					'<span class="' + t.options.classPrefix + 'currenttime">' +
@@ -60,7 +60,7 @@
 		 * @param {HTMLElement} media
 		 */
 		buildduration: function(player, controls, layers, media) {
-			var t = this;
+			let t = this;
 
 			if (controls.children().last().find('.' + t.options.classPrefix + 'currenttime').length > 0) {
 				$(t.options.timeAndDurationSeparator +
@@ -97,9 +97,9 @@
 		 *
 		 */
 		updateCurrent:  function() {
-			var t = this;
+			let t = this;
 
-			var currentTime = t.media.currentTime;
+			let currentTime = t.media.currentTime;
 
 			if (isNaN(currentTime)) {
 				currentTime = 0;
@@ -115,11 +115,11 @@
 		 *
 		 */
 		updateDuration: function() {
-			var t = this;
+			let t = this;
 
-			var duration = t.media.duration;
+			let duration = t.media.duration;
 
-			if (isNaN(duration) || duration == Infinity || duration < 0) {
+			if (isNaN(duration) || duration === Infinity || duration < 0) {
 				t.media.duration = t.options.duration = duration = 0;
 			}
 
