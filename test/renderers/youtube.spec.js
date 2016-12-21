@@ -160,6 +160,21 @@
 			url = parts[0];
 
 			return url.substring(url.lastIndexOf('/') + 1);
+		},
+
+		/**
+		 * Inject `no-cookie` element to URL. Only works with format: http://www.youtube.com/v/VIDEO_ID?version=3
+		 * @param {String} url
+		 * @return {?String}
+		 */
+		getYouTubeNoCookieUrl: function(url) {
+			if (url === undefined || url === null || url.indexOf('www.youtube') === -1) {
+				return url;
+			}
+
+			var parts = url.split('/');
+			parts[2] = parts[2].replace('.com', '-nocookie.com');
+			return parts.join('/');
 		}
 	};
 

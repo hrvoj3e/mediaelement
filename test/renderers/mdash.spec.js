@@ -242,7 +242,7 @@
 				 * @see http://cdn.dashjs.org/latest/jsdoc/MediaPlayerEvents.html
 				 */
 				let assignMdashEvents = function (e, data) {
-					let event = mejs.Utils.createEvent(e, node);
+					let event = mejs.Utils.createEvent(e.type, node);
 					mediaElement.dispatchEvent(event);
 
 					if (e === 'error') {
