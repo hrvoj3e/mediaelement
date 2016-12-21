@@ -65,8 +65,8 @@
 				}
 			;
 
-			for (var i=0, len=t.options.speeds.length; i < len; i++) {
-				var s = t.options.speeds[i];
+			for (let i=0, len=t.options.speeds.length; i < len; i++) {
+				let s = t.options.speeds[i];
 				if (typeof(s) === 'string'){
 					speeds.push({
 						name: s + t.options.speedChar,

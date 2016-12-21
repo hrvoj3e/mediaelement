@@ -114,7 +114,7 @@
 						.appendTo(controls);
 
 
-			var subtitleCount = 0;
+			let subtitleCount = 0;
 			for (i=0; i<player.tracks.length; i++) {
 				kind = player.tracks[i].kind;
 				if (kind === 'subtitles' || kind === 'captions') {
@@ -126,7 +126,7 @@
 			if (t.options.toggleCaptionsButtonWhenOnlyOne && subtitleCount === 1){
 				// click
 				player.captionsButton.on('click',function() {
-					var trackId = 'none';
+					let trackId = 'none';
 					if (player.selectedTrack === null) {
 						trackId = player.tracks[0].trackId;
 					}
@@ -185,7 +185,7 @@
 			player.isLoadingTrack = false;
 
 			// add to list
-			var total = player.tracks.length;
+			let total = player.tracks.length;
 
 			for (i = 0; i < total; i++) {
 				kind = player.tracks[i].kind;
@@ -309,7 +309,7 @@
 		 *
 		 */
 		loadNextTrack: function() {
-			var t = this;
+			let t = this;
 
 			t.trackToLoad++;
 			if (t.trackToLoad < t.tracks.length) {
@@ -383,7 +383,7 @@
 		 * @param {String} label
 		 */
 		enableTrackButton: function(track) {
-			var t = this, 
+			let t = this,
 					lang = track.srclang, 
 					label = track.label
 				;
@@ -408,7 +408,7 @@
 		 * @param {String} trackId
 		 */
 		removeTrackButton: function(trackId) {
-			var t = this;
+			let t = this;
 
 			t.captionsButton.find('input[id=' + trackId + ']').closest('li').remove();
 
@@ -422,7 +422,7 @@
 		 * @param {String} label
 		 */
 		addTrackButton: function(trackId, lang, label) {
-			var t = this;
+			let t = this;
 			if (label === '') {
 				label = mejs.i18n.t(mejs.language.codes[lang]) || lang;
 			}
@@ -448,7 +448,7 @@
 		 *
 		 */
 		adjustLanguageBox:function() {
-			var t = this;
+			let t = this;
 			// adjust the size of the outer box
 			t.captionsButton.find('.' + t.options.classPrefix + 'captions-selector').height(
 				t.captionsButton.find('.' + t.options.classPrefix + 'captions-selector-list').outerHeight(true) +
@@ -467,8 +467,8 @@
 
 			// check if any subtitles
 			if (t.options.hideCaptionsButtonWhenEmpty) {
-				for (var i=0; i<t.tracks.length; i++) {
-					var kind = t.tracks[i].kind;
+				for (let i=0; i<t.tracks.length; i++) {
+					let kind = t.tracks[i].kind;
 					if ((kind === 'subtitles' || kind === 'captions') && t.tracks[i].isLoaded) {
 						hasSubtitles = true;
 						break;
@@ -518,7 +518,7 @@
 		 * @param {HTMLElement} track
 		 */
 		setupSlides: function(track) {
-			var t = this;
+			let t = this;
 
 			t.slides = track;
 			t.slides.entries.imgs = [t.slides.entries.length];
@@ -535,7 +535,7 @@
 				return;
 			}
 
-			var t = this,
+			let t = this,
 				url = t.slides.entries[index].text,
 				img = t.slides.entries[index].imgs;
 
@@ -836,7 +836,7 @@
 
 
 				if (styleNode.length) {
-					var attributes = styleNode.removeAttr("id").get(0).attributes;
+					let attributes = styleNode.removeAttr("id").get(0).attributes;
 					if (attributes.length) {
 						styles = {};
 						for (i = 0; i < attributes.length; i++) {
@@ -871,7 +871,7 @@
 
 					if (styles) {
 						style = "";
-						for (var _style in styles) {
+						for (let _style in styles) {
 							style += _style + ":" + styles[_style] + ";";
 						}
 					}

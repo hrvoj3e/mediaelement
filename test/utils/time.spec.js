@@ -165,7 +165,7 @@ export function convertSMPTEtoSeconds (SMPTE) {
 
 	SMPTE = SMPTE.split(':').reverse();
 
-	for (var i = 0; i < SMPTE.length; i++) {
+	for (let i = 0; i < SMPTE.length; i++) {
 		multiplier = 1;
 		if (i > 0) {
 			multiplier = Math.pow(60, i);

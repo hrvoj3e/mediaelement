@@ -26,7 +26,7 @@
 		}
 	});
 
-	var vimeoApi = {
+	let vimeoApi = {
 
 		/**
 		 * @type {Boolean}
@@ -95,7 +95,7 @@
 			this.isIframeLoaded = true;
 
 			while (this.iframeQueue.length > 0) {
-				var settings = this.iframeQueue.pop();
+				let settings = this.iframeQueue.pop();
 				this.createIframe(settings);
 			}
 		},
@@ -106,7 +106,7 @@
 		 * @param {Object} settings - an object with settings needed to create <iframe>
 		 */
 		createIframe: function (settings) {
-			var player = new Vimeo.Player(settings.iframe);
+			let player = new Vimeo.Player(settings.iframe);
 			win['__ready__' + settings.id](player);
 		},
 
@@ -124,7 +124,7 @@
 				return null;
 			}
 
-			var parts = url.split('?');
+			let parts = url.split('?');
 
 			url = parts[0];
 
@@ -139,7 +139,7 @@
 		 * @param {Object} target
 		 */
 		errorHandler: function (error, target) {
-			var event = mejs.Utils.createEvent('error', target);
+			let event = mejs.Utils.createEvent('error', target);
 			event.message = error.name + ': ' + error.message;
 			mediaElement.dispatchEvent(event);
 		}
@@ -153,7 +153,7 @@
 		vimeoApi.iFrameReady();
 	};
 
-	var vimeoIframeRenderer = {
+	let vimeoIframeRenderer = {
 
 		name: 'vimeo_iframe',
 
@@ -167,7 +167,7 @@
 		 * @return {Boolean}
 		 */
 		canPlayType: function (type) {
-			var mediaTypes = ['video/vimeo', 'video/x-vimeo'];
+			let mediaTypes = ['video/vimeo', 'video/x-vimeo'];
 
 			return mediaTypes.indexOf(type) > -1;
 		},
@@ -207,11 +207,11 @@
 				props = mejs.html5media.properties,
 				assignGettersSetters = function (propName) {
 
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					vimeo['get' + capName] = function () {
 						if (vimeoPlayer !== null) {
-							var value = null;
+							let value = null;
 
 							switch (propName) {
 								case 'currentTime':
@@ -262,7 +262,7 @@
 							switch (propName) {
 
 								case 'src':
-									var url = typeof value === 'string' ? value : value[0].src,
+									let url = typeof value === 'string' ? value : value[0].src,
 										videoId = vimeoApi.getVimeoId(url);
 
 									vimeoPlayer.loadVideo(videoId).then(function () {
@@ -279,7 +279,7 @@
 									vimeoPlayer.setCurrentTime(value).then(function () {
 										currentTime = value;
 										setTimeout(function () {
-											var event = mejs.Utils.createEvent('timeupdate', vimeo);
+											let event = mejs.Utils.createEvent('timeupdate', vimeo);
 											mediaElement.dispatchEvent(event);
 										}, 50);
 									})['catch'](function (error) {
@@ -292,7 +292,7 @@
 										volume = value;
 										oldVolume = volume;
 										setTimeout(function () {
-											var event = mejs.Utils.createEvent('volumechange', vimeo);
+											let event = mejs.Utils.createEvent('volumechange', vimeo);
 											mediaElement.dispatchEvent(event);
 										}, 50);
 									})['catch'](function (error) {
@@ -310,7 +310,7 @@
 										vimeoPlayer.setVolume(0).then(function () {
 											volume = 0;
 											setTimeout(function () {
-												var event = mejs.Utils.createEvent('volumechange', vimeo);
+												let event = mejs.Utils.createEvent('volumechange', vimeo);
 												mediaElement.dispatchEvent(event);
 											}, 50);
 										})['catch'](function (error) {
@@ -320,7 +320,7 @@
 										vimeoPlayer.setVolume(oldVolume).then(function () {
 											volume = oldVolume;
 											setTimeout(function () {
-												var event = mejs.Utils.createEvent('volumechange', vimeo);
+												let event = mejs.Utils.createEvent('volumechange', vimeo);
 												mediaElement.dispatchEvent(event);
 											}, 50);
 										})['catch'](function (error) {
@@ -385,10 +385,10 @@
 				// do call stack
 				for (i = 0, il = apiStack.length; i < il; i++) {
 
-					var stackItem = apiStack[i];
+					let stackItem = apiStack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						vimeo['set' + capName](stackItem.value);
@@ -397,18 +397,18 @@
 					}
 				}
 
-				var vimeoIframe = doc.getElementById(vimeo.id), events;
+				let vimeoIframe = doc.getElementById(vimeo.id), events;
 
 				// a few more events
 				events = ['mouseover', 'mouseout'];
 
-				var assignEvents = function (e) {
-					var event = mejs.Utils.createEvent(e.type, vimeo);
+				let assignEvents = function (e) {
+					let event = mejs.Utils.createEvent(e.type, vimeo);
 					mediaElement.dispatchEvent(event);
 				};
 
-				for (var j in events) {
-					var eventName = events[j];
+				for (let j in events) {
+					let eventName = events[j];
 					mejs.addEvent(vimeoIframe, eventName, assignEvents);
 				}
 
@@ -423,7 +423,7 @@
 							bufferedTime = duration * loadProgress;
 						}
 
-						var event = mejs.Utils.createEvent('loadedmetadata', vimeo);
+						let event = mejs.Utils.createEvent('loadedmetadata', vimeo);
 						mediaElement.dispatchEvent(event);
 
 					})['catch'](function (error) {
@@ -443,7 +443,7 @@
 							bufferedTime = duration * loadProgress;
 						}
 
-						var event = mejs.Utils.createEvent('progress', vimeo);
+						let event = mejs.Utils.createEvent('progress', vimeo);
 						mediaElement.dispatchEvent(event);
 
 					})['catch'](function (error) {
@@ -459,7 +459,7 @@
 						currentTime = seconds;
 					});
 
-					var event = mejs.Utils.createEvent('timeupdate', vimeo);
+					let event = mejs.Utils.createEvent('timeupdate', vimeo);
 					mediaElement.dispatchEvent(event);
 
 				});
@@ -489,7 +489,7 @@
 					paused = false;
 					ended = true;
 
-					var event = mejs.Utils.createEvent('ended', vimeo);
+					let event = mejs.Utils.createEvent('ended', vimeo);
 					mediaElement.dispatchEvent(event);
 				});
 
@@ -497,7 +497,7 @@
 				events = ['rendererready', 'loadeddata', 'loadedmetadata', 'canplay'];
 
 				for (i = 0, il = events.length; i < il; i++) {
-					var event = mejs.Utils.createEvent(events[i], vimeo);
+					let event = mejs.Utils.createEvent(events[i], vimeo);
 					mediaElement.dispatchEvent(event);
 				}
 			};

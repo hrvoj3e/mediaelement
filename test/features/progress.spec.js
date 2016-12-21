@@ -66,9 +66,9 @@
 			 * @private
 			 * @param {Event} e
 			 */
-			var handleMouseMove = function (e) {
+			let handleMouseMove = function (e) {
 
-					var offset = t.total.offset(),
+					let offset = t.total.offset(),
 						width = t.total.width(),
 						percentage = 0,
 						newTime = 0,
@@ -116,7 +116,7 @@
 				 */
 				updateSlider = function () {
 
-					var seconds = media.currentTime,
+					let seconds = media.currentTime,
 						timeSliderText = mejs.i18n.t('mejs.time-slider'),
 						time = mejs.Utility.secondsToTimeCode(seconds, player.options.alwaysShowHours),
 						duration = media.duration;
@@ -142,7 +142,7 @@
 				 * @private
 				 */
 				restartPlayer = function () {
-					var now = new Date();
+					let now = new Date();
 					if (now - lastKeyPressTime >= 1000) {
 						media.play();
 					}
@@ -161,7 +161,7 @@
 
 				if (t.options.keyActions.length) {
 
-					var keyCode = e.keyCode,
+					let keyCode = e.keyCode,
 						duration = media.duration,
 						seekTime = media.currentTime,
 						seekForward = player.options.defaultSeekForwardInterval(media),
@@ -220,7 +220,7 @@
 				}
 			}).on('click', function(e) {
 
-				var paused = media.paused;
+				let paused = media.paused;
 
 				if (!paused) {
 					media.pause();
@@ -335,7 +335,7 @@
 		 */
 		setCurrentRail: function () {
 
-			var t = this;
+			let t = this;
 
 			if (t.media.currentTime !== undefined && t.media.duration) {
 

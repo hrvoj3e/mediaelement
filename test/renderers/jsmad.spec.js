@@ -6,7 +6,7 @@
  */
 (function(win, doc, mejs, undefined) {
 
-	var JsMadRenderer = {
+	let JsMadRenderer = {
 		name: 'jsmad',
 
 		options: null,
@@ -18,7 +18,7 @@
 		 */
 		canPlayType: function(type) {
 
-			var doesThisWork = true,
+			let doesThisWork = true,
 				supportedMediaTypes = ['audio/mp3'];
 
 			if (doesThisWork) {
@@ -76,9 +76,9 @@
 					mediaElement.dispatchEvent('ready');
 
 					// do call stack
-					for (var i=0, il=t.apiStack.length; i<il; i++) {
+					for (let i=0, il=t.apiStack.length; i<il; i++) {
 
-						var stackItem = t.apiStack[i];
+						let stackItem = t.apiStack[i];
 
 						if (stackItem.type === 'set') {
 							jsmad[stackItem.propName] = stackItem.value;
@@ -95,11 +95,11 @@
 				props = mejs.html5media.properties,
 				assignGettersSetters = function(propName) {
 
-					var capName = propName.substring(0,1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0,1).toUpperCase() + propName.substring(1);
 
 					jsmad['get' + capName] = function() {
 
-						var value = null;
+						let value = null;
 
 						if (jsmad.jsMad !== null) {
 							switch (propName) {

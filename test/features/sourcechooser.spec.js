@@ -33,10 +33,10 @@
 			;
 
 			// add to list
-			var sources = [];
+			let sources = [];
 
-			for (var j in this.node.children) {
-				var s = this.node.children[j];
+			for (let j in this.node.children) {
+				let s = this.node.children[j];
 				if (s.nodeName === 'SOURCE') {
 					sources.push(s);
 				}
@@ -74,7 +74,7 @@
 
 				// keyboard menu activation
 				.on('keydown', function (e) {
-					var keyCode = e.keyCode;
+					let keyCode = e.keyCode;
 
 					switch (keyCode) {
 						case 32: // space
@@ -103,7 +103,7 @@
 					// Firefox does NOT support e.relatedTarget to see which element
 					// just lost focus, so wait to find the next focused element
 					setTimeout(function () {
-						var parent = $(document.activeElement).closest('.' + t.options.classPrefix + 'sourcechooser-selector');
+						let parent = $(document.activeElement).closest('.' + t.options.classPrefix + 'sourcechooser-selector');
 						if (!parent.length) {
 							// focus is outside the control; close menu
 							player.hideSourcechooserSelector();
@@ -121,11 +121,11 @@
 						.attr('aria-selected', 'false')
 						.removeAttr('checked');
 
-					var src = this.value;
+					let src = this.value;
 
 					if (media.currentSrc !== src) {
-						var currentTime = media.currentTime;
-						var paused = media.paused;
+						let currentTime = media.currentTime;
+						let paused = media.paused;
 						media.pause();
 						media.setSrc(src);
 						media.load();
@@ -134,7 +134,7 @@
 							media.currentTime = currentTime;
 						}, true);
 
-						var canPlayAfterSourceSwitchHandler = function (e) {
+						let canPlayAfterSourceSwitchHandler = function (e) {
 							if (!paused) {
 								media.play();
 							}
@@ -156,8 +156,8 @@
 					}
 				});
 
-			for (var i in sources) {
-				var src = sources[i];
+			for (let i in sources) {
+				let src = sources[i];
 				if (src.type !== undefined && src.nodeName === 'SOURCE' && media.canPlayType !== null) {
 					player.addSourceButton(src.src, src.title, src.type, media.src === src.src);
 				}
@@ -173,7 +173,7 @@
 		 * @param {Boolean} isCurrent
 		 */
 		addSourceButton: function (src, label, type, isCurrent) {
-			var t = this;
+			let t = this;
 			if (label === '' || label === undefined) {
 				label = src;
 			}
@@ -198,7 +198,7 @@
 		 *
 		 */
 		adjustSourcechooserBox: function () {
-			var t = this;
+			let t = this;
 			// adjust the size of the outer box
 			t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').height(
 				t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector ul').outerHeight(true)
@@ -210,7 +210,7 @@
 		 */
 		hideSourcechooserSelector: function () {
 
-			var t = this;
+			let t = this;
 
 			if (t.sourcechooserButton === undefined ||
 				!t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').find('input[type=radio]').length) {
@@ -230,7 +230,7 @@
 		 */
 		showSourcechooserSelector: function () {
 
-			var t = this;
+			let t = this;
 
 			if (t.sourcechooserButton === undefined ||
 				!t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').find('input[type=radio]').length) {

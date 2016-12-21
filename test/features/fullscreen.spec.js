@@ -75,7 +75,7 @@
 			});
 
 			// build button
-			var t = this,
+			let t = this,
 				hideTimeout = null,
 				fullscreenTitle = t.options.fullscreenText ? t.options.fullscreenText : mejs.i18n.t('mejs.fullscreen'),
 				fullscreenBtn =
@@ -88,7 +88,7 @@
 					.on('click', function () {
 
 						// toggle fullscreen
-						var isFullScreen = (mejs.MediaFeatures.hasTrueNativeFullScreen && mejs.MediaFeatures.isFullScreen()) || player.isFullScreen;
+						let isFullScreen = (mejs.MediaFeatures.hasTrueNativeFullScreen && mejs.MediaFeatures.isFullScreen()) || player.isFullScreen;
 
 						if (isFullScreen) {
 							player.exitFullScreen();
@@ -105,7 +105,7 @@
 								hideTimeout = null;
 							}
 
-							var buttonPos = fullscreenBtn.offset(),
+							let buttonPos = fullscreenBtn.offset(),
 								containerPos = player.container.offset();
 
 							media.positionFullscreenButton(buttonPos.left - containerPos.left, buttonPos.top - containerPos.top, true);
@@ -148,7 +148,7 @@
 				 * Chrome doesn't always fire this in an `<iframe>`
 				 * @private
 				 */
-				var fullscreenChanged = function () {
+				let fullscreenChanged = function () {
 					if (player.isFullScreen) {
 						if (mejs.MediaFeatures.isFullScreen()) {
 							player.isNativeFullScreen = true;
@@ -209,7 +209,7 @@
 		 */
 		createPluginClickThrough: function () {
 
-			var t = this;
+			let t = this;
 
 			// don't build twice
 			if (t.isPluginClickThroughCreated) {
@@ -224,11 +224,11 @@
 			 to capture mouse movement and restore the controls once the mouse moves outside of the fullscreen button
 			 */
 
-			var fullscreenIsDisabled = false,
+			let fullscreenIsDisabled = false,
 				restoreControls = function () {
 					if (fullscreenIsDisabled) {
 						// hide the hovers
-						for (var i in hoverDivs) {
+						for (let i in hoverDivs) {
 							hoverDivs[i].hide();
 						}
 
@@ -247,7 +247,7 @@
 				hoverDivNames = ['top', 'left', 'right', 'bottom'],
 				i, len,
 				positionHoverDivs = function () {
-					var fullScreenBtnOffsetLeft = fullscreenBtn.offset().left - t.container.offset().left,
+					let fullScreenBtnOffsetLeft = fullscreenBtn.offset().left - t.container.offset().left,
 						fullScreenBtnOffsetTop = fullscreenBtn.offset().top - t.container.offset().top,
 						fullScreenBtnWidth = fullscreenBtn.outerWidth(true),
 						fullScreenBtnHeight = fullscreenBtn.outerHeight(true),
@@ -299,7 +299,7 @@
 
 				if (!t.isFullScreen) {
 
-					var buttonPos = fullscreenBtn.offset(),
+					let buttonPos = fullscreenBtn.offset(),
 						containerPos = player.container.offset();
 
 					// move the button in Flash into place
@@ -346,7 +346,7 @@
 				// if the mouse is anywhere but the fullsceen button, then restore it all
 				if (fullscreenIsDisabled) {
 
-					var fullscreenBtnPos = fullscreenBtn.offset();
+					let fullscreenBtnPos = fullscreenBtn.offset();
 
 
 					if (e.pageY < fullscreenBtnPos.top || e.pageY > fullscreenBtnPos.top + fullscreenBtn.outerHeight(true) ||
@@ -409,7 +409,7 @@
 					setTimeout(function checkFullscreen() {
 
 						if (t.isNativeFullScreen) {
-							var percentErrorMargin = 0.002, // 0.2%
+							let percentErrorMargin = 0.002, // 0.2%
 								windowWidth = $(window).width(),
 								screenWidth = screen.width,
 								absDiff = Math.abs(screenWidth - windowWidth),
@@ -475,7 +475,7 @@
 			t.setControlsSize();
 			t.isFullScreen = true;
 
-			var zoomFactor = Math.min(screen.width / t.width, screen.height / t.height);
+			let zoomFactor = Math.min(screen.width / t.width, screen.height / t.height);
 			t.container.find('.' + t.options.classPrefix + 'captions-text')
 				.css('font-size', zoomFactor * 100 + '%');
 			t.container.find('.' + t.options.classPrefix + 'captions-text')

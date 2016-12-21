@@ -5,7 +5,7 @@
  */
 (function (win, doc, mejs, undefined) {
 
-	var HtmlMediaElement = {
+	let HtmlMediaElement = {
 
 		name: 'html5',
 
@@ -21,7 +21,7 @@
 		 */
 		canPlayType: function (type) {
 
-			var mediaElement = doc.createElement('video');
+			let mediaElement = doc.createElement('video');
 
 			if (mediaElement.canPlayType) {
 				return mediaElement.canPlayType(type).replace(/no/, '');
@@ -39,7 +39,7 @@
 		 */
 		create: function (mediaElement, options, mediaFiles) {
 
-			var node = null,
+			let node = null,
 				id = mediaElement.id + '_html5';
 
 			// CREATE NODE
@@ -60,7 +60,7 @@
 				i,
 				il,
 				assignGettersSetters = function (propName) {
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					node['get' + capName] = function () {
 						return node[propName];
@@ -83,7 +83,7 @@
 					node.addEventListener(eventName, function (e) {
 						// copy event
 
-						var event = doc.createEvent('HTMLEvents');
+						let event = doc.createEvent('HTMLEvents');
 						event.initEvent(e.type, e.bubbles, e.cancelable);
 						event.srcElement = e.srcElement;
 						event.target = e.srcElement;
@@ -127,7 +127,7 @@
 				}
 			}
 
-			var event = mejs.Utils.createEvent('rendererready', node);
+			let event = mejs.Utils.createEvent('rendererready', node);
 			mediaElement.dispatchEvent(event);
 
 			return node;

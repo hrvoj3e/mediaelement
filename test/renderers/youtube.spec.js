@@ -23,7 +23,7 @@
 		}
 	});
 
-	var YouTubeApi = {
+	let YouTubeApi = {
 		/**
 		 * @type {Boolean}
 		 */
@@ -58,9 +58,9 @@
 		 */
 		loadIframeApi: function () {
 			if (!this.isIframeStarted) {
-				var tag = document.createElement('script');
+				let tag = document.createElement('script');
 				tag.src = 'https://www.youtube.com/player_api';
-				var firstScriptTag = document.getElementsByTagName('script')[0];
+				let firstScriptTag = document.getElementsByTagName('script')[0];
 				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 				this.isIframeStarted = true;
 			}
@@ -76,7 +76,7 @@
 			this.isIframeLoaded = true;
 
 			while (this.iframeQueue.length > 0) {
-				var settings = this.iframeQueue.pop();
+				let settings = this.iframeQueue.pop();
 				this.createIframe(settings);
 			}
 		},
@@ -102,7 +102,7 @@
 		 */
 		getYouTubeId: function (url) {
 
-			var youTubeId = "";
+			let youTubeId = "";
 
 			if (url.indexOf('?') > 0) {
 				// assuming: http://www.youtube.com/watch?feature=player_embedded&v=yyWWXSwtPP0
@@ -127,12 +127,12 @@
 		 */
 		getYouTubeIdFromParam: function (url) {
 
-			var youTubeId = '',
+			let youTubeId = '',
 				parts = url.split('?'),
 				parameters = parts[1].split('&');
 
-			for (var i = 0, il = parameters.length; i < il; i++) {
-				var paramParts = parameters[i].split('=');
+			for (let i = 0, il = parameters.length; i < il; i++) {
+				let paramParts = parameters[i].split('=');
 				if (paramParts[0] === 'v') {
 					youTubeId = paramParts[1];
 					break;
@@ -155,7 +155,7 @@
 				return null;
 			}
 
-			var parts = url.split('?');
+			let parts = url.split('?');
 
 			url = parts[0];
 
@@ -171,7 +171,7 @@
 		YouTubeApi.iFrameReady();
 	};
 
-	var YouTubeIframeRenderer = {
+	let YouTubeIframeRenderer = {
 		name: 'youtube_iframe',
 
 		options: {
@@ -185,7 +185,7 @@
 		 * @return {Boolean}
 		 */
 		canPlayType: function (type) {
-			var mediaTypes = ['video/youtube', 'video/x-youtube'];
+			let mediaTypes = ['video/youtube', 'video/x-youtube'];
 
 			return mediaTypes.indexOf(type) > -1;
 		},
@@ -200,13 +200,13 @@
 		create: function (mediaElement, options, mediaFiles) {
 
 			// exposed object
-			var youtube = {};
+			let youtube = {};
 			youtube.options = options;
 			youtube.id = mediaElement.id + '_' + options.prefix;
 			youtube.mediaElement = mediaElement;
 
 			// API objects
-			var apiStack = [],
+			let apiStack = [],
 				youTubeApi = null,
 				youTubeApiReady = false,
 				paused = true,
@@ -222,11 +222,11 @@
 
 					// add to flash state that we will store
 
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					youtube['get' + capName] = function () {
 						if (youTubeApi !== null) {
-							var value = null;
+							let value = null;
 
 							// figure out how to get youtube dta here
 							switch (propName) {
@@ -249,7 +249,7 @@
 									return youTubeApi.isMuted(); // ?
 
 								case 'buffered':
-									var percentLoaded = youTubeApi.getVideoLoadedFraction(),
+									let percentLoaded = youTubeApi.getVideoLoadedFraction(),
 										duration = youTubeApi.getDuration();
 									return {
 										start: function () {
@@ -278,7 +278,7 @@
 							switch (propName) {
 
 								case 'src':
-									var url = typeof value === 'string' ? value : value[0].src,
+									let url = typeof value === 'string' ? value : value[0].src,
 										videoId = YouTubeApi.getYouTubeId(url);
 
 									if (mediaElement.getAttribute('autoplay')) {
@@ -299,7 +299,7 @@
 										youTubeApi.unMute(); // ?
 									}
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', youtube);
+										let event = mejs.Utils.createEvent('volumechange', youtube);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -307,7 +307,7 @@
 								case 'volume':
 									youTubeApi.setVolume(value);
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', youtube);
+										let event = mejs.Utils.createEvent('volumechange', youtube);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -361,7 +361,7 @@
 			}
 
 			// CREATE YouTube
-			var youtubeContainer = doc.createElement('div');
+			let youtubeContainer = doc.createElement('div');
 			youtubeContainer.id = youtube.id;
 			mediaElement.originalNode.parentNode.insertBefore(youtubeContainer, mediaElement.originalNode);
 			mediaElement.originalNode.style.display = 'none';
@@ -399,10 +399,10 @@
 							// do call stack
 							for (i = 0, il = apiStack.length; i < il; i++) {
 
-								var stackItem = apiStack[i];
+								let stackItem = apiStack[i];
 
 								if (stackItem.type === 'set') {
-									var propName = stackItem.propName,
+									let propName = stackItem.propName,
 										capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 									youtube['set' + capName](stackItem.value);
@@ -418,28 +418,28 @@
 								events = ['mouseover', 'mouseout'],
 								assignEvents = function (e) {
 
-									var newEvent = mejs.Utils.createEvent(e.type, youtube);
+									let newEvent = mejs.Utils.createEvent(e.type, youtube);
 									mediaElement.dispatchEvent(newEvent);
 								}
 							;
 
-							for (var j in events) {
-								var eventName = events[j];
+							for (let j in events) {
+								let eventName = events[j];
 								mejs.addEvent(youTubeIframe, eventName, assignEvents);
 							}
 
 							// send init events
-							var initEvents = ['rendererready', 'loadeddata', 'loadedmetadata', 'canplay'];
+							let initEvents = ['rendererready', 'loadeddata', 'loadedmetadata', 'canplay'];
 
 							for (i = 0, il = initEvents.length; i < il; i++) {
-								var event = mejs.Utils.createEvent(initEvents[i], youtube);
+								let event = mejs.Utils.createEvent(initEvents[i], youtube);
 								mediaElement.dispatchEvent(event);
 							}
 						},
 						onStateChange: function (e) {
 
 							// translate events
-							var events = [];
+							let events = [];
 
 							switch (e.data) {
 								case -1: // not started
@@ -488,8 +488,8 @@
 							}
 
 							// send events up
-							for (var i = 0, il = events.length; i < il; i++) {
-								var event = mejs.Utils.createEvent(events[i], youtube);
+							for (let i = 0, il = events.length; i < il; i++) {
+								let event = mejs.Utils.createEvent(events[i], youtube);
 								mediaElement.dispatchEvent(event);
 							}
 
@@ -531,7 +531,7 @@
 				// create timer
 				youtube.interval = setInterval(function () {
 
-					var event = mejs.Utils.createEvent('timeupdate', youtube);
+					let event = mejs.Utils.createEvent('timeupdate', youtube);
 					mediaElement.dispatchEvent(event);
 
 				}, 250);

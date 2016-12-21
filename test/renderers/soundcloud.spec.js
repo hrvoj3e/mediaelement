@@ -21,7 +21,7 @@
 		}
 	});
 
-	var SoundCloudApi = {
+	let SoundCloudApi = {
 		/**
 		 * @type {Boolean}
 		 */
@@ -57,7 +57,7 @@
 		loadIframeApi: function () {
 			if (!this.isSDKStarted) {
 
-				var head = doc.getElementsByTagName("head")[0] || document.documentElement,
+				let head = doc.getElementsByTagName("head")[0] || document.documentElement,
 					script = doc.createElement("script"),
 					done = false;
 
@@ -90,7 +90,7 @@
 			this.isSDKLoaded = true;
 
 			while (this.iframeQueue.length > 0) {
-				var settings = this.iframeQueue.pop();
+				let settings = this.iframeQueue.pop();
 				this.createIframe(settings);
 			}
 		},
@@ -101,12 +101,12 @@
 		 * @param {Object} settings - an object with settings needed to create <iframe>
 		 */
 		createIframe: function (settings) {
-			var player = SC.Widget(settings.iframe);
+			let player = SC.Widget(settings.iframe);
 			win['__ready__' + settings.id](player);
 		}
 	};
 
-	var SoundCloudIframeRenderer = {
+	let SoundCloudIframeRenderer = {
 		name: 'soundcloud_iframe',
 
 		options: {
@@ -120,7 +120,7 @@
 		 * @return {Boolean}
 		 */
 		canPlayType: function (type) {
-			var mediaTypes = ['video/soundcloud', 'video/x-soundcloud'];
+			let mediaTypes = ['video/soundcloud', 'video/x-soundcloud'];
 
 			return mediaTypes.indexOf(type) > -1;
 		},
@@ -134,7 +134,7 @@
 		 */
 		create: function (mediaElement, options, mediaFiles) {
 
-			var sc = {};
+			let sc = {};
 
 			// store main variable
 			sc.options = options;
@@ -142,7 +142,7 @@
 			sc.mediaElement = mediaElement;
 
 			// create our fake element that allows events and such to work
-			var apiStack = [],
+			let apiStack = [],
 				scPlayerReady = false,
 				scPlayer = null,
 				scIframe = null,
@@ -164,11 +164,11 @@
 
 					// add to flash state that we will store
 
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					sc['get' + capName] = function () {
 						if (scPlayer !== null) {
-							var value = null;
+							let value = null;
 
 							// figure out how to get dm dta here
 							switch (propName) {
@@ -218,7 +218,7 @@
 							switch (propName) {
 
 								case 'src':
-									var url = typeof value === 'string' ? value : value[0].src;
+									let url = typeof value === 'string' ? value : value[0].src;
 
 									scPlayer.load(url);
 									break;
@@ -234,7 +234,7 @@
 										scPlayer.setVolume(1); // ?
 									}
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', sc);
+										let event = mejs.Utils.createEvent('volumechange', sc);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -242,7 +242,7 @@
 								case 'volume':
 									scPlayer.setVolume(value);
 									setTimeout(function () {
-										var event = mejs.Utils.createEvent('volumechange', sc);
+										let event = mejs.Utils.createEvent('volumechange', sc);
 										mediaElement.dispatchEvent(event);
 									}, 50);
 									break;
@@ -304,10 +304,10 @@
 				// do call stack
 				for (i = 0, il = apiStack.length; i < il; i++) {
 
-					var stackItem = apiStack[i];
+					let stackItem = apiStack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						sc['set' + capName](stackItem.value);
@@ -323,7 +323,7 @@
 
 					scPlayer.getPosition(function (_currentTime) {
 						currentTime = _currentTime / 1000;
-						var event = mejs.Utils.createEvent('timeupdate', sc);
+						let event = mejs.Utils.createEvent('timeupdate', sc);
 						mediaElement.dispatchEvent(event);
 					});
 				});
@@ -331,28 +331,28 @@
 				scPlayer.bind(SC.Widget.Events.PAUSE, function () {
 					paused = true;
 
-					var event = mejs.Utils.createEvent('pause', sc);
+					let event = mejs.Utils.createEvent('pause', sc);
 					mediaElement.dispatchEvent(event);
 				});
 				scPlayer.bind(SC.Widget.Events.PLAY, function () {
 					paused = false;
 					ended = false;
 
-					var event = mejs.Utils.createEvent('play', sc);
+					let event = mejs.Utils.createEvent('play', sc);
 					mediaElement.dispatchEvent(event);
 				});
 				scPlayer.bind(SC.Widget.Events.FINISHED, function () {
 					paused = false;
 					ended = true;
 
-					var event = mejs.Utils.createEvent('ended', sc);
+					let event = mejs.Utils.createEvent('ended', sc);
 					mediaElement.dispatchEvent(event);
 				});
 				scPlayer.bind(SC.Widget.Events.READY, function () {
 					scPlayer.getDuration(function (_duration) {
 						duration = _duration / 1000;
 
-						var event = mejs.Utils.createEvent('loadedmetadata', sc);
+						let event = mejs.Utils.createEvent('loadedmetadata', sc);
 						mediaElement.dispatchEvent(event);
 					});
 				});
@@ -361,23 +361,23 @@
 						if (duration > 0) {
 							bufferedTime = duration * loadProgress;
 
-							var event = mejs.Utils.createEvent('progress', sc);
+							let event = mejs.Utils.createEvent('progress', sc);
 							mediaElement.dispatchEvent(event);
 						}
 					});
 					scPlayer.getDuration(function (_duration) {
 						duration = _duration;
 
-						var event = mejs.Utils.createEvent('loadedmetadata', sc);
+						let event = mejs.Utils.createEvent('loadedmetadata', sc);
 						mediaElement.dispatchEvent(event);
 					});
 				});
 
 				// give initial events
-				var initEvents = ['rendererready', 'loadeddata', 'loadedmetadata', 'canplay'];
+				let initEvents = ['rendererready', 'loadeddata', 'loadedmetadata', 'canplay'];
 
-				for (var i = 0, il = initEvents.length; i < il; i++) {
-					var event = mejs.Utils.createEvent(initEvents[i], sc);
+				for (let i = 0, il = initEvents.length; i < il; i++) {
+					let event = mejs.Utils.createEvent(initEvents[i], sc);
 					mediaElement.dispatchEvent(event);
 				}
 			};

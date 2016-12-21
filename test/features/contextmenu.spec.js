@@ -104,7 +104,7 @@ $.extend(mejs.MepDefaults,
 
 		contextMenuTimeout: null,
 		startContextMenuTimer: function() {
-			var t = this;
+			let t = this;
 
 			t.killContextMenuTimer();
 
@@ -114,7 +114,7 @@ $.extend(mejs.MepDefaults,
 			}, 750);
 		},
 		killContextMenuTimer: function() {
-			var timer = this.contextMenuTimer;
+			let timer = this.contextMenuTimer;
 
 			if (timer !== null && timer !== undefined) {
 				clearTimeout(timer);
@@ -129,17 +129,17 @@ $.extend(mejs.MepDefaults,
 		renderContextMenu: function(x,y) {
 
 			// alway re-render the items so that things like "turn fullscreen on" and "turn fullscreen off" are always written correctly
-			var t = this,
+			let t = this,
 				html = '',
 				items = t.options.contextMenuItems;
 
-			for (var i=0, il=items.length; i<il; i++) {
+			for (let i=0, il=items.length; i<il; i++) {
 
 				if (items[i].isSeparator) {
 					html += '<div class="' + t.options.classPrefix + 'contextmenu-separator"></div>';
 				} else {
 
-					var rendered = items[i].render(t);
+					let rendered = items[i].render(t);
 
 					// render can return null if the item doesn't need to be used at the moment
 					if (rendered !== null && rendered !== undefined) {
@@ -160,7 +160,7 @@ $.extend(mejs.MepDefaults,
 			t.contextMenu.find('.' + t.options.classPrefix + 'contextmenu-item').each(function() {
 
 				// which one is this?
-				var $dom = $(this),
+				let $dom = $(this),
 					itemIndex = parseInt( $dom.data('itemindex'), 10 ),
 					item = t.options.contextMenuItems[itemIndex];
 

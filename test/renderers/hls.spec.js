@@ -24,7 +24,7 @@
 		}
 	});
 
-	var NativeHls = {
+	let NativeHls = {
 		/**
 		 * @type {Boolean}
 		 */
@@ -89,7 +89,7 @@
 			this.isMediaLoaded = true;
 
 			while (this.creationQueue.length > 0) {
-				var settings = this.creationQueue.pop();
+				let settings = this.creationQueue.pop();
 				this.createInstance(settings);
 			}
 		},
@@ -100,12 +100,12 @@
 		 * @param {Object} settings - an object with settings needed to instantiate HLS object
 		 */
 		createInstance: function (settings) {
-			var player = new Hls(settings.options);
+			let player = new Hls(settings.options);
 			win['__ready__' + settings.id](player);
 		}
 	};
 
-	var HlsNativeRenderer = {
+	let HlsNativeRenderer = {
 		name: 'native_hls',
 
 		options: {
@@ -166,7 +166,7 @@
 		 */
 		canPlayType: function (type) {
 
-			var mediaTypes = ['application/x-mpegURL', 'application/x-mpegurl', 'vnd.apple.mpegURL',
+			let mediaTypes = ['application/x-mpegURL', 'application/x-mpegurl', 'vnd.apple.mpegURL',
 				'audio/mpegURL', 'audio/hls', 'video/hls'];
 			return mejs.MediaFeatures.hasMse && mediaTypes.indexOf(type) > -1;
 		},
@@ -197,7 +197,7 @@
 			var
 				props = mejs.html5media.properties,
 				assignGettersSetters = function (propName) {
-					var capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+					let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 					node['get' + capName] = function () {
 						if (hlsPlayer !== null) {
@@ -240,10 +240,10 @@
 				// do call stack
 				for (i = 0, il = stack.length; i < il; i++) {
 
-					var stackItem = stack[i];
+					let stackItem = stack[i];
 
 					if (stackItem.type === 'set') {
-						var propName = stackItem.propName,
+						let propName = stackItem.propName,
 							capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 						node['set' + capName](stackItem.value);
@@ -261,7 +261,7 @@
 
 							hlsPlayer.detachMedia();
 
-							var url = node.src;
+							let url = node.src;
 
 							hlsPlayer.attachMedia(node);
 							hlsPlayer.on(hlsEvents.MEDIA_ATTACHED, function () {
@@ -271,7 +271,7 @@
 
 						node.addEventListener(eventName, function (e) {
 							// copy event
-							var event = doc.createEvent('HTMLEvents');
+							let event = doc.createEvent('HTMLEvents');
 							event.initEvent(e.type, e.bubbles, e.cancelable);
 							event.srcElement = e.srcElement;
 							event.target = e.srcElement;
@@ -298,8 +298,8 @@
 				 * @see https://github.com/dailymotion/hls.js/blob/master/API.md#runtime-events
 				 * @see https://github.com/dailymotion/hls.js/blob/master/API.md#errors
 				 */
-				var assignHlsEvents = function (e, data) {
-					var event = mejs.Utils.createEvent(e, node);
+				let assignHlsEvents = function (e, data) {
+					let event = mejs.Utils.createEvent(e, node);
 					mediaElement.dispatchEvent(event);
 
 					if (e === 'ERROR') {
@@ -313,16 +313,16 @@
 					}
 				};
 
-				for (var eventType in hlsEvents) {
+				for (let eventType in hlsEvents) {
 					if (hlsEvents.hasOwnProperty(eventType)) {
 						hlsPlayer.on(hlsEvents[eventType], assignHlsEvents);
 					}
 				}
 			};
 
-			var filteredAttributes = ['id', 'src', 'style'];
-			for (var j = 0, total = originalNode.attributes.length; j < total; j++) {
-				var attribute = originalNode.attributes[j];
+			let filteredAttributes = ['id', 'src', 'style'];
+			for (let j = 0, total = originalNode.attributes.length; j < total; j++) {
+				let attribute = originalNode.attributes[j];
 				if (attribute.specified && filteredAttributes.indexOf(attribute.name) === -1) {
 					node.setAttribute(attribute.name, attribute.value);
 				}
@@ -371,7 +371,7 @@
 				hlsPlayer.destroy();
 			};
 
-			var event = mejs.Utils.createEvent('rendererready', node);
+			let event = mejs.Utils.createEvent('rendererready', node);
 			mediaElement.dispatchEvent(event);
 
 			return node;

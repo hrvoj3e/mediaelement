@@ -77,7 +77,7 @@
 
 		buildads: function(player, controls, layers, media) {
 
-			var t = this;
+			let t = this;
 
 			if (t.adsLoaded) {
 				return;
@@ -132,7 +132,7 @@
 
 		adsMediaTryingToStart: function() {
 
-			var t = this;
+			let t = this;
 
 			// make sure to pause until the ad data is loaded
 			if (t.adsDataIsLoading && !t.media.paused) {
@@ -144,7 +144,7 @@
 
 		adsStartPreroll: function() {
 
-			var t = this;
+			let t = this;
 
 			t.media.addEventListener('loadedmetadata', t.adsPrerollMetaProxy );
 			t.media.addEventListener('playing', t.adsPrerollStartedProxy );
@@ -190,7 +190,7 @@
 		},
 
 		adsPrerollStarted: function() {
-			var t = this;
+			let t = this;
 			t.media.removeEventListener('playing', t.adsPrerollStartedProxy);
 
 			// turn off controls until the preroll is done
@@ -227,7 +227,7 @@
 		},
 
 		adsPrerollUpdate: function() {
-			var t = this;
+			let t = this;
 
 			if (t.options.adsPrerollAdEnableSkip && t.options.adsPrerollAdSkipSeconds > 0) {
 				// update message
@@ -244,7 +244,7 @@
 		},
 
 		adsPrerollEnded: function() {
-			var t = this;
+			let t = this;
 
 			t.container.trigger('mejsprerollended');
 
@@ -257,7 +257,7 @@
 		},
 
 		adRestoreMainMedia: function() {
-			var t = this;
+			let t = this;
 
 			t.media.setSrc(t.adsCurrentMediaUrl);
 			setTimeout(function() {
@@ -279,7 +279,7 @@
 		},
 
 		adsAdClick: function(e) {
-			var t = this;
+			let t = this;
 
 			if (t.media.paused) {
 				t.media.play();
@@ -291,7 +291,7 @@
 		},
 
 		adsSkipClick: function() {
-			var t = this;
+			let t = this;
 
 			t.container.trigger('mejsprerollskipclicked');
 			t.container.trigger('mejsprerollended');
@@ -306,13 +306,13 @@
 
 		// tells calling function if ads have finished running
 		prerollAdsFinished: function() {
-			var t = this;
+			let t = this;
 			return t.options.indexPreroll === t.options.adsPrerollMediaUrl.length;
 	 	},
 
 		// fires off fake XHR requests
 		adsLoadUrl: function(url) {
-			var img = new Image(),
+			let img = new Image(),
 				rnd = Math.round(Math.random()*100000);
 
 			img.src = url + ((url.indexOf('?') > 0) ? '&' : '?') + 'random' + rnd + '=' + rnd;
