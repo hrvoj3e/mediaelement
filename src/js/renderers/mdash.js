@@ -1,9 +1,12 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
 import {renderer} from '../core/renderer';
-import {createEvent, addEvent} from '../utils/dom';
+import {createEvent} from '../utils/dom';
 import {typeChecks} from '../utils/media';
+import {HAS_MSE} from '../utils/constants';
 
 /**
  * Native M-Dash renderer
@@ -14,24 +17,7 @@ import {typeChecks} from '../utils/media';
  * @see https://github.com/Dash-Industry-Forum/dash.js
  *
  */
-
-
-/**
- * Register Native M(PEG)-Dash type based on URL structure
- *
- */
-mejs.Utils.typeChecks.push(function (url) {
-
-	url = url.toLowerCase();
-
-	if (url.indexOf('mpd') > -1) {
-		return 'application/dash+xml';
-	} else {
-		return null;
-	}
-});
-
-let NativeDash = {
+const NativeDash = {
 	/**
 	 * @type {Boolean}
 	 */
@@ -45,12 +31,12 @@ let NativeDash = {
 	 * Create a queue to prepare the loading of an HLS source
 	 * @param {Object} settings - an object with settings needed to load an HLS player instance
 	 */
-	prepareSettings: function (settings) {
-		if (this.isLoaded) {
-			this.createInstance(settings);
+	prepareSettings: (settings) => {
+		if (NativeDash.isLoaded) {
+			NativeDash.createInstance(settings);
 		} else {
-			this.loadScript();
-			this.creationQueue.push(settings);
+			NativeDash.loadScript();
+			NativeDash.creationQueue.push(settings);
 		}
 	},
 
@@ -59,11 +45,11 @@ let NativeDash = {
 	 *
 	 */
 	loadScript: () => {
-		if (!this.isScriptLoaded) {
+		if (!NativeDash.isScriptLoaded) {
 
-			var
-				script = doc.createElement('script'),
-				firstScriptTag = doc.getElementsByTagName('script')[0],
+			let
+				script = document.createElement('script'),
+				firstScriptTag = document.getElementsByTagName('script')[0],
 				done = false;
 
 			// script.src = 'https://cdn.dashjs.org/latest/dash.all.min.js';
@@ -71,8 +57,8 @@ let NativeDash = {
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
-				if (!done && (!this.readyState || this.readyState === undefined ||
-					this.readyState === 'loaded' || this.readyState === 'complete')) {
+				if (!done && (!NativeDash.readyState || NativeDash.readyState === undefined ||
+					NativeDash.readyState === 'loaded' || NativeDash.readyState === 'complete')) {
 					done = true;
 					NativeDash.mediaReady();
 					script.onload = script.onreadystatechange = null;
@@ -80,7 +66,7 @@ let NativeDash = {
 			};
 
 			firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
-			this.isScriptLoaded = true;
+			NativeDash.isScriptLoaded = true;
 		}
 	},
 
@@ -90,12 +76,12 @@ let NativeDash = {
 	 */
 	mediaReady: () => {
 
-		this.isLoaded = true;
-		this.isScriptLoaded = true;
+		NativeDash.isLoaded = true;
+		NativeDash.isScriptLoaded = true;
 
-		while (this.creationQueue.length > 0) {
-			let settings = this.creationQueue.pop();
-			this.createInstance(settings);
+		while (NativeDash.creationQueue.length > 0) {
+			let settings = NativeDash.creationQueue.pop();
+			NativeDash.createInstance(settings);
 		}
 	},
 
@@ -104,10 +90,10 @@ let NativeDash = {
 	 *
 	 * @param {Object} settings - an object with settings needed to instantiate HLS object
 	 */
-	createInstance: function (settings) {
+	createInstance: (settings) => {
 
 		let player = dashjs.MediaPlayer().create();
-		win['__ready__' + settings.id](player);
+		window['__ready__' + settings.id](player);
 	}
 };
 
@@ -124,11 +110,8 @@ let DashNativeRenderer = {
 	 * @param {String} type
 	 * @return {Boolean}
 	 */
-	canPlayType: function (type) {
+	canPlayType: (type) => HAS_MSE && ['application/dash+xml'].includes(type),
 
-		let mediaTypes = ['application/dash+xml'];
-		return mejs.MediaFeatures.hasMse && mediaTypes.indexOf(type) > -1;
-	},
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
 	 *
@@ -137,9 +120,9 @@ let DashNativeRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
-		var
+		let
 			node = null,
 			originalNode = mediaElement.originalNode,
 			i,
@@ -152,20 +135,14 @@ let DashNativeRenderer = {
 		node = originalNode.cloneNode(true);
 
 		// WRAPPERS for PROPs
-		var
+		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+			assignGettersSetters = (propName) => {
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
-				node['get' + capName] = () => {
-					if (dashPlayer !== null) {
-						return node[propName];
-					} else {
-						return null;
-					}
-				};
+				node['get' + capName] = () => (dashPlayer !== null) ? node[propName] : null;
 
-				node['set' + capName] = function (value) {
+				node['set' + capName] = (value) => {
 					if (dashPlayer !== null) {
 						if (propName === 'src') {
 
@@ -190,7 +167,7 @@ let DashNativeRenderer = {
 		}
 
 		// Initial method to register all M-Dash events
-		win['__ready__' + id] = function (_dashPlayer) {
+		window['__ready__' + id] = (_dashPlayer) => {
 
 			mediaElement.dashPlayer = dashPlayer = _dashPlayer;
 
@@ -213,21 +190,20 @@ let DashNativeRenderer = {
 			}
 
 			// BUBBLE EVENTS
-			var
+			let
 				events = mejs.html5media.events, dashEvents = dashjs.MediaPlayer.events,
-				assignEvents = function (eventName) {
+				assignEvents = (eventName) => {
 
 					if (eventName === 'loadedmetadata') {
 						dashPlayer.initialize(node, node.src, false);
 					}
 
-					node.addEventListener(eventName, function (e) {
-						// copy event
-
-						let event = doc.createEvent('HTMLEvents');
+					node.addEventListener(eventName, (e) => {
+						let event = document.createEvent('HTMLEvents');
 						event.initEvent(e.type, e.bubbles, e.cancelable);
-						event.srcElement = e.srcElement;
-						event.target = e.srcElement;
+						// @todo Check this
+						// event.srcElement = e.srcElement;
+						// event.target = e.srcElement;
 
 						mediaElement.dispatchEvent(event);
 					});
@@ -248,7 +224,7 @@ let DashNativeRenderer = {
 			 * not using dashjs.MediaPlayer.events object
 			 * @see http://cdn.dashjs.org/latest/jsdoc/MediaPlayerEvents.html
 			 */
-			let assignMdashEvents = function (e, data) {
+			let assignMdashEvents = (e, data) => {
 				let event = createEvent(e, node);
 				mediaElement.dispatchEvent(event);
 
@@ -266,7 +242,7 @@ let DashNativeRenderer = {
 		let filteredAttributes = ['id', 'src', 'style'];
 		for (let j = 0, total = originalNode.attributes.length; j < total; j++) {
 			let attribute = originalNode.attributes[j];
-			if (attribute.specified && filteredAttributes.indexOf(attribute.name) === -1) {
+			if (attribute.specified && !filteredAttributes.includes(attribute.name)) {
 				node.setAttribute(attribute.name, attribute.value);
 			}
 		}
@@ -275,7 +251,7 @@ let DashNativeRenderer = {
 
 		if (mediaFiles && mediaFiles.length > 0) {
 			for (i = 0, il = mediaFiles.length; i < il; i++) {
-				if (mejs.Renderers.renderers[options.prefix].canPlayType(mediaFiles[i].type)) {
+				if (renderer.renderers[options.prefix].canPlayType(mediaFiles[i].type)) {
 					node.setAttribute('src', mediaFiles[i].src);
 					break;
 				}
@@ -318,5 +294,14 @@ let DashNativeRenderer = {
 		return node;
 	}
 };
+
+/**
+ * Register Native M(PEG)-Dash type based on URL structure
+ *
+ */
+typeChecks.push((url) => {
+	url = url.toLowerCase();
+	return url.includes('.mpd') ? 'application/dash+xml' : null;
+});
 
 renderer.add(DashNativeRenderer);

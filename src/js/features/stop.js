@@ -4,7 +4,7 @@
  * This feature enables the displaying of a Stop button in the control bar, which basically pauses the media and rewinds
  * it to the initial position.
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -25,8 +25,8 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildstop: function (player, controls, layers, media) {
-			var
+		buildstop: (player, controls, layers, media) => {
+			let
 				t = this,
 				stopTitle = t.options.stopText ? t.options.stopText : mejs.i18n.t('mejs.stop');
 

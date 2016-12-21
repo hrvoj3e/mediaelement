@@ -1,8 +1,8 @@
 import window from 'global/window';
 import document from 'global/document';
 
-const NAV = window.navigator;
-const UA = NAV.userAgent.toLowerCase();
+export const NAV = window.navigator;
+export const UA = NAV.userAgent.toLowerCase();
 
 export const IS_IPAD = (UA.match(/ipad/i) !== null);
 export const IS_IPHONE = (UA.match(/iphone/i) !== null);

@@ -1,3 +1,5 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
@@ -65,7 +67,7 @@ const HtmlMediaElement = {
 			i,
 			il,
 			assignGettersSetters = (propName) => {
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				node['get' + capName] = () => {
 					return node[propName];

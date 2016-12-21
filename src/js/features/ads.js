@@ -170,7 +170,7 @@
 
 		adsPrerollMeta: function() {
 
-			var
+			let
 				t = this,
 				newDuration = 0
 			;
@@ -312,7 +312,7 @@
 
 		// fires off fake XHR requests
 		adsLoadUrl: function(url) {
-			var
+			let
 				img = new Image(),
 				rnd = Math.round(Math.random()*100000)
 			;

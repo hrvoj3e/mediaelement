@@ -1,3 +1,5 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
@@ -90,7 +92,7 @@ const NativeHls = {
 	 *
 	 * @param {Object} settings - an object with settings needed to instantiate HLS object
 	 */
-	createInstance: function (settings) {
+	createInstance: (settings) => {
 		let player = new Hls(settings.options);
 		window['__ready__' + settings.id](player);
 	}
@@ -155,8 +157,8 @@ const HlsNativeRenderer = {
 	 * @param {String} type
 	 * @return {Boolean}
 	 */
-	canPlayType: (type) => HAS_MSE && ['application/x-mpegurl', 'vnd.apple.mpegURL',
-			'audio/mpegURL', 'audio/hls', 'video/hls'].includes(type.toLowerCase()),
+	canPlayType: (type) => HAS_MSE && ['application/x-mpegurl', 'vnd.apple.mpegurl', 'audio/mpegurl', 'audio/hls',
+		'video/hls'].includes(type.toLowerCase()),
 
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
@@ -184,7 +186,7 @@ const HlsNativeRenderer = {
 		// WRAPPERS for PROPs
 		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
+			assignGettersSetters = (propName) => {
 				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				node['get' + capName] = () => hlsPlayer !== null ?  node[propName] : null;

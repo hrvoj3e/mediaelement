@@ -41,7 +41,7 @@
 		 * @param {HTMLElement} media
 		 */
 		buildspeed: function(player, controls, layers, media) {
-			var
+			let
 				t = this,
 				isNative = t.media.rendererName !== null && t.media.rendererName.match(/(native|html5)/)
 			;
@@ -50,7 +50,7 @@
 				return;
 			}
 
-			var
+			let
 				playbackSpeed,
 				inputId,
 				speedTitle = t.options.speedText ? t.options.speedText : mejs.i18n.t('mejs.speed-rate'),
@@ -149,7 +149,7 @@
 				})
 				// handle clicks to the language radio buttons
 				.on('click','input[type=radio]',function() {
-					var
+					let
 						self = $(this),
 						newSpeed = self.val()
 					;

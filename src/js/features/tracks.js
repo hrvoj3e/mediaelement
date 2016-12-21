@@ -62,7 +62,7 @@
 				return;
 			}
 
-			var
+			let
 				t = this,
 				attr = t.options.tracksAriaLive ? 'role="log" aria-live="assertive" aria-atomic="false"' : '',
 				tracksTitle = t.options.tracksText ? t.options.tracksText : mejs.i18n.t('mejs.captions-subtitles'),
@@ -270,7 +270,7 @@
 		 * @param {String} trackId, or "none" to disable captions
 		 */
 		setTrack: function(trackId){
-			var
+			let
 				t = this,
 				i
 			;
@@ -328,7 +328,7 @@
 		 * @param index
 		 */
 		loadTrack: function(index){
-			var
+			let
 				t = this,
 				track = t.tracks[index],
 				after = function() {
@@ -383,7 +383,7 @@
 		 * @param {String} label
 		 */
 		enableTrackButton: function(track) {
-			var
+			let
 				t = this,
 				lang = track.srclang,
 				label = track.label
@@ -461,7 +461,7 @@
 		 *
 		 */
 		checkForTracks: function() {
-			var
+			let
 				t = this,
 				hasSubtitles = false
 			;
@@ -492,7 +492,7 @@
 				return;
 			}
 
-			var
+			let
 				t = this,
 				track = t.selectedTrack,
 				i
@@ -572,7 +572,7 @@
 				return;
 			}
 
-			var
+			let
 				t = this,
 				slides = t.slides,
 				i = t.searchTrackPosition(slides.entries, t.media.currentTime)
@@ -588,7 +588,7 @@
 		 *
 		 */
 		displayChapters: function() {
-			var
+			let
 				t = this,
 				i;
 
@@ -606,7 +606,7 @@
 		 * @param {Object} chapters
 		 */
 		drawChapters: function(chapters) {
-			var
+			let
 				t = this,
 				i,
 				dur,
@@ -660,7 +660,7 @@
 		 * @return {Number}
 		 */
 		searchTrackPosition: function(tracks, currentTime) {
-			var
+			let
 				lo = 0,
 				hi = tracks.length - 1,
 				mid,
@@ -781,7 +781,7 @@
 			 * @returns {{text: Array, times: Array}}
 			 */
 			parse: function(trackText) {
-				var
+				let
 					i = 0,
 					lines = mejs.TrackFormatParser.split2(trackText, /\r?\n/),
 					entries = [],
@@ -826,7 +826,7 @@
 			 */
 			parse: function(trackText) {
 				trackText = $(trackText).filter("tt");
-				var
+				let
 					i = 0,
 					container = trackText.children("div").eq(0),
 					lines = container.find("p"),
@@ -847,7 +847,7 @@
 				}
 
 				for(i = 0; i<lines.length; i++) {
-					var
+					let
 						style,
 						_temp = {
 							start: null,
@@ -894,7 +894,7 @@
 		 * @param {String} regex
 		 * @returns {Array}
 		 */
-		split2: function (text, regex) {
+		split2: (text, regex) => {
 			// normal version for compliant browsers
 			// see below for IE fix
 			return text.split(regex);
@@ -905,7 +905,7 @@
 	if ('x\n\ny'.split(/\n/gi).length !== 3) {
 		// add super slow IE8 and below version
 		mejs.TrackFormatParser.split2 = function(text, regex) {
-			var
+			let
 				parts = [],
 				chunk = '',
 				i;

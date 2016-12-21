@@ -136,7 +136,7 @@ $.extend(MediaElementPlayer.prototype, {
 
 		player.fullscreenBtn = fullscreenBtn;
 
-		t.globalBind('keydown', function (e) {
+		t.globalBind('keydown', (e) => {
 			if (e.keyCode === 27 && ((Features.HAS_TRUE_NATIVE_FULLSCREEN && Features.IS_FULLSCREEN) || t.isFullScreen)) {
 				player.exitFullScreen();
 			}

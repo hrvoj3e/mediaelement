@@ -3,7 +3,7 @@
  *
  * This feature creates a button to speed media in different levels.
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -24,9 +24,9 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildsourcechooser: function (player, controls, layers, media) {
+		buildsourcechooser: (player, controls, layers, media) => {
 
-			var
+			let
 				t = this,
 				sourceTitle = t.options.sourcechooserText ? t.options.sourcechooserText : mejs.i18n.t('mejs.source-chooser'),
 				hoverTimeout
@@ -73,7 +73,7 @@
 				})
 
 				// keyboard menu activation
-				.on('keydown', function (e) {
+				.on('keydown', (e) => {
 					let keyCode = e.keyCode;
 
 					switch (keyCode) {
@@ -99,7 +99,7 @@
 				})
 
 				// close menu when tabbing away
-				.on('focusout', mejs.Utility.debounce(function (e) { // Safari triggers focusout multiple times
+				.on('focusout', mejs.Utility.debounce((e) => { // Safari triggers focusout multiple times
 					// Firefox does NOT support e.relatedTarget to see which element
 					// just lost focus, so wait to find the next focused element
 					setTimeout(() => {
@@ -130,11 +130,11 @@
 						media.setSrc(src);
 						media.load();
 
-						media.addEventListener('loadedmetadata', function (e) {
+						media.addEventListener('loadedmetadata', (e) => {
 							media.currentTime = currentTime;
 						}, true);
 
-						let canPlayAfterSourceSwitchHandler = function (e) {
+						let canPlayAfterSourceSwitchHandler = (e) => {
 							if (!paused) {
 								media.play();
 							}
@@ -146,7 +146,7 @@
 				})
 
 				// Handle click so that screen readers can toggle the menu
-				.on('click', 'button', function (e) {
+				.on('click', 'button', (e) => {
 					if ($(this).siblings('.' + t.options.classPrefix + 'sourcechooser-selector').hasClass(t.options.classPrefix + 'offscreen')) {
 						player.showSourcechooserSelector();
 						$(this).siblings('.' + t.options.classPrefix + 'sourcechooser-selector')
@@ -172,7 +172,7 @@
 		 * @param {String} type
 		 * @param {Boolean} isCurrent
 		 */
-		addSourceButton: function (src, label, type, isCurrent) {
+		addSourceButton: (src, label, type, isCurrent) => {
 			let t = this;
 			if (label === '' || label === undefined) {
 				label = src;

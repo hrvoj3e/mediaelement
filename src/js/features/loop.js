@@ -25,7 +25,7 @@
 		 * @param {HTMLElement} media
 		 */
 		buildloop: function(player, controls, layers, media) {
-			var
+			let
 				t = this,
 				loopTitle = t.options.loopText ? t.options.loopText : mejs.i18n.t('mejs.loop'),
 				// create the loop button

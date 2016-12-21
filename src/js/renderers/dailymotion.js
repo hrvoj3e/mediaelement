@@ -1,3 +1,5 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
@@ -147,7 +149,7 @@ const DailyMotionIframeRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
 		let dm = {};
 
@@ -172,7 +174,7 @@ const DailyMotionIframeRenderer = {
 
 				// add to flash state that we will store
 
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				dm['get' + capName] = () => {
 					if (dmPlayer !== null) {
@@ -396,7 +398,7 @@ const DailyMotionIframeRenderer = {
 				mediaElement.dispatchEvent(event);
 			});
 			dmPlayer.addEventListener('durationchange', () => {
-				event = createEvent('timeupdate', dmPlayer);
+				let event = createEvent('timeupdate', dmPlayer);
 				mediaElement.dispatchEvent(event);
 			});
 
@@ -476,7 +478,7 @@ const DailyMotionIframeRenderer = {
  */
 typeChecks.push((url) => {
 	url = url.toLowerCase();
-	return (url.startsWith('http://dailymotion.com') || url.startsWith('http://dai.ly')) ? 'video/x-dailymotion' : null;
+	return (url.includes('//dailymotion.com') || url.includes('//dai.ly')) ? 'video/x-dailymotion' : null;
 });
 
 window.dmAsyncInit = () => {

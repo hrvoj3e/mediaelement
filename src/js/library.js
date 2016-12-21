@@ -6,7 +6,7 @@ if (typeof jQuery !== 'undefined') {
 	mejs.$ = Zepto;
 
 	// define `outerWidth` method which has not been realized in Zepto
-	Zepto.fn.outerWidth = function (includeMargin) {
+	Zepto.fn.outerWidth = (includeMargin) => {
 		let width = $(this).width();
 		if (includeMargin) {
 			width += parseInt($(this).css('margin-right'), 10);

@@ -9,7 +9,7 @@
  * on GA to send events properly.
  * @see https://developers.google.com/analytics/devguides/collection/analyticsjs/events
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -51,7 +51,7 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildgoogleanalytics: function (player, controls, layers, media) {
+		buildgoogleanalytics: (player, controls, layers, media) => {
 
 			media.addEventListener('play', () => {
 				if (typeof ga !== 'undefined') {

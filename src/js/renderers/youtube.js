@@ -1,3 +1,5 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
@@ -13,24 +15,7 @@ import {typeChecks} from '../utils/media';
  * so it doesn't work - not sure if Google problem or not.
  * @see https://developers.google.com/youtube/iframe_api_reference
  */
-
-
-/**
- * Register YouTube type based on URL structure
- *
- */
-mejs.Utils.typeChecks.push(function (url) {
-
-	url = url.toLowerCase();
-
-	if (url.indexOf('www.youtube') > -1 || url.indexOf('//youtu.be') > -1) {
-		return 'video/x-youtube';
-	} else {
-		return null;
-	}
-});
-
-let YouTubeApi = {
+const YouTubeApi = {
 	/**
 	 * @type {Boolean}
 	 */
@@ -49,13 +34,13 @@ let YouTubeApi = {
 	 *
 	 * @param {Object} settings - an object with settings needed to create <iframe>
 	 */
-	enqueueIframe: function (settings) {
+	enqueueIframe: (settings) => {
 
-		if (this.isLoaded) {
-			this.createIframe(settings);
+		if (YouTubeApi.isLoaded) {
+			YouTubeApi.createIframe(settings);
 		} else {
-			this.loadIframeApi();
-			this.iframeQueue.push(settings);
+			YouTubeApi.loadIframeApi();
+			YouTubeApi.iframeQueue.push(settings);
 		}
 	},
 
@@ -64,12 +49,12 @@ let YouTubeApi = {
 	 *
 	 */
 	loadIframeApi: () => {
-		if (!this.isIframeStarted) {
+		if (!YouTubeApi.isIframeStarted) {
 			let tag = document.createElement('script');
 			tag.src = 'https://www.youtube.com/player_api';
 			let firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-			this.isIframeStarted = true;
+			YouTubeApi.isIframeStarted = true;
 		}
 	},
 
@@ -79,12 +64,12 @@ let YouTubeApi = {
 	 */
 	iFrameReady: () => {
 
-		this.isLoaded = true;
-		this.isIframeLoaded = true;
+		YouTubeApi.isLoaded = true;
+		YouTubeApi.isIframeLoaded = true;
 
-		while (this.iframeQueue.length > 0) {
-			let settings = this.iframeQueue.pop();
-			this.createIframe(settings);
+		while (YouTubeApi.iframeQueue.length > 0) {
+			let settings = YouTubeApi.iframeQueue.pop();
+			YouTubeApi.createIframe(settings);
 		}
 	},
 
@@ -93,7 +78,7 @@ let YouTubeApi = {
 	 *
 	 * @param {Object} settings - an object with settings needed to create <iframe>
 	 */
-	createIframe: function (settings) {
+	createIframe: (settings) => {
 		return new YT.Player(settings.containerId, settings);
 	},
 
@@ -108,7 +93,7 @@ let YouTubeApi = {
 	 * @param {String} url
 	 * @return {string}
 	 */
-	getYouTubeId: function (url) {
+	getYouTubeId: (url) => {
 
 		let youTubeId = "";
 
@@ -133,7 +118,7 @@ let YouTubeApi = {
 	 * @param {String} url
 	 * @returns {string}
 	 */
-	getYouTubeIdFromParam: function (url) {
+	getYouTubeIdFromParam: (url) => {
 
 		let youTubeId = '',
 			parts = url.split('?'),
@@ -157,7 +142,7 @@ let YouTubeApi = {
 	 * @param {String} url
 	 * @return {?String}
 	 */
-	getYouTubeIdFromUrl: function (url) {
+	getYouTubeIdFromUrl: (url) => {
 
 		if (url === undefined || url === null) {
 			return null;
@@ -175,8 +160,8 @@ let YouTubeApi = {
 	 * @param {String} url
 	 * @return {?String}
 	 */
-	getYouTubeNoCookieUrl: function (url) {
-		if (url === undefined || url === null || url.indexOf('www.youtube') === -1) {
+	getYouTubeNoCookieUrl: (url) => {
+		if (url === undefined || url === null || !url.includes('//www.youtube') || !url.includes('//www.youtube')) {
 			return url;
 		}
 
@@ -187,15 +172,7 @@ let YouTubeApi = {
 	}
 };
 
-/*
- * Register YouTube API event globally
- *
- */
-win.onYouTubePlayerAPIReady = () => {
-	YouTubeApi.iFrameReady();
-};
-
-let YouTubeIframeRenderer = {
+const YouTubeIframeRenderer = {
 	name: 'youtube_iframe',
 
 	options: {
@@ -227,11 +204,8 @@ let YouTubeIframeRenderer = {
 	 * @param {String} type
 	 * @return {Boolean}
 	 */
-	canPlayType: function (type) {
-		let mediaTypes = ['video/youtube', 'video/x-youtube'];
+	canPlayType: (type) => ['video/youtube', 'video/x-youtube'].includes(type),
 
-		return mediaTypes.indexOf(type) > -1;
-	},
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
 	 *
@@ -240,7 +214,7 @@ let YouTubeIframeRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
 		// exposed object
 		let youtube = {};
@@ -249,23 +223,25 @@ let YouTubeIframeRenderer = {
 		youtube.mediaElement = mediaElement;
 
 		// API objects
-		let apiStack = [],
+		let
+			apiStack = [],
 			youTubeApi = null,
 			youTubeApiReady = false,
 			paused = true,
 			ended = false,
 			youTubeIframe = null,
 			i,
-			il;
+			il
+		;
 
 		// wrappers for get/set
-		var
+		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
+			assignGettersSetters = (propName) => {
 
 				// add to flash state that we will store
 
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				youtube['get' + capName] = () => {
 					if (youTubeApi !== null) {
@@ -313,7 +289,7 @@ let YouTubeIframeRenderer = {
 					}
 				};
 
-				youtube['set' + capName] = function (value) {
+				youtube['set' + capName] = (value) => {
 
 					if (youTubeApi !== null) {
 
@@ -372,9 +348,9 @@ let YouTubeIframeRenderer = {
 		}
 
 		// add wrappers for native methods
-		var
+		let
 			methods = mejs.html5media.methods,
-			assignMethods = function (methodName) {
+			assignMethods = (methodName) => {
 
 				// run the method on the native HTMLMediaElement
 				youtube[methodName] = () => {
@@ -404,7 +380,7 @@ let YouTubeIframeRenderer = {
 		}
 
 		// CREATE YouTube
-		let youtubeContainer = doc.createElement('div');
+		let youtubeContainer = document.createElement('div');
 		youtubeContainer.id = youtube.id;
 
 		// If `nocookie` feature was enabled, modify original URL
@@ -415,7 +391,7 @@ let YouTubeIframeRenderer = {
 		mediaElement.originalNode.parentNode.insertBefore(youtubeContainer, mediaElement.originalNode);
 		mediaElement.originalNode.style.display = 'none';
 
-		var
+		let
 			height = mediaElement.originalNode.height,
 			width = mediaElement.originalNode.width,
 			videoId = YouTubeApi.getYouTubeId(mediaFiles[0].src),
@@ -436,13 +412,13 @@ let YouTubeIframeRenderer = {
 					start: 0,
 					end: 0
 				}, youtube.options.youtube),
-				origin: win.location.host,
+				origin: window.location.host,
 				events: {
-					onReady: function (e) {
+					onReady: (e) => {
 
 						youTubeApiReady = true;
 						mediaElement.youTubeApi = youTubeApi = e.target;
-						mediaElement.youTubeState = youTubeState = {
+						mediaElement.youTubeState = {
 							paused: true,
 							ended: false
 						};
@@ -465,9 +441,9 @@ let YouTubeIframeRenderer = {
 						// a few more events
 						youTubeIframe = youTubeApi.getIframe();
 
-						var
+						let
 							events = ['mouseover', 'mouseout'],
-							assignEvents = function (e) {
+							assignEvents = (e) => {
 
 								let newEvent = createEvent(e.type, youtube);
 								mediaElement.dispatchEvent(newEvent);
@@ -476,7 +452,7 @@ let YouTubeIframeRenderer = {
 
 						for (let j in events) {
 							let eventName = events[j];
-							mejs.addEvent(youTubeIframe, eventName, assignEvents);
+							addEvent(youTubeIframe, eventName, assignEvents);
 						}
 
 						// send init events
@@ -487,7 +463,7 @@ let YouTubeIframeRenderer = {
 							mediaElement.dispatchEvent(event);
 						}
 					},
-					onStateChange: function (e) {
+					onStateChange: (e) => {
 
 						// translate events
 						let events = [];
@@ -551,9 +527,9 @@ let YouTubeIframeRenderer = {
 		// send it off for async loading and creation
 		YouTubeApi.enqueueIframe(youtubeSettings);
 
-		youtube.onEvent = function (eventName, player, _youTubeState) {
+		youtube.onEvent = (eventName, player, _youTubeState) => {
 			if (_youTubeState !== null && _youTubeState !== undefined) {
-				mediaElement.youTubeState = youTubeState = _youTubeState;
+				mediaElement.youTubeState = _youTubeState;
 			}
 
 		};
@@ -598,5 +574,15 @@ let YouTubeIframeRenderer = {
 };
 
 if (window.postMessage && typeof window.addEventListener) {
+
+	window.onYouTubePlayerAPIReady = () => {
+		YouTubeApi.iFrameReady();
+	};
+
+	typeChecks.push((url) => {
+		url = url.toLowerCase();
+		return (url.includes('//www.youtube') || url.includes('//youtu.be')) ? 'video/x-youtube' : null;
+	});
+
 	renderer.add(YouTubeIframeRenderer);
 }

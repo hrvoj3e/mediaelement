@@ -6,7 +6,7 @@
  * Marker position and a reference to the MediaElement Player object is passed to the registered callback function for
  * any post processing. Marker color is configurable.
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -36,8 +36,8 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildmarkers: function (player, controls, layers, media) {
-			var
+		buildmarkers: (player, controls, layers, media) => {
+			let
 				t = this,
 				i = 0,
 				currentPos = -1,
@@ -50,10 +50,10 @@
 					.append('<span class="' + t.options.classPrefix + 'time-marker"></span>');
 			}
 
-			media.addEventListener('durationchange', function (e) {
+			media.addEventListener('durationchange', (e) => {
 				player.setmarkers(controls);
 			});
-			media.addEventListener('timeupdate', function (e) {
+			media.addEventListener('timeupdate', (e) => {
 				currentPos = Math.floor(media.currentTime);
 				if (lastPlayPos > currentPos) {
 					if (lastMarkerCallBack > currentPos) {
@@ -79,7 +79,7 @@
 		 *
 		 * @param {$} controls
 		 */
-		setmarkers: function (controls) {
+		setmarkers: (controls) => {
 			let t = this,
 				i = 0,
 				left;

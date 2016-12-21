@@ -1,8 +1,10 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
 import {renderer} from '../core/renderer';
-import {createEvent, addEvent} from '../utils/dom';
+import {createEvent} from '../utils/dom';
 import {typeChecks} from '../utils/media';
 
 /**
@@ -11,24 +13,7 @@ import {typeChecks} from '../utils/media';
  * Uses <iframe> approach and uses SoundCloud Widget API to manipulate it.
  * @see https://developers.soundcloud.com/docs/api/html5-widget
  */
-
-
-/**
- * Register SoundCloud type based on URL structure
- *
- */
-mejs.Utils.typeChecks.push(function (url) {
-
-	url = url.toLowerCase();
-
-	if (url.indexOf('soundcloud.com') > -1) {
-		return 'video/x-soundcloud';
-	} else {
-		return null;
-	}
-});
-
-let SoundCloudApi = {
+const SoundCloudApi = {
 	/**
 	 * @type {Boolean}
 	 */
@@ -47,13 +32,13 @@ let SoundCloudApi = {
 	 *
 	 * @param {Object} settings - an object with settings needed to create <iframe>
 	 */
-	enqueueIframe: function (settings) {
+	enqueueIframe: (settings) => {
 
-		if (this.isLoaded) {
-			this.createIframe(settings);
+		if (SoundCloudApi.isLoaded) {
+			SoundCloudApi.createIframe(settings);
 		} else {
-			this.loadIframeApi();
-			this.iframeQueue.push(settings);
+			SoundCloudApi.loadIframeApi();
+			SoundCloudApi.iframeQueue.push(settings);
 		}
 	},
 
@@ -62,7 +47,7 @@ let SoundCloudApi = {
 	 *
 	 */
 	loadIframeApi: () => {
-		if (!this.isSDKStarted) {
+		if (!SoundCloudApi.isSDKStarted) {
 
 			let head = doc.getElementsByTagName("head")[0] || document.documentElement,
 				script = doc.createElement("script"),
@@ -72,7 +57,7 @@ let SoundCloudApi = {
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
-				if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+				if (!done && (!SoundCloudApi.readyState || SoundCloudApi.readyState === "loaded" || SoundCloudApi.readyState === "complete")) {
 					done = true;
 					SoundCloudApi.apiReady();
 
@@ -84,7 +69,7 @@ let SoundCloudApi = {
 				}
 			};
 			head.appendChild(script);
-			this.isSDKStarted = true;
+			SoundCloudApi.isSDKStarted = true;
 		}
 	},
 
@@ -93,12 +78,12 @@ let SoundCloudApi = {
 	 *
 	 */
 	apiReady: () => {
-		this.isLoaded = true;
-		this.isSDKLoaded = true;
+		SoundCloudApi.isLoaded = true;
+		SoundCloudApi.isSDKLoaded = true;
 
-		while (this.iframeQueue.length > 0) {
-			let settings = this.iframeQueue.pop();
-			this.createIframe(settings);
+		while (SoundCloudApi.iframeQueue.length > 0) {
+			let settings = SoundCloudApi.iframeQueue.pop();
+			SoundCloudApi.createIframe(settings);
 		}
 	},
 
@@ -107,13 +92,13 @@ let SoundCloudApi = {
 	 *
 	 * @param {Object} settings - an object with settings needed to create <iframe>
 	 */
-	createIframe: function (settings) {
+	createIframe: (settings) => {
 		let player = SC.Widget(settings.iframe);
-		win['__ready__' + settings.id](player);
+		window['__ready__' + settings.id](player);
 	}
 };
 
-let SoundCloudIframeRenderer = {
+const SoundCloudIframeRenderer = {
 	name: 'soundcloud_iframe',
 
 	options: {
@@ -126,11 +111,8 @@ let SoundCloudIframeRenderer = {
 	 * @param {String} type
 	 * @return {Boolean}
 	 */
-	canPlayType: function (type) {
-		let mediaTypes = ['video/soundcloud', 'video/x-soundcloud'];
+	canPlayType: (type) => ['video/soundcloud', 'video/x-soundcloud'].includes(type),
 
-		return mediaTypes.indexOf(type) > -1;
-	},
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
 	 *
@@ -139,7 +121,7 @@ let SoundCloudIframeRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
 		let sc = {};
 
@@ -149,11 +131,11 @@ let SoundCloudIframeRenderer = {
 		sc.mediaElement = mediaElement;
 
 		// create our fake element that allows events and such to work
-		let apiStack = [],
+		let
+			apiStack = [],
 			scPlayerReady = false,
 			scPlayer = null,
 			scIframe = null,
-
 			currentTime = 0,
 			duration = 0,
 			bufferedTime = 0,
@@ -162,16 +144,17 @@ let SoundCloudIframeRenderer = {
 			muted = false,
 			ended = false,
 			i,
-			il;
+			il
+		;
 
 		// wrappers for get/set
-		var
+		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
+			assignGettersSetters = (propName) => {
 
 				// add to flash state that we will store
 
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				sc['get' + capName] = () => {
 					if (scPlayer !== null) {
@@ -217,7 +200,7 @@ let SoundCloudIframeRenderer = {
 					}
 				};
 
-				sc['set' + capName] = function (value) {
+				sc['set' + capName] = (value) => {
 
 					if (scPlayer !== null) {
 
@@ -265,15 +248,16 @@ let SoundCloudIframeRenderer = {
 				};
 
 			}
-			;
+		;
+
 		for (i = 0, il = props.length; i < il; i++) {
 			assignGettersSetters(props[i]);
 		}
 
 		// add wrappers for native methods
-		var
+		let
 			methods = mejs.html5media.methods,
-			assignMethods = function (methodName) {
+			assignMethods = (methodName) => {
 
 				// run the method on the Soundcloud API
 				sc[methodName] = () => {
@@ -297,13 +281,14 @@ let SoundCloudIframeRenderer = {
 				};
 
 			}
-			;
+		;
+
 		for (i = 0, il = methods.length; i < il; i++) {
 			assignMethods(methods[i]);
 		}
 
 		// add a ready method that SC can fire
-		win['__ready__' + sc.id] = function (_scPlayer) {
+		window['__ready__' + sc.id] = (_scPlayer) => {
 
 			scPlayerReady = true;
 			mediaElement.scPlayer = scPlayer = _scPlayer;
@@ -328,7 +313,7 @@ let SoundCloudIframeRenderer = {
 				paused = false;
 				ended = false;
 
-				scPlayer.getPosition(function (_currentTime) {
+				scPlayer.getPosition((_currentTime) => {
 					currentTime = _currentTime / 1000;
 					let event = createEvent('timeupdate', sc);
 					mediaElement.dispatchEvent(event);
@@ -356,7 +341,7 @@ let SoundCloudIframeRenderer = {
 				mediaElement.dispatchEvent(event);
 			});
 			scPlayer.bind(SC.Widget.Events.READY, () => {
-				scPlayer.getDuration(function (_duration) {
+				scPlayer.getDuration((_duration) => {
 					duration = _duration / 1000;
 
 					let event = createEvent('loadedmetadata', sc);
@@ -364,7 +349,7 @@ let SoundCloudIframeRenderer = {
 				});
 			});
 			scPlayer.bind(SC.Widget.Events.LOAD_PROGRESS, () => {
-				scPlayer.getDuration(function (loadProgress) {
+				scPlayer.getDuration((loadProgress) => {
 					if (duration > 0) {
 						bufferedTime = duration * loadProgress;
 
@@ -372,7 +357,7 @@ let SoundCloudIframeRenderer = {
 						mediaElement.dispatchEvent(event);
 					}
 				});
-				scPlayer.getDuration(function (_duration) {
+				scPlayer.getDuration((_duration) => {
 					duration = _duration;
 
 					let event = createEvent('loadedmetadata', sc);
@@ -398,15 +383,14 @@ let SoundCloudIframeRenderer = {
 		scIframe.style.visibility = 'hidden';
 		scIframe.src = mediaFiles[0].src;
 		scIframe.scrolling = 'no';
-		mediaElement.appendChild(scIframe);
 
+		mediaElement.appendChild(scIframe);
 		mediaElement.originalNode.style.display = 'none';
 
-		var
-			scSettings = {
-				iframe: scIframe,
-				id: sc.id
-			};
+		let scSettings = {
+			iframe: scIframe,
+			id: sc.id
+		};
 
 		SoundCloudApi.enqueueIframe(scSettings);
 
@@ -431,5 +415,14 @@ let SoundCloudIframeRenderer = {
 		return sc;
 	}
 };
+
+/**
+ * Register SoundCloud type based on URL structure
+ *
+ */
+typeChecks.push((url) => {
+	url = url.toLowerCase();
+	return url.includes('//soundcloud.com') ? 'video/x-soundcloud' : null;
+});
 
 renderer.add(SoundCloudIframeRenderer);

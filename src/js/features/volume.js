@@ -4,7 +4,7 @@
  * This feature enables the displaying of a Volume button in the control bar, and also contains logic to manipulate its
  * events, such as sliding up/down (or left/right, if vertical), muting/unmuting media, etc.
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -42,14 +42,14 @@
 		 * @param {HTMLElement} media
 		 * @public
 		 */
-		buildvolume: function (player, controls, layers, media) {
+		buildvolume: (player, controls, layers, media) => {
 
 			// Android and iOS don't support volume controls
 			if ((mejs.MediaFeatures.isAndroid || mejs.MediaFeatures.isiOS) && this.options.hideVolumeOnTouchDevices) {
 				return;
 			}
 
-			var
+			let
 				t = this,
 				mode = (t.isVideo) ? t.options.videoVolume : t.options.audioVolume,
 				mute = (mode === 'horizontal') ?
@@ -107,7 +107,7 @@
 				 * @private
 				 * @param {Number} volume
 				 */
-				positionVolumeHandle = function (volume) {
+				positionVolumeHandle = (volume) => {
 
 					// correct to 0-1
 					volume = Math.max(0, volume);
@@ -154,9 +154,9 @@
 				/**
 				 * @private
 				 */
-				handleVolumeMove = function (e) {
+				handleVolumeMove = (e) => {
 
-					var
+					let
 						volume = null,
 						totalOffset = volumeTotal.offset()
 					;
@@ -164,7 +164,7 @@
 					// calculate the new volume based on the most recent position
 					if (mode === 'vertical') {
 
-						var
+						let
 							railHeight = volumeTotal.height(),
 							newY = e.pageY - totalOffset.top
 						;
@@ -177,7 +177,7 @@
 						}
 
 					} else {
-						var
+						let
 							railWidth = volumeTotal.width(),
 							newX = e.pageX - totalOffset.left
 						;
@@ -241,9 +241,9 @@
 				.on('mouseover', () => {
 					mouseIsOver = true;
 				})
-				.on('mousedown', function (e) {
+				.on('mousedown', (e) => {
 					handleVolumeMove(e);
-					t.globalBind('mousemove.vol', function (e) {
+					t.globalBind('mousemove.vol', (e) => {
 						handleVolumeMove(e);
 					});
 					t.globalBind('mouseup.vol', () => {
@@ -258,10 +258,10 @@
 
 					return false;
 				})
-				.on('keydown', function (e) {
+				.on('keydown', (e) => {
 
 					if (t.options.keyActions.length) {
-						var
+						let
 							keyCode = e.keyCode,
 							volume = media.volume
 							;
@@ -300,7 +300,7 @@
 			});
 
 			// listen for volume change events from other sources
-			media.addEventListener('volumechange', function (e) {
+			media.addEventListener('volumechange', (e) => {
 				if (!mouseIsDown) {
 					if (media.muted) {
 						positionVolumeHandle(0);

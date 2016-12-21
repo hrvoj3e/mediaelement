@@ -27,7 +27,7 @@
 		 * @param {HTMLElement} media
 		 */
 		buildpostroll: function(player, controls, layers, media) {
-			var
+			let
 				t = this,
 				postrollTitle = t.options.postrollCloseText ? t.options.postrollCloseText : mejs.i18n.t('mejs.close'),
 				postrollLink = t.container.find('link[rel="postroll"]').attr('href');
@@ -43,11 +43,11 @@
 					'<div class="' + t.options.classPrefix + 'postroll-layer-content"></div></div>')
 						.prependTo(layers).hide();
 
-				t.media.addEventListener('ended', function (e) {
+				t.media.addEventListener('ended', (e) => {
 					$.ajax({
 						dataType: 'html',
 						url: postrollLink,
-						success: function (data, textStatus) {
+						success: (data, textStatus) => {
 							layers.find('.' + t.options.classPrefix + 'postroll-layer-content').html(data);
 						}
 					});

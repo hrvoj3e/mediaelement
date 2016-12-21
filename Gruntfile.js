@@ -39,6 +39,7 @@ module.exports = function(grunt) {
 					'src/js/languages/*.js',
 					'src/js/renderers/*.js',
 					'src/js/features/*.js',
+					'src/library.js',
 					'src/player.js',
 					'src/simple.js',
 					'test/core/*.js'
@@ -59,13 +60,21 @@ module.exports = function(grunt) {
 				},
 				files: {
 					// core element
-					"tmp/mediaelement.js": [
+					'tmp/mediaelement.js': [
 						'src/js/utils/legacy.js',
 						'src/js/core/mediaelement.js',
 						'src/js/renderers/html5.js',
 						'src/js/renderers/hls.js',
+						'src/js/renderers/mdash.js',
 						'src/js/renderers/flv.js',
-						'src/js/renderers/dailymotion.js'
+						'src/js/renderers/youtube.js',
+						'src/js/renderers/vimeo.js',
+						'src/js/renderers/dailymotion.js',
+						'src/js/renderers/facebook.js',
+						'src/js/renderers/soundcloud.js',
+						'src/js/renderers/flash.js',
+						'src/js/core/i18n.js',
+						'src/js/languages/en.js'
 					]
 				}
 			}
@@ -74,29 +83,13 @@ module.exports = function(grunt) {
 			me: {
 				src: [
 					'src/js/header.js',
-					// 'src/js/mediaelement-namespace.js',
-					// 'src/js/mediaelement-utility.js',
-					// 'src/js/mediaelement-utility-oldie.js',
-					// 'src/js/mediaelement-core.js',
-					// 'src/js/mediaelement-renderer-html5.js',
-					// 'src/js/mediaelement-renderer-hls.js',
-					// 'src/js/mediaelement-renderer-mdash.js',
-					// 'src/js/mediaelement-renderer-flv.js',
-					// 'src/js/mediaelement-renderer-youtube-iframe.js',
-					// 'src/js/mediaelement-renderer-vimeo.js',
-					// 'src/js/mediaelement-renderer-dailymotion-iframe.js',
-					// 'src/js/mediaelement-renderer-facebook.js',
-					// 'src/js/mediaelement-renderer-soundcloud.js',
-					// 'src/js/mediaelement-renderer-flash.js',
-					// 'src/js/mediaelement-i18n.js',
-					// 'src/js/mediaelement-i18n-locale-en.js',
 					'tmp/mediaelement.js'
 				],
 				dest: 'tmp/mediaelement.js'
 			},
 			mep: {
 				src: [
-					'src/js/mediaelement-header.js',
+					'src/js/header.js',
 					'src/js/mediaelementplayer-library.js',
 					'src/js/mediaelementplayer-player.js'
 				].concat(featureSources || [

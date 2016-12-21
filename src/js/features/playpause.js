@@ -30,7 +30,7 @@
 		 * @public
 		 */
 		buildplaypause: function(player, controls, layers, media) {
-			var
+			let
 				t = this,
 				op = t.options,
 				playTitle = op.playText ? op.playText : mejs.i18n.t('mejs.play'),

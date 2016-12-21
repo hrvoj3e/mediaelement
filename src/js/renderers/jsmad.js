@@ -1,9 +1,7 @@
-import window from 'global/window';
-import document from 'global/document';
+"use strict";
+
 import mejs from '../core/mejs';
 import {renderer} from '../core/renderer';
-import {createEvent, addEvent} from '../utils/dom';
-import {typeChecks} from '../utils/media';
 
 /**
  * JSMad renderer
@@ -11,7 +9,7 @@ import {typeChecks} from '../utils/media';
  * It expands the original player using JSMad library to decode audio `mp3` media.
  * @see https://github.com/fasterthanlime/jsmad
  */
-let JsMadRenderer = {
+const JsMadRenderer = {
 	name: 'jsmad',
 
 	options: null,
@@ -21,17 +19,8 @@ let JsMadRenderer = {
 	 * @param {String} type
 	 * @return {Array}
 	 */
-	canPlayType: function (type) {
+	canPlayType: (type) => ['audio/mp3'].includes(type) ? 'audio/mp3' : null,
 
-		let doesThisWork = true,
-			supportedMediaTypes = ['audio/mp3'];
-
-		if (doesThisWork) {
-			return supportedMediaTypes;
-		} else {
-			return [];
-		}
-	},
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
 	 *
@@ -40,9 +29,9 @@ let JsMadRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
-		var
+		let
 			jsmad = {},
 			i,
 			il
@@ -58,19 +47,19 @@ let JsMadRenderer = {
 		// JSMAD player
 		jsmad.jsMad = null;
 
-		jsmad.loadSrc = function (filename) {
+		jsmad.loadSrc = (filename) => {
 
-			new Mad.Player.fromURL(filename, function (player) {
+			new Mad.Player.fromURL(filename, (player) => {
 
 				jsmad.jsMad = player;
 
-				jsmad.jsMad.onPlay = function () {
+				jsmad.jsMad.onPlay = () => {
 					mediaElement.dispatchEvent('play');
 				};
-				jsmad.jsMad.onPause = function () {
+				jsmad.jsMad.onPause = () => {
 					mediaElement.dispatchEvent('pause');
 				};
-				jsmad.jsMad.onProgress = function (current, total) {
+				jsmad.jsMad.onProgress = (current, total) => {
 					mediaElement.dispatchEvent('timeupdate');
 
 					jsmad.jsMad.currentTime = current;
@@ -96,13 +85,13 @@ let JsMadRenderer = {
 		};
 
 		// wrappers for get/set
-		var
+		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
+			assignGettersSetters = (propName) => {
 
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
-				jsmad['get' + capName] = function () {
+				jsmad['get' + capName] = () => {
 
 					let value = null;
 
@@ -126,7 +115,7 @@ let JsMadRenderer = {
 					return value;
 				};
 
-				jsmad['set' + capName] = function (value) {
+				jsmad['set' + capName] = (value) => {
 
 					if (propName === 'src') {
 
@@ -154,12 +143,12 @@ let JsMadRenderer = {
 		}
 
 		// add wrappers for native methods
-		var
+		let
 			methods = mejs.html5media.methods,
-			assignMethods = function (methodName) {
+			assignMethods = (methodName) => {
 
 				// run the method on the native HTMLMediaElement
-				jsmad[methodName] = function () {
+				jsmad[methodName] = () => {
 
 					if (jsmad.jsMad !== null) {
 
@@ -189,9 +178,9 @@ let JsMadRenderer = {
 			assignMethods(methods[i]);
 		}
 
-		jsmad.show = function () {
+		jsmad.show = () => {
 		};
-		jsmad.hide = function () {
+		jsmad.hide = () => {
 		};
 
 		if (mediaFiles && mediaFiles.length > 0) {

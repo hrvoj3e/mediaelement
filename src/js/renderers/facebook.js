@@ -1,8 +1,11 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
 import {renderer} from '../core/renderer';
-import {createEvent, addEvent} from '../utils/dom';
+import {isObjectEmpty} from '../utils/general';
+import {createEvent} from '../utils/dom';
 import {typeChecks} from '../utils/media';
 
 /**
@@ -11,24 +14,7 @@ import {typeChecks} from '../utils/media';
  * It creates an <iframe> from a <div> with specific configuration.
  * @see https://developers.facebook.com/docs/plugins/embedded-video-player
  */
-
-
-/**
- * Register Facebook type based on URL structure
- *
- */
-mejs.Utils.typeChecks.push(function (url) {
-
-	url = url.toLowerCase();
-
-	if (url.indexOf('www.facebook') > -1) {
-		return 'video/x-facebook';
-	} else {
-		return null;
-	}
-});
-
-let FacebookRenderer = {
+const FacebookRenderer = {
 	name: 'facebook',
 
 	options: {
@@ -46,11 +32,8 @@ let FacebookRenderer = {
 	 * @param {String} type
 	 * @return {Boolean}
 	 */
-	canPlayType: function (type) {
-		let mediaTypes = ['video/facebook', 'video/x-facebook'];
+	canPlayType: (type)  => ['video/facebook', 'video/x-facebook'].includes(type),
 
-		return mediaTypes.indexOf(type) > -1;
-	},
 	/**
 	 * Create the player instance and add all native events/methods/properties as possible
 	 *
@@ -59,9 +42,9 @@ let FacebookRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles)  => {
 
-		var
+		let
 			fbWrapper = {},
 			fbApi = null,
 			fbDiv = null,
@@ -73,18 +56,19 @@ let FacebookRenderer = {
 			eventHandler = {},
 			i,
 			il
-			;
+		;
 
+		options = Object.assign(options, mediaElement.options);
 		fbWrapper.options = options;
 		fbWrapper.id = mediaElement.id + '_' + options.prefix;
 		fbWrapper.mediaElement = mediaElement;
 
 		// wrappers for get/set
-		var
+		let
 			props = mejs.html5media.properties,
-			assignGettersSetters = function (propName) {
+			assignGettersSetters = (propName)  => {
 
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				fbWrapper['get' + capName] = () => {
 
@@ -131,7 +115,7 @@ let FacebookRenderer = {
 					}
 				};
 
-				fbWrapper['set' + capName] = function (value) {
+				fbWrapper['set' + capName] = (value)  => {
 
 					if (fbApi !== null) {
 
@@ -185,15 +169,16 @@ let FacebookRenderer = {
 				};
 
 			}
-			;
+		;
+
 		for (i = 0, il = props.length; i < il; i++) {
 			assignGettersSetters(props[i]);
 		}
 
 		// add wrappers for native methods
-		var
+		let
 			methods = mejs.html5media.methods,
-			assignMethods = function (methodName) {
+			assignMethods = (methodName)  => {
 
 				// run the method on the native HTMLMediaElement
 				fbWrapper[methodName] = () => {
@@ -217,7 +202,8 @@ let FacebookRenderer = {
 				};
 
 			}
-			;
+		;
+
 		for (i = 0, il = methods.length; i < il; i++) {
 			assignMethods(methods[i]);
 		}
@@ -264,22 +250,22 @@ let FacebookRenderer = {
 			 * Register Facebook API event globally
 			 *
 			 */
-			win.fbAsyncInit = () => {
+			window.fbAsyncInit = () => {
 
 				FB.init(config);
 
-				FB.Event.subscribe('xfbml.ready', function (msg) {
+				FB.Event.subscribe('xfbml.ready', (msg) => {
 
 					if (msg.type === 'video') {
 
 						fbApi = msg.instance;
 
 						// Set proper size since player dimensions are unknown before this event
-						var
+						let
 							fbIframe = fbDiv.getElementsByTagName('iframe')[0],
-							width = parseInt(win.getComputedStyle(fbIframe, null).width),
+							width = parseInt(window.getComputedStyle(fbIframe, null).width),
 							height = parseInt(fbIframe.style.height)
-							;
+						;
 
 						fbWrapper.setSize(width, height);
 
@@ -289,7 +275,7 @@ let FacebookRenderer = {
 						let fbEvents = ['startedPlaying', 'paused', 'finishedPlaying', 'startedBuffering', 'finishedBuffering'];
 						for (i = 0, il = fbEvents.length; i < il; i++) {
 							let event = fbEvents[i], handler = eventHandler[event];
-							if (!mejs.Utility.isObjectEmpty(handler) && typeof handler.removeListener === 'function') {
+							if (!isObjectEmpty(handler) && typeof handler.removeListener === 'function') {
 								handler.removeListener(event);
 							}
 						}
@@ -359,8 +345,9 @@ let FacebookRenderer = {
 				});
 			};
 
-			(function (d, s, id) {
-				let js, fjs = d.getElementsByTagName(s)[0];
+			(((d, s, id) => {
+				let js;
+				let fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) {
 					return;
 				}
@@ -368,11 +355,11 @@ let FacebookRenderer = {
 				js.id = id;
 				js.src = 'https://connect.facebook.net/en_US/sdk.js';
 				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
+			})(document, 'script', 'facebook-jssdk'));
 		}
 
 		if (mediaFiles.length > 0) {
-			createFacebookEmbed(mediaFiles[0].src, options.facebook);
+			createFacebookEmbed(mediaFiles[0].src, fbWrapper.options.facebook);
 		}
 
 		fbWrapper.hide = () => {
@@ -413,5 +400,14 @@ let FacebookRenderer = {
 		return fbWrapper;
 	}
 };
+
+/**
+ * Register Facebook type based on URL structure
+ *
+ */
+typeChecks.push((url) => {
+	url = url.toLowerCase();
+	return url.includes('//www.facebook') ? 'video/x-facebook' : null;
+});
 
 renderer.add(FacebookRenderer);

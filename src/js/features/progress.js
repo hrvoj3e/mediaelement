@@ -3,7 +3,7 @@
  *
  * This feature creates a progress bar with a slider in the control bar, and updates it based on native events.
  */
-(function ($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -25,9 +25,9 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildprogress: function (player, controls, layers, media) {
+		buildprogress: (player, controls, layers, media) => {
 
-			var
+			let
 				t = this,
 				mouseIsDown = false,
 				mouseIsOver = false,
@@ -66,7 +66,7 @@
 			 * @private
 			 * @param {Event} e
 			 */
-			let handleMouseMove = function (e) {
+			let handleMouseMove = (e) => {
 
 					let offset = t.total.offset(),
 						width = t.total.width(),
@@ -149,11 +149,11 @@
 				};
 
 			// Events
-			t.slider.on('focus', function (e) {
+			t.slider.on('focus', (e) => {
 				player.options.autoRewind = false;
-			}).on('blur', function (e) {
+			}).on('blur', (e) => {
 				player.options.autoRewind = autoRewindInitial;
-			}).on('keydown', function (e) {
+			}).on('keydown', (e) => {
 
 				if ((new Date() - lastKeyPressTime) >= 1000) {
 					startedPaused = media.paused;
@@ -238,15 +238,15 @@
 
 
 			// handle clicks
-			t.rail.on('mousedown touchstart', function (e) {
+			t.rail.on('mousedown touchstart', (e) => {
 				// only handle left clicks or touch
 				if (e.which === 1 || e.which === 0) {
 					mouseIsDown = true;
 					handleMouseMove(e);
-					t.globalBind('mousemove.dur touchmove.dur', function (e) {
+					t.globalBind('mousemove.dur touchmove.dur', (e) => {
 						handleMouseMove(e);
 					});
-					t.globalBind('mouseup.dur touchend.dur', function (e) {
+					t.globalBind('mouseup.dur touchend.dur', (e) => {
 						mouseIsDown = false;
 						if (t.timefloat !== undefined) {
 							t.timefloat.hide();
@@ -254,15 +254,15 @@
 						t.globalUnbind('.dur');
 					});
 				}
-			}).on('mouseenter', function (e) {
+			}).on('mouseenter', (e) => {
 				mouseIsOver = true;
-				t.globalBind('mousemove.dur', function (e) {
+				t.globalBind('mousemove.dur', (e) => {
 					handleMouseMove(e);
 				});
 				if (t.timefloat !== undefined && !mejs.MediaFeatures.hasTouch) {
 					t.timefloat.show();
 				}
-			}).on('mouseleave', function (e) {
+			}).on('mouseleave', (e) => {
 				mouseIsOver = false;
 				if (!mouseIsDown) {
 					t.globalUnbind('.dur');
@@ -273,19 +273,19 @@
 			});
 
 			// loading
-			media.addEventListener('progress', function (e) {
+			media.addEventListener('progress', (e) => {
 				player.setProgressRail(e);
 				player.setCurrentRail(e);
 			}, false);
 
 			// current time
-			media.addEventListener('timeupdate', function (e) {
+			media.addEventListener('timeupdate', (e) => {
 				player.setProgressRail(e);
 				player.setCurrentRail(e);
 				updateSlider(e);
 			}, false);
 
-			t.container.on('controlsresize', function (e) {
+			t.container.on('controlsresize', (e) => {
 				player.setProgressRail(e);
 				player.setCurrentRail(e);
 			});
@@ -296,9 +296,9 @@
 		 *
 		 * @param {Event} e
 		 */
-		setProgressRail: function (e) {
+		setProgressRail: (e) => {
 
-			var
+			let
 				t = this,
 				target = (e !== undefined) ? e.target : t.media,
 				percent = null;
@@ -341,7 +341,7 @@
 
 				// update bar and handle
 				if (t.total && t.handle) {
-					var
+					let
 						newWidth = Math.round(t.total.width() * t.media.currentTime / t.media.duration),
 						handlePos = newWidth - Math.round(t.handle.outerWidth(true) / 2);
 

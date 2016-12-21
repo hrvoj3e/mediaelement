@@ -1,3 +1,5 @@
+"use strict";
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
@@ -34,7 +36,7 @@ const NativeFlv = {
 	 * Create a queue to prepare the loading of an FLV source
 	 * @param {Object} settings - an object with settings needed to load an FLV player instance
 	 */
-	prepareSettings: function (settings) {
+	prepareSettings: (settings) => {
 		if (NativeFlv.isLoaded) {
 			NativeFlv.createInstance(settings);
 		} else {
@@ -91,7 +93,7 @@ const NativeFlv = {
 	 *
 	 * @param {Object} settings - an object with settings needed to instantiate FLV object
 	 */
-	createInstance: function (settings) {
+	createInstance: (settings) => {
 		let player = flvjs.createPlayer(settings.options);
 		window['__ready__' + settings.id](player);
 	}
@@ -142,7 +144,7 @@ const FlvNativeRenderer = {
 	 * @param {Object[]} mediaFiles List of sources with format: {src: url, type: x/y-z}
 	 * @return {Object}
 	 */
-	create: function (mediaElement, options, mediaFiles) {
+	create: (mediaElement, options, mediaFiles) => {
 
 		let
 			node = null,
@@ -161,7 +163,7 @@ const FlvNativeRenderer = {
 		let
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName) => {
-				let capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
 
 				node['get' + capName] = () => flvPlayer !== null ?  node[propName] : null;
 
