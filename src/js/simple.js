@@ -161,7 +161,7 @@ function MediaElementPlayerSimple(idOrObj, options) {
 		t = this;
 
 	t.id = id;
-	t.options = mejs.Utils.extend(mejs.MediaElementPlayerSimpleDefaults, options);
+	t.options = Object.assign(mejs.MediaElementPlayerSimpleDefaults, options);
 	t.original = original;
 	t.isVideo = isVideo;
 

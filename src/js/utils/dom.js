@@ -42,7 +42,7 @@ export function addEvent (obj, type, fn) {
 		obj.addEventListener(type, fn, false);
 	} else if (obj.attachEvent) {
 		obj['e' + type + fn] = fn;
-		obj[type + fn] = function () {
+		obj[type + fn] = () => {
 			obj['e' + type + fn](window.event);
 		};
 		obj.attachEvent('on' + type, obj[type + fn]);

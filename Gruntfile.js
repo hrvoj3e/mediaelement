@@ -63,8 +63,9 @@ module.exports = function(grunt) {
 						'src/js/utils/legacy.js',
 						'src/js/core/mediaelement.js',
 						'src/js/renderers/html5.js',
-						'src/js/renderers/dailymotion.js',
-						'src/js/renderers/flv.js'
+						'src/js/renderers/hls.js',
+						'src/js/renderers/flv.js',
+						'src/js/renderers/dailymotion.js'
 					]
 				}
 			}

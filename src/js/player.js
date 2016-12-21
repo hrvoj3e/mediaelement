@@ -299,7 +299,7 @@
 
 		controlsAreVisible: true,
 
-		init: function () {
+		init: () => {
 
 			var
 				t = this,
@@ -488,7 +488,7 @@
 			if (doAnimation) {
 				t.controls
 				.removeClass(t.options.classPrefix + 'offscreen')
-				.stop(true, true).fadeIn(200, function () {
+				.stop(true, true).fadeIn(200, () => {
 					t.controlsAreVisible = true;
 					t.container.trigger('controlsshown');
 				});
@@ -496,7 +496,7 @@
 				// any additional controls people might add and want to hide
 				t.container.find('.' + t.options.classPrefix + 'control')
 				.removeClass(t.options.classPrefix + 'offscreen')
-				.stop(true, true).fadeIn(200, function () {
+				.stop(true, true).fadeIn(200, () => {
 					t.controlsAreVisible = true;
 				});
 
@@ -532,7 +532,7 @@
 
 			if (doAnimation) {
 				// fade out main controls
-				t.controls.stop(true, true).fadeOut(200, function () {
+				t.controls.stop(true, true).fadeOut(200, () => {
 					$(this)
 					.addClass(t.options.classPrefix + 'offscreen')
 					.css('display', 'block');
@@ -543,7 +543,7 @@
 
 				// any additional controls people might add and want to hide
 				t.container.find('.' + t.options.classPrefix + 'control')
-					.stop(true, true).fadeOut(200, function () {
+					.stop(true, true).fadeOut(200, () => {
 						$(this).addClass(t.options.classPrefix + 'offscreen')
 						.css('display', 'block');
 					});
@@ -574,7 +574,7 @@
 
 			t.killControlsTimer('start');
 
-			t.controlsTimer = setTimeout(function () {
+			t.controlsTimer = setTimeout(() => {
 				t.hideControls();
 				t.killControlsTimer('hide');
 			}, timeout);
@@ -593,7 +593,7 @@
 
 		controlsEnabled: true,
 
-		disableControls: function () {
+		disableControls: () => {
 			let t = this;
 
 			t.killControlsTimer();
@@ -601,7 +601,7 @@
 			this.controlsEnabled = false;
 		},
 
-		enableControls: function () {
+		enableControls: () => {
 			let t = this;
 
 			t.showControls(false);
@@ -694,7 +694,7 @@
 						// for touch devices (iOS, Android)
 						// show/hide without animation on touch
 
-						t.$media.on('touchstart', function () {
+						t.$media.on('touchstart', () => {
 
 							// toggle controls
 							if (t.controlsAreVisible) {
@@ -710,7 +710,7 @@
 
 						// create callback here since it needs access to current
 						// MediaElement object
-						t.clickToPlayPauseCallback = function () {
+						t.clickToPlayPauseCallback = () => {
 
 							if (t.options.clickToPlayPause) {
 								var
@@ -735,7 +735,7 @@
 
 						// show/hide controls
 						t.container
-						.on('mouseenter', function () {
+						.on('mouseenter', () => {
 							if (t.controlsEnabled) {
 								if (!t.options.alwaysShowControls) {
 									t.killControlsTimer('enter');
@@ -744,7 +744,7 @@
 								}
 							}
 						})
-						.on('mousemove', function () {
+						.on('mousemove', () => {
 							if (t.controlsEnabled) {
 								if (!t.controlsAreVisible) {
 									t.showControls();
@@ -754,7 +754,7 @@
 								}
 							}
 						})
-						.on('mouseleave', function () {
+						.on('mouseleave', () => {
 							if (t.controlsEnabled) {
 								if (!t.media.paused && !t.options.alwaysShowControls) {
 									t.startControlsTimer(t.options.controlsTimeoutMouseLeave);
@@ -789,7 +789,7 @@
 				// EVENTS
 
 				// FOCUS: when a video starts playing, it takes focus from other players (possibly pausing them)
-				t.media.addEventListener('play', function () {
+				t.media.addEventListener('play', () => {
 					let playerIndex;
 
 					t.hasFocus = true;
@@ -811,7 +811,7 @@
 						try {
 							t.media.setCurrentTime(0);
 							// Fixing an Android stock browser bug, where "seeked" isn't fired correctly after ending the video and jumping to the beginning
-							window.setTimeout(function () {
+							window.setTimeout(() => {
 								$(t.container)
 									.find('.' + t.options.classPrefix + 'overlay-loading')
 									.parent().hide();
@@ -842,7 +842,7 @@
 				}, false);
 
 				// resize on the first play
-				t.media.addEventListener('loadedmetadata', function () {
+				t.media.addEventListener('loadedmetadata', () => {
 
 					mejs.Utility.calculateTimeFormat(t.duration, t.options, t.options.framesPerSecond || 25);
 
@@ -861,7 +861,7 @@
 
 				// Only change the time format when necessary
 				let duration = null;
-				t.media.addEventListener('timeupdate', function () {
+				t.media.addEventListener('timeupdate', () => {
 					if (duration !== this.duration) {
 						duration = this.duration;
 						mejs.Utility.calculateTimeFormat(duration, t.options, t.options.framesPerSecond || 25);
@@ -892,13 +892,13 @@
 				});
 
 				// webkit has trouble doing this without a delay
-				setTimeout(function () {
+				setTimeout(() => {
 					t.setPlayerSize(t.width, t.height);
 					t.setControlsSize();
 				}, 50);
 
 				// adjust controls whenever window sizes (used to be in fullscreen only)
-				t.globalBind('resize', function () {
+				t.globalBind('resize', () => {
 
 					// don't resize for fullscreen mode
 					if (!(t.isFullScreen || (mejs.MediaFeatures.hasTrueNativeFullScreen && document.webkitIsFullScreen))) {
@@ -966,7 +966,7 @@
 			}
 		},
 
-		setPlayerSize: function (width, height) {
+		setPlayerSize: (width, height) => {
 			let t = this;
 
 			if (!t.options.setDimensions) {
@@ -982,7 +982,7 @@
 			}
 
 			if (typeof FB !== 'undefined' && t.isVideo) {
-				FB.Event.subscribe('xfbml.ready', function () {
+				FB.Event.subscribe('xfbml.ready', () => {
 					let target = $(t.media).children('.fb-video');
 
 					t.width = target.width();
@@ -1026,18 +1026,18 @@
 			}
 		},
 
-		hasFluidMode: function () {
+		hasFluidMode: () => {
 			let t = this;
 
 			// detect 100% mode - use currentStyle for IE since css() doesn't return percentages
 			return (t.height.toString().indexOf('%') > -1 || (t.$node.css('max-width') !== 'none' && t.$node.css('max-width') !== t.width) || (t.$node[0].currentStyle && t.$node[0].currentStyle.maxWidth === '100%'));
 		},
 
-		setResponsiveMode: function () {
+		setResponsiveMode: () => {
 			let t = this;
 
 			// do we have the native dimensions yet?
-			let nativeWidth = (function () {
+			let nativeWidth = (() => {
 				if (t.isVideo) {
 					if (t.media.videoWidth && t.media.videoWidth > 0) {
 						return t.media.videoWidth;
@@ -1051,7 +1051,7 @@
 				}
 			})();
 
-			let nativeHeight = (function () {
+			let nativeHeight = (() => {
 				if (t.isVideo) {
 					if (t.media.videoHeight && t.media.videoHeight > 0) {
 						return t.media.videoHeight;
@@ -1067,7 +1067,7 @@
 
 			// Use media aspect ratio if received; otherwise, the initially stored initial aspect ratio
 			var
-				aspectRatio = (function () {
+				aspectRatio = (() => {
 					ratio = 1;
 					if (!t.isVideo) {
 						return ratio;
@@ -1136,7 +1136,7 @@
 			}
 		},
 
-		setFillMode: function () {
+		setFillMode: () => {
 			let t = this,
 				parent = t.outerContainer;
 
@@ -1214,7 +1214,7 @@
 			});
 		},
 
-		setDimensions: function (width, height) {
+		setDimensions: (width, height) => {
 			let t = this;
 
 			t.container
@@ -1226,7 +1226,7 @@
 			.height(height);
 		},
 
-		setControlsSize: function () {
+		setControlsSize: () => {
 			var
 				t = this
 			;
@@ -1243,7 +1243,7 @@
 				siblingsWidth = 0
 			;
 
-			t.rail.siblings().each(function () {
+			t.rail.siblings().each(() => {
 				siblingsWidth += parseFloat( $(this).outerWidth(true) );
 			});
 
@@ -1277,12 +1277,12 @@
 				poster.hide();
 			}
 
-			media.addEventListener('play', function () {
+			media.addEventListener('play', () => {
 				poster.hide();
 			}, false);
 
 			if (player.options.showPosterWhenEnded && player.options.autoRewind) {
-				media.addEventListener('ended', function () {
+				media.addEventListener('ended', () => {
 					poster.show();
 				}, false);
 			}
@@ -1334,7 +1334,7 @@
 							'" aria-pressed="false"></div>' +
 						'</div>')
 					.appendTo(layers)
-					.on('click', function () {	 // Removed 'touchstart' due issues on Samsung Android devices where a tap on bigPlay started and immediately stopped the video
+					.on('click', () => {	 // Removed 'touchstart' due issues on Samsung Android devices where a tap on bigPlay started and immediately stopped the video
 						if (t.options.clickToPlayPause) {
 
 							var
@@ -1358,42 +1358,42 @@
 			}
 
 			// show/hide big play button
-			media.addEventListener('play', function () {
+			media.addEventListener('play', () => {
 				bigPlay.hide();
 				loading.hide();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').hide();
 				error.hide();
 			}, false);
 
-			media.addEventListener('playing', function () {
+			media.addEventListener('playing', () => {
 				bigPlay.hide();
 				loading.hide();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').hide();
 				error.hide();
 			}, false);
 
-			media.addEventListener('seeking', function () {
+			media.addEventListener('seeking', () => {
 				loading.show();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').show();
 			}, false);
 
-			media.addEventListener('seeked', function () {
+			media.addEventListener('seeked', () => {
 				loading.hide();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').hide();
 			}, false);
 
-			media.addEventListener('pause', function () {
+			media.addEventListener('pause', () => {
 				bigPlay.show();
 			}, false);
 
-			media.addEventListener('waiting', function () {
+			media.addEventListener('waiting', () => {
 				loading.show();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').show();
 			}, false);
 
 
 			// show/hide loading
-			media.addEventListener('loadeddata', function () {
+			media.addEventListener('loadeddata', () => {
 				// for some reason Chrome is firing this event
 				//if (mejs.MediaFeatures.isChrome && media.getAttribute && media.getAttribute('preload') === 'none')
 				//	return;
@@ -1404,7 +1404,7 @@
 				// (https://github.com/johndyer/mediaelement/issues/1305)
 				if (mejs.MediaFeatures.isAndroid) {
 					media.canplayTimeout = window.setTimeout(
-						function () {
+						() => {
 							if (document.createEvent) {
 								let evt = document.createEvent('HTMLEvents');
 								evt.initEvent('canplay', true, true);
@@ -1414,7 +1414,7 @@
 					);
 				}
 			}, false);
-			media.addEventListener('canplay', function () {
+			media.addEventListener('canplay', () => {
 				loading.hide();
 				controls.find('.' + t.options.classPrefix + 'time-buffering').hide();
 				// Clear timeout inside 'loadeddata' to prevent 'canplay' from firing twice
@@ -1440,7 +1440,7 @@
 
 			let t = this;
 
-			t.container.keydown(function () {
+			t.container.keydown(() => {
 				t.keyboardAction = true;
 			});
 
@@ -1478,7 +1478,7 @@
 			return true;
 		},
 
-		findTracks: function () {
+		findTracks: () => {
 			let t = this,
 				tracktags = t.$media.find('track');
 
@@ -1508,7 +1508,7 @@
 			t.setPlayerSize(t.width, t.height);
 			t.setControlsSize();
 		},
-		play: function () {
+		play: () => {
 			let t = this;
 
 			// only load if the current time is 0 to ensure proper playing
@@ -1517,13 +1517,13 @@
 			}
 			t.media.play();
 		},
-		pause: function () {
+		pause: () => {
 			try {
 				this.media.pause();
 			} catch (e) {
 			}
 		},
-		load: function () {
+		load: () => {
 			let t = this;
 
 			if (!t.isLoaded) {
@@ -1538,19 +1538,19 @@
 		setCurrentTime: function (time) {
 			this.media.setCurrentTime(time);
 		},
-		getCurrentTime: function () {
+		getCurrentTime: () => {
 			return this.media.currentTime;
 		},
 		setVolume: function (volume) {
 			this.media.setVolume(volume);
 		},
-		getVolume: function () {
+		getVolume: () => {
 			return this.media.volume;
 		},
 		setSrc: function (src) {
 			this.media.setSrc(src);
 		},
-		remove: function () {
+		remove: () => {
 			let t = this, featureIndex, feature;
 
 			// invoke features cleanup
@@ -1595,22 +1595,22 @@
 			t.globalUnbind();
 			delete t.node.player;
 		},
-		rebuildtracks: function () {
+		rebuildtracks: () => {
 			let t = this;
 			t.findTracks();
 			t.buildtracks(t, t.controls, t.layers, t.media);
 		},
-		resetSize: function () {
+		resetSize: () => {
 			let t = this;
 			// webkit has trouble doing this without a delay
-			setTimeout(function () {
+			setTimeout(() => {
 				t.setPlayerSize(t.width, t.height);
 				t.setControlsSize();
 			}, 50);
 		}
 	};
 
-	(function () {
+	(() => {
 		let rwindow = /^((after|before)print|(before)?unload|hashchange|message|o(ff|n)line|page(hide|show)|popstate|resize|storage)\b/;
 
 		function splitEvents(events, id) {
@@ -1654,7 +1654,7 @@
 	if (typeof $ != 'undefined') {
 		$.fn.mediaelementplayer = function (options) {
 			if (options === false) {
-				this.each(function () {
+				this.each(() => {
 					let player = $(this).data('mediaelementplayer');
 					if (player) {
 						player.remove();
@@ -1663,7 +1663,7 @@
 				});
 			}
 			else {
-				this.each(function () {
+				this.each(() => {
 					$(this).data('mediaelementplayer', new mejs.MediaElementPlayer(this, options));
 				});
 			}
@@ -1672,7 +1672,7 @@
 
 
 		// Auto-init using the configured default settings & JSON attribute
-		$(document).ready(function () {
+		$(document).ready(() => {
 			// auto enable using JSON attribute
 			$('.' + mejs.MepDefaults.classPrefix + 'player').mediaelementplayer();
 		});

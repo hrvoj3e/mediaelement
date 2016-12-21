@@ -114,7 +114,7 @@
 				 * This is to avoid attempts to repeat the time over and over again when media is playing.
 				 * @private
 				 */
-				updateSlider = function () {
+				updateSlider = () => {
 
 					let seconds = media.currentTime,
 						timeSliderText = mejs.i18n.t('mejs.time-slider'),
@@ -141,7 +141,7 @@
 				 *
 				 * @private
 				 */
-				restartPlayer = function () {
+				restartPlayer = () => {
 					let now = new Date();
 					if (now - lastKeyPressTime >= 1000) {
 						media.play();
@@ -333,7 +333,7 @@
 		 * Update the slider's width depending on the current time
 		 *
 		 */
-		setCurrentRail: function () {
+		setCurrentRail: () => {
 
 			let t = this;
 

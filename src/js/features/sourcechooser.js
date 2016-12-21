@@ -63,11 +63,11 @@
 				.appendTo(controls)
 
 				// hover
-				.hover(function () {
+				.hover(() => {
 					clearTimeout(hoverTimeout);
 					player.showSourcechooserSelector();
-				}, function () {
-					hoverTimeout = setTimeout(function () {
+				}, () => {
+					hoverTimeout = setTimeout(() => {
 						player.hideSourcechooserSelector();
 					}, 500);
 				})
@@ -102,7 +102,7 @@
 				.on('focusout', mejs.Utility.debounce(function (e) { // Safari triggers focusout multiple times
 					// Firefox does NOT support e.relatedTarget to see which element
 					// just lost focus, so wait to find the next focused element
-					setTimeout(function () {
+					setTimeout(() => {
 						let parent = $(document.activeElement).closest('.' + t.options.classPrefix + 'sourcechooser-selector');
 						if (!parent.length) {
 							// focus is outside the control; close menu
@@ -112,7 +112,7 @@
 				}, 100))
 
 				// handle clicks to the source radio buttons
-				.on('click', 'input[type=radio]', function () {
+				.on('click', 'input[type=radio]', () => {
 					// set aria states
 					$(this).attr('aria-selected', true).attr('checked', 'checked');
 					$(this).closest('.' + t.options.classPrefix + 'sourcechooser-selector')
@@ -197,7 +197,7 @@
 		/**
 		 *
 		 */
-		adjustSourcechooserBox: function () {
+		adjustSourcechooserBox: () => {
 			let t = this;
 			// adjust the size of the outer box
 			t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').height(
@@ -208,7 +208,7 @@
 		/**
 		 *
 		 */
-		hideSourcechooserSelector: function () {
+		hideSourcechooserSelector: () => {
 
 			let t = this;
 
@@ -228,7 +228,7 @@
 		/**
 		 *
 		 */
-		showSourcechooserSelector: function () {
+		showSourcechooserSelector: () => {
 
 			let t = this;
 

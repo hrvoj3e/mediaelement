@@ -53,7 +53,7 @@
 		 */
 		buildgoogleanalytics: function (player, controls, layers, media) {
 
-			media.addEventListener('play', function () {
+			media.addEventListener('play', () => {
 				if (typeof ga !== 'undefined') {
 					ga('send', 'event',
 						player.options.googleAnalyticsCategory,
@@ -63,7 +63,7 @@
 				}
 			}, false);
 
-			media.addEventListener('pause', function () {
+			media.addEventListener('pause', () => {
 				if (typeof ga !== 'undefined') {
 					ga('send', 'event',
 						player.options.googleAnalyticsCategory,
@@ -73,7 +73,7 @@
 				}
 			}, false);
 
-			media.addEventListener('ended', function () {
+			media.addEventListener('ended', () => {
 				if (typeof ga !== 'undefined') {
 					ga('send', 'event',
 						player.options.googleAnalyticsCategory,

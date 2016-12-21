@@ -1,8 +1,8 @@
 import mejs from 'core/mejs';
 
-if (jQuery !== undefined) {
+if (typeof jQuery !== 'undefined') {
 	mejs.$ = jQuery;
-} else if (Zepto !== undefined) {
+} else if (typeof Zepto !== 'undefined') {
 	mejs.$ = Zepto;
 
 	// define `outerWidth` method which has not been realized in Zepto
@@ -15,6 +15,6 @@ if (jQuery !== undefined) {
 		return width;
 	};
 
-} else if (ender !== undefined) {
+} else if (typeof ender !== 'undefined') {
 	mejs.$ = ender;
 }

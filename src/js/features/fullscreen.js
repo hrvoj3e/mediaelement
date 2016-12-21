@@ -76,7 +76,7 @@ $.extend(MediaElementPlayer.prototype, {
 		player.isInIframe = (window.location !== window.parent.location);
 
 		// detect on start
-		media.addEventListener('loadstart', function () {
+		media.addEventListener('loadstart', () => {
 			player.detectFullscreenMode();
 		});
 
@@ -92,7 +92,7 @@ $.extend(MediaElementPlayer.prototype, {
 					'" aria-label="' + fullscreenTitle + '"></button>' +
 					'</div>')
 				.appendTo(controls)
-				.on('click', function () {
+				.on('click', () => {
 
 					// toggle fullscreen
 					let isFullScreen = (Features.HAS_TRUE_NATIVE_FULLSCREEN && Features.IS_FULLSCREEN) || player.isFullScreen;
@@ -103,7 +103,7 @@ $.extend(MediaElementPlayer.prototype, {
 						player.enterFullScreen();
 					}
 				})
-				.on('mouseover', function () {
+				.on('mouseover', () => {
 
 					// very old browsers with a plugin
 					if (t.fullscreenMode === 'plugin-hover') {
@@ -119,14 +119,14 @@ $.extend(MediaElementPlayer.prototype, {
 					}
 
 				})
-				.on('mouseout', function () {
+				.on('mouseout', () => {
 
 					if (t.fullscreenMode === 'plugin-hover') {
 						if (hideTimeout !== null) {
 							clearTimeout(hideTimeout);
 						}
 
-						hideTimeout = setTimeout(function () {
+						hideTimeout = setTimeout(() => {
 							media.hideFullscreenButton();
 						}, 1500);
 					}

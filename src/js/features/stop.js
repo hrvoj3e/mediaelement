@@ -38,7 +38,7 @@
 					'</button>' +
 				'</div>')
 			.appendTo(controls)
-			.click(function () {
+			.click(() => {
 				if (!media.paused) {
 					media.pause();
 				}

@@ -162,13 +162,13 @@
 			if (!player.options.alwaysShowControls) {
 				// move with controls
 				player.container
-					.on('controlsshown', function () {
+					.on('controlsshown', () => {
 						// push captions above controls
 						player.container.find('.' + t.options.classPrefix + 'captions-position')
 							.addClass(t.options.classPrefix + 'captions-position-hover');
 
 					})
-					.on('controlshidden', function () {
+					.on('controlshidden', () => {
 						if (!media.paused) {
 							// move back to normal place
 							player.container.find('.' + t.options.classPrefix + 'captions-position')
@@ -215,7 +215,7 @@
 			}, false);
 
 			player.container.hover(
-				function () {
+				() => {
 					// chapters
 					if (player.hasChapters) {
 						player.chapters.removeClass(t.options.classPrefix + 'offscreen');
@@ -223,7 +223,7 @@
 							.height(player.chapters.find('.' + t.options.classPrefix + 'chapter').outerHeight());
 					}
 				},
-				function () {
+				() => {
 					if (player.hasChapters && !media.paused) {
 						player.chapters.fadeOut(200, function() {
 							$(this).addClass(t.options.classPrefix + 'offscreen');

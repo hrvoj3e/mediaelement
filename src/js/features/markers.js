@@ -22,7 +22,7 @@
 		/**
 		 * @type {Function}
 		 */
-		markerCallback: function () {
+		markerCallback: () => {
 		}
 	});
 

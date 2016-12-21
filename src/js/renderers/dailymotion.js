@@ -202,10 +202,10 @@ const DailyMotionIframeRenderer = {
 								let percentLoaded = dmPlayer.bufferedTime,
 									duration = dmPlayer.duration;
 								return {
-									start: function () {
+									start: () => {
 										return 0;
 									},
-									end: function () {
+									end: () => {
 										return percentLoaded / duration;
 									},
 									length: 1
@@ -241,7 +241,7 @@ const DailyMotionIframeRenderer = {
 								} else {
 									dmPlayer.setMuted(false);
 								}
-								setTimeout(function () {
+								setTimeout(() => {
 									let event = createEvent('volumechange', dm);
 									mediaElement.dispatchEvent(event);
 								}, 50);
@@ -249,7 +249,7 @@ const DailyMotionIframeRenderer = {
 
 							case 'volume':
 								dmPlayer.setVolume(value);
-								setTimeout(function () {
+								setTimeout(() => {
 									let event = createEvent('volumechange', dm);
 									mediaElement.dispatchEvent(event);
 								}, 50);
@@ -277,7 +277,7 @@ const DailyMotionIframeRenderer = {
 			assignMethods = (methodName) => {
 
 				// run the method on the native HTMLMediaElement
-				dm[methodName] = function () {
+				dm[methodName] = () => {
 					if (dmPlayer !== null) {
 
 						// DO method
@@ -452,7 +452,7 @@ const DailyMotionIframeRenderer = {
 		dm.interval = null;
 
 		dm.startInterval = () => {
-			dm.interval = setInterval(function () {
+			dm.interval = setInterval(() => {
 				DailyMotionApi.sendEvent(dm.id, dmPlayer, 'timeupdate', {
 					paused: false,
 					ended: false

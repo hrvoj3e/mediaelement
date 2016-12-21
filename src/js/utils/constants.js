@@ -53,7 +53,7 @@ let hasNativeFullscreen = (video.requestFullscreen !== undefined);
 
 // OS X 10.5 can't do this even if it says it can :(
 if (hasiOSFullScreen && UA.match(/mac os x 10_5/i)) {
-	hasNativeFullScreen = false;
+	hasNativeFullscreen = false;
 	hasiOSFullScreen = false;
 }
 

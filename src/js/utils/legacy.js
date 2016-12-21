@@ -85,7 +85,7 @@ if (document.createEvent === undefined) {
 			this.bubbles = !!bubbles;
 			this.cancelable = !!cancelable;
 			if (!this.bubbles) {
-				this.stopPropagation = function () {
+				this.stopPropagation = () => {
 					this.stoppedPropagation = true;
 					this.cancelBubble = true;
 				};

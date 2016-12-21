@@ -220,7 +220,7 @@
 			/**
 			 * @private
 			 */
-			let updateVolumeSlider = function () {
+			let updateVolumeSlider = () => {
 
 				let volume = Math.floor(media.volume * 100);
 
@@ -238,7 +238,7 @@
 
 			// Events
 			volumeSlider
-				.on('mouseover', function () {
+				.on('mouseover', () => {
 					mouseIsOver = true;
 				})
 				.on('mousedown', function (e) {
@@ -246,7 +246,7 @@
 					t.globalBind('mousemove.vol', function (e) {
 						handleVolumeMove(e);
 					});
-					t.globalBind('mouseup.vol', function () {
+					t.globalBind('mouseup.vol', () => {
 						mouseIsDown = false;
 						t.globalUnbind('.vol');
 
@@ -284,16 +284,16 @@
 				});
 
 			// MUTE button
-			mute.find('button').click(function () {
+			mute.find('button').click(() => {
 				media.setMuted(!media.muted);
 			});
 
 			//Keyboard input
-			mute.find('button').on('focus', function () {
+			mute.find('button').on('focus', () => {
 				if (!volumeSlider.hasClass(t.options.classPrefix + 'horizontal-volume-slider')) {
 					volumeSlider.show();
 				}
-			}).on('blur', function () {
+			}).on('blur', () => {
 				if (!volumeSlider.hasClass(t.options.classPrefix + 'horizontal-volume-slider')) {
 					volumeSlider.hide();
 				}
@@ -327,7 +327,7 @@
 				media.setVolume(player.options.startVolume);
 			}
 
-			t.container.on('controlsresize', function () {
+			t.container.on('controlsresize', () => {
 				if (media.muted) {
 					positionVolumeHandle(0);
 					mute.removeClass(t.options.classPrefix + 'mute')
