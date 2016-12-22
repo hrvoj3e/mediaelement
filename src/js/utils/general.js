@@ -113,8 +113,8 @@ mejs.getElementsByClassName = (className, node, tag) => {
 
 	for (i = 0; i < elsLen; i++) {
 		if (els[i].className.indexOf(className) > -1) {
-			teststr = "," + els[i].className.split(" ").join(",") + ",";
-			if (teststr.indexOf("," + className + ",") > -1) {
+			teststr = `,${els[i].className.split(' ').join(',')},`;
+			if (teststr.indexOf(`,${className},`) > -1) {
 				classElements[j] = els[i];
 				j++;
 			}

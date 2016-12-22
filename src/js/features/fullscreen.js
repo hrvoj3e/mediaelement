@@ -86,7 +86,7 @@ $.extend(MediaElementPlayer.prototype, {
 			hideTimeout = null,
 			fullscreenTitle = t.options.fullscreenText ? t.options.fullscreenText : mejs.i18n.t('mejs.fullscreen'),
 			fullscreenBtn =
-				$('<div class="' + t.options.classPrefix + 'button ' +
+				$('<div class="' +`${ t.options.classPrefix}button ` +
 					t.options.classPrefix + 'fullscreen-button">' +
 					'<button type="button" aria-controls="' + t.id + '" title="' + fullscreenTitle +
 					'" aria-label="' + fullscreenTitle + '"></button>' +
@@ -296,7 +296,7 @@ $.extend(MediaElementPlayer.prototype, {
 		});
 
 		for (i = 0, len = hoverDivNames.length; i < len; i++) {
-			hoverDivs[hoverDivNames[i]] = $('<div class="' + t.options.classPrefix + 'fullscreen-hover" />')
+			hoverDivs[hoverDivNames[i]] = $('<div class="' +`${ t.options.classPrefix}fullscreen-hover" />`)
 			.appendTo(t.container).mouseover(restoreControls).hide();
 		}
 
@@ -477,9 +477,9 @@ $.extend(MediaElementPlayer.prototype, {
 		t.isFullScreen = true;
 
 		let zoomFactor = Math.min(screen.width / t.width, screen.height / t.height);
-		t.container.find('.' + t.options.classPrefix + 'captions-text').css('font-size', zoomFactor * 100 + '%');
-		t.container.find('.' + t.options.classPrefix + 'captions-text').css('line-height', 'normal');
-		t.container.find('.' + t.options.classPrefix + 'captions-position').css('bottom', '45px');
+		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('font-size', zoomFactor * 100 + '%');
+		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('line-height', 'normal');
+		t.container.find('.' +`${ t.options.classPrefix}captions-position`).css('bottom', '45px');
 
 		t.container.trigger('enteredfullscreen');
 	},
@@ -535,9 +535,9 @@ $.extend(MediaElementPlayer.prototype, {
 		t.setControlsSize();
 		t.isFullScreen = false;
 
-		t.container.find('.' + t.options.classPrefix + 'captions-text').css('font-size', '');
-		t.container.find('.' + t.options.classPrefix + 'captions-text').css('line-height', '');
-		t.container.find('.' + t.options.classPrefix + 'captions-position').css('bottom', '');
+		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('font-size', '');
+		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('line-height', '');
+		t.container.find('.' +`${ t.options.classPrefix}captions-position`).css('bottom', '');
 
 		t.container.trigger('exitedfullscreen');
 	}

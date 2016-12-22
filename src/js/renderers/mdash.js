@@ -138,11 +138,11 @@ let DashNativeRenderer = {
 		let
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName) => {
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				node['get' + capName] = () => (dashPlayer !== null) ? node[propName] : null;
+				node[`get${capName}`] = () => (dashPlayer !== null) ? node[propName] : null;
 
-				node['set' + capName] = (value) => {
+				node[`set${capName}`] = (value) => {
 					if (dashPlayer !== null) {
 						if (propName === 'src') {
 
@@ -181,9 +181,9 @@ let DashNativeRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-					node['set' + capName](stackItem.value);
+					node[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					node[stackItem.methodName]();
 				}

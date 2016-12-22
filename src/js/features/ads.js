@@ -9,36 +9,35 @@
 // 2013/02/23		3.5		split into a generic pre-roll plugin
 
 
-(function($) {
+(($) => {
 
 	// on time insert into head
-	$('head').append($('<style>' +
-'.' + t.options.classPrefix + 'ads a {' +
-'	display: block; ' +
-'	position: absolute;' +
-'	right: 0;' +
-'	top: 0;' +
-'	width: 100%; ' +
-'	height: 100%; ' +
-'	display: block; ' +
-'}' +
-'.' + t.options.classPrefix + 'ads .' + t.options.classPrefix + 'ads-skip-block {' +
-'	display: block; ' +
-'	position: absolute;' +
-'	right: 0;' +
-'	top: 0;' +
-'	padding: 10px; ' +
-'	background: #000; ' +
-'	background: rgba(0,0,0,0.5); ' +
-'	color: #fff; ' +
-'}' +
-'.' + t.options.classPrefix + 'ads .' + t.options.classPrefix + 'ads-skip-button {' +
-'	cursor: pointer; ' +
-'}' +
-'.' + t.options.classPrefix + 'ads .' + t.options.classPrefix + 'ads-skip-button:hover {' +
-'	text-decoration: underline; ' +
-'}' +
-	'</style>'));
+	$('head').append($(`<style>
+.${t.options.classPrefix}ads a {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.${t.options.classPrefix}ads .${t.options.classPrefix}ads-skip-block {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 10px;
+	background: #000;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+}
+.${t.options.classPrefix}ads .${t.options.classPrefix}ads-skip-button {
+	cursor: pointer; 
+}
+.${t.options.classPrefix}ads .${t.options.classPrefix}ads-skip-button:hover {
+	text-decoration: underline;
+}
+	</style>`));
 
 
 	$.extend(mejs.MepDefaults, {
@@ -75,7 +74,7 @@
 		// true when the user clicks play for the first time, or if autoplay is set
 		adsPlayerHasStarted: false,
 
-		buildads: function(player, controls, layers, media) {
+		buildads: (player, controls, layers, media) => {
 
 			let t = this;
 
@@ -86,29 +85,27 @@
 			}
 
 			// add layer for ad links and skipping
-			player.adsLayer =
-					$('<div class="' + t.options.classPrefix + 'layer ' +
-					                   t.options.classPrefix + 'overlay ' +
-									   t.options.classPrefix + 'ads">' +
-							'<a href="#" target="_blank">&nbsp;</a>' +
-							'<div class="' + t.options.classPrefix + 'ads-skip-block">' +
-								'<span class="' + t.options.classPrefix + 'ads-skip-message"></span>' +
-								'<span class="' + t.options.classPrefix + 'ads-skip-button">' +
-									mejs.i18n.t('mejs.ad-skip') + '&raquo;' +
-								'</span>' +
-							'</div>' +
-						'</div>')
-						.insertBefore( layers.find('.' + t.options.classPrefix + 'overlay-play') )
-						.hide();
+			player.adsLayer = $(`<div class="${t.options.classPrefix}layer ${t.options.classPrefix}overlay 
+				${t.options.classPrefix}ads">
+					<a href="#" target="_blank">&nbsp;</a>
+					<div class="${t.options.classPrefix}ads-skip-block">
+						<span class="${t.options.classPrefix}ads-skip-message"></span>
+						<span class="${t.options.classPrefix}ads-skip-button">
+							${mejs.i18n.t('mejs.ad-skip')}&raquo;
+						</span>
+					</div>
+				</div>`)
+				.insertBefore( layers.find(`.${t.options.classPrefix}overlay-play`))
+				.hide();
 
 			player.adsLayer.find('a')
 				.on('click', $.proxy(t.adsAdClick, t) );
 
-			player.adsSkipBlock = player.adsLayer.find('.' + t.options.classPrefix + 'ads-skip-block')
+			player.adsSkipBlock = player.adsLayer.find(`.${t.options.classPrefix}ads-skip-block`)
 				.hide();
-			player.adsSkipMessage = player.adsLayer.find('.' + t.options.classPrefix + 'ads-skip-message')
+			player.adsSkipMessage = player.adsLayer.find(`.${t.options.classPrefix}ads-skip-message`)
 				.hide();
-			player.adsSkipButton = player.adsLayer.find('.' + t.options.classPrefix + 'ads-skip-button')
+			player.adsSkipButton = player.adsLayer.find(`.${t.options.classPrefix}ads-skip-button`)
 				.on('click', $.proxy(t.adsSkipClick, t));
 
 			// create proxies (only needed for events we want to remove later)
@@ -130,7 +127,7 @@
 		},
 
 
-		adsMediaTryingToStart: function() {
+		adsMediaTryingToStart: () => {
 
 			let t = this;
 
@@ -142,7 +139,7 @@
 			t.adsPlayerHasStarted = true;
 		},
 
-		adsStartPreroll: function() {
+		adsStartPreroll: () => {
 
 			let t = this;
 
@@ -168,7 +165,7 @@
 			}
 		},
 
-		adsPrerollMeta: function() {
+		adsPrerollMeta: () => {
 
 			let
 				t = this,
@@ -182,14 +179,14 @@
 				newDuration = t.adsCurrentMediaDuration;
 			}
 
-			setTimeout(function() {
-				t.controls.find('.' + t.options.classPrefix + 'duration').html(
+			setTimeout(() => {
+				t.controls.find(`.${t.options.classPrefix}duration`).html(
 					mejs.Utility.secondsToTimeCode(newDuration, t.options.alwaysShowHours)
 				);
 			}, 250);
 		},
 
-		adsPrerollStarted: function() {
+		adsPrerollStarted: () => {
 			let t = this;
 			t.media.removeEventListener('playing', t.adsPrerollStartedProxy);
 
@@ -226,7 +223,7 @@
 			t.container.trigger('mejsprerollstarted');
 		},
 
-		adsPrerollUpdate: function() {
+		adsPrerollUpdate: () => {
 			let t = this;
 
 			if (t.options.adsPrerollAdEnableSkip && t.options.adsPrerollAdSkipSeconds > 0) {
@@ -243,7 +240,7 @@
 			t.container.trigger('mejsprerolltimeupdate');
 		},
 
-		adsPrerollEnded: function() {
+		adsPrerollEnded: () => {
 			let t = this;
 
 			t.container.trigger('mejsprerollended');
@@ -256,11 +253,11 @@
 			}
 		},
 
-		adRestoreMainMedia: function() {
+		adRestoreMainMedia: () => {
 			let t = this;
 
 			t.media.setSrc(t.adsCurrentMediaUrl);
-			setTimeout(function() {
+			setTimeout(() => {
 				t.media.load();
 				t.media.play();
 			}, 10);
@@ -278,7 +275,7 @@
 
 		},
 
-		adsAdClick: function(e) {
+		adsAdClick: (e) => {
 			let t = this;
 
 			if (t.media.paused) {
@@ -290,7 +287,7 @@
 			t.container.trigger('mejsprerolladsclicked');
 		},
 
-		adsSkipClick: function() {
+		adsSkipClick: () => {
 			let t = this;
 
 			t.container.trigger('mejsprerollskipclicked');
@@ -305,20 +302,20 @@
 		},
 
 		// tells calling function if ads have finished running
-		prerollAdsFinished: function() {
+		prerollAdsFinished: () => {
 			let t = this;
 			return t.options.indexPreroll === t.options.adsPrerollMediaUrl.length;
 	 	},
 
 		// fires off fake XHR requests
-		adsLoadUrl: function(url) {
+		adsLoadUrl: (url) => {
 			let
 				img = new Image(),
 				rnd = Math.round(Math.random()*100000)
 			;
 
-			img.src = url + ((url.indexOf('?') > 0) ? '&' : '?') + 'random' + rnd + '=' + rnd;
-			img.loaded = function() {
+			img.src = url + (url.includes('?') ? '&' : '?') + `random${rnd}=${rnd}`;
+			img.loaded = () => {
 				img = null;
 			};
 		}

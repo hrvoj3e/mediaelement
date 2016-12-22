@@ -4,13 +4,13 @@
 *
 */
 
-(function($) {
+(($) => {
 
 $.extend(mejs.MepDefaults,
 	{ 'contextMenuItems': [
 		// demo of a fullscreen option
 		{
-			render: function(player) {
+			render: (player) => {
 
 				// check for fullscreen plugin
 				if (player.enterFullScreen === undefined) {
@@ -23,7 +23,7 @@ $.extend(mejs.MepDefaults,
 					return mejs.i18n.t('mejs.fullscreen-on');
 				}
 			},
-			click: function(player) {
+			click: (player) => {
 				if (player.isFullScreen) {
 					player.exitFullScreen();
 				} else {
@@ -33,14 +33,14 @@ $.extend(mejs.MepDefaults,
 		},
 		// demo of a mute/unmute button
 		{
-			render: function(player) {
+			render: (player) => {
 				if (player.media.muted) {
 					return mejs.i18n.t('mejs.unmute');
 				} else {
 					return mejs.i18n.t('mejs.mute');
 				}
 			},
-			click: function(player) {
+			click: (player) => {
 				if (player.media.muted) {
 					player.setMuted(false);
 				} else {
@@ -54,10 +54,10 @@ $.extend(mejs.MepDefaults,
 		},
 		// demo of simple download video
 		{
-			render: function(player) {
+			render: (player) => {
 				return mejs.i18n.t('mejs.download-video');
 			},
-			click: function(player) {
+			click: (player) => {
 				window.location.href = player.media.currentSrc;
 			}
 		}
@@ -66,54 +66,54 @@ $.extend(mejs.MepDefaults,
 
 
 	$.extend(MediaElementPlayer.prototype, {
-		buildcontextmenu: function(player, controls, layers, media) {
+		buildcontextmenu: (player, controls, layers, media) => {
 
 			// create context menu
-			player.contextMenu = $('<div class="' + t.options.classPrefix + 'contextmenu"></div>')
+			player.contextMenu = $(`<div class="${t.options.classPrefix}contextmenu"></div>`)
 								.appendTo($('body'))
 								.hide();
 
 			// create events for showing context menu
-			player.container.on('contextmenu', function(e) {
+			player.container.on('contextmenu', (e) => {
 				if (player.isContextMenuEnabled) {
 					e.preventDefault();
 					player.renderContextMenu(e.clientX-1, e.clientY-1);
 					return false;
 				}
 			});
-			player.container.on('click', function() {
+			player.container.on('click', () => {
 				player.contextMenu.hide();
 			});
-			player.contextMenu.on('mouseleave', function() {
+			player.contextMenu.on('mouseleave', () => {
 				player.startContextMenuTimer();
 
 			});
 		},
 
-		cleancontextmenu: function(player) {
+		cleancontextmenu: (player) => {
 			player.contextMenu.remove();
 		},
 
 		isContextMenuEnabled: true,
-		enableContextMenu: function() {
+		enableContextMenu: () => {
 			this.isContextMenuEnabled = true;
 		},
-		disableContextMenu: function() {
+		disableContextMenu: () => {
 			this.isContextMenuEnabled = false;
 		},
 
 		contextMenuTimeout: null,
-		startContextMenuTimer: function() {
+		startContextMenuTimer: () => {
 			let t = this;
 
 			t.killContextMenuTimer();
 
-			t.contextMenuTimer = setTimeout(function() {
+			t.contextMenuTimer = setTimeout(() => {
 				t.hideContextMenu();
 				t.killContextMenuTimer();
 			}, 750);
 		},
-		killContextMenuTimer: function() {
+		killContextMenuTimer: () => {
 			let timer = this.contextMenuTimer;
 
 			if (timer !== null && timer !== undefined) {
@@ -122,11 +122,11 @@ $.extend(mejs.MepDefaults,
 			}
 		},
 
-		hideContextMenu: function() {
+		hideContextMenu: () => {
 			this.contextMenu.hide();
 		},
 
-		renderContextMenu: function(x,y) {
+		renderContextMenu: (x,y) => {
 
 			// alway re-render the items so that things like "turn fullscreen on" and "turn fullscreen off" are always written correctly
 			let t = this,
@@ -136,15 +136,15 @@ $.extend(mejs.MepDefaults,
 			for (let i=0, il=items.length; i<il; i++) {
 
 				if (items[i].isSeparator) {
-					html += '<div class="' + t.options.classPrefix + 'contextmenu-separator"></div>';
+					html += `<div class="${t.options.classPrefix}contextmenu-separator"></div>`;
 				} else {
 
 					let rendered = items[i].render(t);
 
 					// render can return null if the item doesn't need to be used at the moment
 					if (rendered !== null && rendered !== undefined) {
-						html += '<div class="' + t.options.classPrefix + 'contextmenu-item" ' +
-							'data-itemindex="' + i + '" id="element-' + (Math.random()*1000000) + '">' + rendered + '</div>';
+						html += `<div class="${t.options.classPrefix}contextmenu-item" 
+							data-itemindex="${i}" id="element-${(Math.random()*1000000)}">${rendered}</div>`;
 					}
 				}
 			}
@@ -157,7 +157,7 @@ $.extend(mejs.MepDefaults,
 				.show();
 
 			// bind events
-			t.contextMenu.find('.' + t.options.classPrefix + 'contextmenu-item').each(function() {
+			t.contextMenu.find(`.${ t.options.classPrefix}contextmenu-item`).each(() => {
 
 				// which one is this?
 				let $dom = $(this),
@@ -170,7 +170,7 @@ $.extend(mejs.MepDefaults,
 				}
 
 				// bind click action
-				$dom.click(function() {
+				$dom.click(() => {
 					// perform click action
 					if (typeof item.click !== 'undefined') {
 						item.click(t);
@@ -182,7 +182,7 @@ $.extend(mejs.MepDefaults,
 			});
 
 			// stop the controls from hiding
-			setTimeout(function() {
+			setTimeout(() => {
 				t.killControlsTimer('rev3');
 			}, 100);
 

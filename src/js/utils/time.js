@@ -19,8 +19,8 @@ export function secondsToTimeCode (time, forceHours = false, showFrameCount = fa
 	let frames = Math.floor(((time % 1) * fps).toFixed(3));
 
 	let result = (forceHours || hours > 0) ? `${(hours < 10 ? `0${hours}` : hours)}:` : '';
-	result += `${(minutes < 10 ? '0' + minutes : minutes)}:`;
-	result += `${(seconds < 10 ? '0' + seconds : seconds)}`;
+	result += `${(minutes < 10 ? `0${minutes}` : minutes)}:`;
+	result += `${(seconds < 10 ? `0${seconds}` : seconds)}`;
 	result += `${((showFrameCount) ? `:${(frames < 10 ? `0${frames}` : frames)}` : '')}`;
 
 	return result;

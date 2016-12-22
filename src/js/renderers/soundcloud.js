@@ -154,9 +154,9 @@ const SoundCloudIframeRenderer = {
 
 				// add to flash state that we will store
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				sc['get' + capName] = () => {
+				sc[`get${capName}`] = () => {
 					if (scPlayer !== null) {
 						let value = null;
 
@@ -200,7 +200,7 @@ const SoundCloudIframeRenderer = {
 					}
 				};
 
-				sc['set' + capName] = (value) => {
+				sc[`set${capName}`] = (value) => {
 
 					if (scPlayer !== null) {
 
@@ -300,9 +300,9 @@ const SoundCloudIframeRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-					sc['set' + capName](stackItem.value);
+					sc[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					sc[stackItem.methodName]();
 				}

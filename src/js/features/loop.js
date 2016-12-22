@@ -4,7 +4,7 @@
  * This feature creates a loop button in the control bar to toggle its behavior. It will restart media once finished
  * if activated
  */
-(function($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -24,30 +24,27 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildloop: function(player, controls, layers, media) {
+		buildloop: (player, controls, layers, media) => {
 			let
 				t = this,
 				loopTitle = t.options.loopText ? t.options.loopText : mejs.i18n.t('mejs.loop'),
 				// create the loop button
 				loop =
-				$('<div class="' + t.options.classPrefix + 'button ' +
-				                   t.options.classPrefix + 'loop-button ' +
-					((player.options.loop) ? t.options.classPrefix + 'loop-on' :
-					                         t.options.classPrefix + 'loop-off') + '">' +
-					'<button type="button" aria-controls="' + t.id + '" ' +
-						'title="' + loopTitle + '" aria-label="' + loopTitle + '"></button>' +
-				'</div>')
+				$(`<div class="${t.options.classPrefix}button ${t.options.classPrefix}loop-button 
+					${((player.options.loop) ? `${t.options.classPrefix}loop-on` : `${t.options.classPrefix}loop-off`)}">
+					<button type="button" aria-controls="${t.id}" title="${loopTitle}" aria-label="${loopTitle}"></button>
+				</div>`)
 				// append it to the toolbar
 				.appendTo(controls)
 				// add a click toggle event
-				.click(function() {
+				.click(() => {
 					player.options.loop = !player.options.loop;
 					if (player.options.loop) {
-						loop.removeClass(t.options.classPrefix + 'loop-off')
-							.addClass(t.options.classPrefix + 'loop-on');
+						loop.removeClass(`${t.options.classPrefix}loop-off`)
+							.addClass(`${t.options.classPrefix}loop-on`);
 					} else {
-						loop.removeClass(t.options.classPrefix + 'loop-on')
-							.addClass(t.options.classPrefix + 'loop-off');
+						loop.removeClass(`${t.options.classPrefix}loop-on`)
+							.addClass(`${t.options.classPrefix}loop-off`);
 					}
 				});
 		}

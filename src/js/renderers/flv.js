@@ -95,7 +95,7 @@ const NativeFlv = {
 	 */
 	createInstance: (settings) => {
 		let player = flvjs.createPlayer(settings.options);
-		window['__ready__' + settings.id](player);
+		window[`__ready__${settings.id}`](player);
 	}
 };
 
@@ -151,7 +151,7 @@ const FlvNativeRenderer = {
 			originalNode = mediaElement.originalNode,
 			i,
 			il,
-			id = mediaElement.id + '_' + options.prefix,
+			id = `${mediaElement.id}_${options.prefix}`,
 			flvPlayer,
 			stack = {}
 		;
@@ -163,11 +163,11 @@ const FlvNativeRenderer = {
 		let
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName) => {
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				node['get' + capName] = () => flvPlayer !== null ?  node[propName] : null;
+				node[`get${capName}`] = () => flvPlayer !== null ?  node[propName] : null;
 
-				node['set' + capName] = (value) => {
+				node[`set${capName}`] = (value) => {
 					if (flvPlayer !== null) {
 						node[propName] = value;
 
@@ -200,9 +200,9 @@ const FlvNativeRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-					node['set' + capName](stackItem.value);
+					node[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					node[stackItem.methodName]();
 				}

@@ -3,7 +3,7 @@
  *
  * Sponsored by Minoto Video
  */
-(function($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -42,7 +42,7 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildvast: function(player, controls, layers, media) {
+		buildvast: (player, controls, layers, media) => {
 
 			let t = this;
 			
@@ -57,12 +57,12 @@
 			t.vastSetupEvents();					
 		},
 	
-		vastSetupEvents: function() {
+		vastSetupEvents: () => {
 			let t = this;
 			
 			
 			// START: preroll
-			t.container.on('mejsprerollstarted', function() {			
+			t.container.on('mejsprerollstarted', () => {
 
 				if (t.vastAdTags.length > 0) {
 				
@@ -87,7 +87,7 @@
 			});
 			
 			// END: preroll
-			t.container.on('mejsprerollended', function() {			
+			t.container.on('mejsprerollended', () => {
 
 				if (t.vastAdTags.length > 0 && t.options.indexPreroll < t.vastAdTags.length &&
                     			t.vastAdTags[t.options.indexPreroll].trackingEvents.complete) {
@@ -102,7 +102,7 @@
 		 *
 		 * @param {String} url
 		 */
-		vastSetAdTagUrl: function(url) {
+		vastSetAdTagUrl: (url) => {
 		
 			let t = this;
 		
@@ -116,7 +116,7 @@
 		/**
 		 *
 		 */
-		vastLoadAdTagInfo: function() {
+		vastLoadAdTagInfo: () => {
 			let t = this;
 			
 			// set this to stop playback
@@ -130,16 +130,16 @@
 		/**
 		 *
 		 */
-		loadAdTagInfoDirect: function() {
+		loadAdTagInfoDirect: () => {
 			let t = this;
 			
 			$.ajax({
 				url: t.options.vastAdTagUrl,
 				crossDomain: true,
-				success: function(data) {
+				success: (data) => {
 					t.vastParseVastData(data);
 				},
-				error: function(err) {
+				error: (err) => {
 					console.log('vast3:direct:error', err);
 
 					// fallback to Yahoo proxy
@@ -151,7 +151,7 @@
 		/**
 		 *
 		 */
-		loadAdTagInfoProxy: function() {
+		loadAdTagInfoProxy: () => {
 			let t = this,
 				protocol = location.protocol,
 				hostname = location.hostname,
@@ -163,10 +163,10 @@
 			$.ajax({
 				url: yahooUrl,
 				crossDomain: true,
-				success: function(data) {
+				success: (data) => {
 					t.vastParseVastData(data);
 				},
-				error: function(err) {
+				error: (err) => {
 					console.log('vast:proxy:yahoo:error', err);
 				}	
 			});
@@ -176,7 +176,7 @@
 		 *
 		 * @param {jQuery} data
 		 */
-		vastParseVastData: function(data) {
+		vastParseVastData: (data) => {
 			
 			let t = this;
 			
@@ -185,7 +185,7 @@
 			t.vastAdTags = [];
 			t.options.indexPreroll = 0;
 			
-			$(data).find('Ad').each(function(index, node) {
+			$(data).find('Ad').each((index, node) => {
 					
 				let
 					adNode = $(node),
@@ -207,11 +207,11 @@
 				
 					
 				// parse all needed nodes
-				adNode.find('Impression').each(function() {
+				adNode.find('Impression').each(() => {
 					adTag.impressions.push( $.trim( $(this).text() ) );
 				});	
 				
-				adNode.find('Tracking').each(function(index, node) {
+				adNode.find('Tracking').each((index, node) => {
 					let trackingEvent = $(node);
 				
 					adTag.trackingEvents[trackingEvent.attr('event')] = $.trim( trackingEvent.text() );
@@ -219,7 +219,7 @@
 				});		
 				
 		
-				adNode.find('MediaFile').each(function(index, node) {
+				adNode.find('MediaFile').each((index, node) => {
 					let mediaFile = $(node),
 						type = mediaFile.attr('type');
 						
@@ -246,7 +246,7 @@
 		/**
 		 *
 		 */
-		vastLoaded: function() {
+		vastLoaded: () => {
 			let t = this;
 			
 			t.vastAdTagIsLoaded = true;
@@ -259,7 +259,7 @@
 		/**
 		 *
 		 */
-		vastStartPreroll: function() {
+		vastStartPreroll: () => {
 			let t = this;
 				
 			// if we have a media URL, then send it up to the ads plugin as a preroll

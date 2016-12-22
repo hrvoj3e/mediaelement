@@ -34,8 +34,8 @@
 				forwardTitle = t.options.jumpForwardText ? t.options.jumpForwardText.replace('%1', t.options.jumpForwardInterval) : defaultTitle,
 				// create the loop button
 				loop =
-					$('<div class="' + t.options.classPrefix + 'button ' +
-					                   t.options.classPrefix + 'jump-forward-button">' +
+					$('<div class="' +`${ t.options.classPrefix}button ` +
+					                  `${ t.options.classPrefix}jump-forward-button">` +
 						'<button type="button" aria-controls="' + t.id + '" title="' + forwardTitle + '" ' +
 							'aria-label="' + forwardTitle + '">' +
 							t.options.jumpForwardInterval +

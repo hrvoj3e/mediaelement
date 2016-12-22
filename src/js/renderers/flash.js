@@ -148,9 +148,9 @@ const FlashMediaElementRenderer = {
 				// add to flash state that we will store
 				flash.flashState[propName] = null;
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				flash['get' + capName] = () => {
+				flash[`get${capName}`] = () => {
 
 					if (flash.flashApi !== null) {
 
@@ -180,7 +180,7 @@ const FlashMediaElementRenderer = {
 					}
 				};
 
-				flash['set' + capName] = (value) => {
+				flash[`set${capName}`] = (value) => {
 					if (propName === 'src') {
 						value = absolutizeUrl(value);
 					}
@@ -257,7 +257,7 @@ const FlashMediaElementRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
 					flash[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {

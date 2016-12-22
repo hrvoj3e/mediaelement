@@ -39,9 +39,9 @@ module.exports = function(grunt) {
 					'src/js/languages/*.js',
 					'src/js/renderers/*.js',
 					'src/js/features/*.js',
-					'src/library.js',
-					'src/player.js',
-					'src/simple.js',
+					'src/js/library.js',
+					'src/js/player.js',
+					'src/js/simple.js',
 					'test/core/*.js'
 
 				]

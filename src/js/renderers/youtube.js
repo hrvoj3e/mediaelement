@@ -240,9 +240,9 @@ const YouTubeIframeRenderer = {
 
 				// add to flash state that we will store
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				youtube['get' + capName] = () => {
+				youtube[`get${capName}`] = () => {
 					if (youTubeApi !== null) {
 						let value = null;
 
@@ -288,7 +288,7 @@ const YouTubeIframeRenderer = {
 					}
 				};
 
-				youtube['set' + capName] = (value) => {
+				youtube[`set${capName}`] = (value) => {
 
 					if (youTubeApi !== null) {
 
@@ -429,9 +429,9 @@ const YouTubeIframeRenderer = {
 
 							if (stackItem.type === 'set') {
 								let propName = stackItem.propName,
-									capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+									capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-								youtube['set' + capName](stackItem.value);
+								youtube[`set${capName}`](stackItem.value);
 							} else if (stackItem.type === 'call') {
 								youtube[stackItem.methodName]();
 							}

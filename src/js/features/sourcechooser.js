@@ -47,14 +47,14 @@
 			}
 
 			player.sourcechooserButton =
-				$('<div class="' + t.options.classPrefix + 'button ' +
-				                   t.options.classPrefix + 'sourcechooser-button">' +
+				$('<div class="' +`${ t.options.classPrefix}button ` +
+				                  `${ t.options.classPrefix}sourcechooser-button">` +
 					'<button type="button" role="button" aria-haspopup="true" ' +
 						'aria-owns="' + t.id + '" title="' + sourceTitle + '" ' +
 						'aria-label="' + sourceTitle +
 					'"></button>' +
-					'<div class="' + t.options.classPrefix + 'sourcechooser-selector ' +
-					                 t.options.classPrefix + 'offscreen" role="menu" ' +
+					'<div class="' +`${ t.options.classPrefix}sourcechooser-selector ` +
+					                `${ t.options.classPrefix}offscreen" role="menu" ` +
 						'aria-expanded="false" aria-hidden="true">' +
 					'<ul>' +
 					'</ul>' +
@@ -81,12 +81,12 @@
 							if (!mejs.MediaFeatures.isFirefox) { // space sends the click event in Firefox
 								player.showSourcechooserSelector();
 							}
-							$(this).find('.' + t.options.classPrefix + 'sourcechooser-selector')
+							$(this).find('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 							.find('input[type=radio]:checked').first().focus();
 							break;
 						case 13: // enter
 							player.showSourcechooserSelector();
-							$(this).find('.' + t.options.classPrefix + 'sourcechooser-selector')
+							$(this).find('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 							.find('input[type=radio]:checked').first().focus();
 							break;
 						case 27: // esc
@@ -103,7 +103,7 @@
 					// Firefox does NOT support e.relatedTarget to see which element
 					// just lost focus, so wait to find the next focused element
 					setTimeout(() => {
-						let parent = $(document.activeElement).closest('.' + t.options.classPrefix + 'sourcechooser-selector');
+						let parent = $(document.activeElement).closest('.' +`${ t.options.classPrefix}sourcechooser-selector`);
 						if (!parent.length) {
 							// focus is outside the control; close menu
 							player.hideSourcechooserSelector();
@@ -115,7 +115,7 @@
 				.on('click', 'input[type=radio]', () => {
 					// set aria states
 					$(this).attr('aria-selected', true).attr('checked', 'checked');
-					$(this).closest('.' + t.options.classPrefix + 'sourcechooser-selector')
+					$(this).closest('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 						.find('input[type=radio]')
 						.not(this)
 						.attr('aria-selected', 'false')
@@ -147,9 +147,9 @@
 
 				// Handle click so that screen readers can toggle the menu
 				.on('click', 'button', (e) => {
-					if ($(this).siblings('.' + t.options.classPrefix + 'sourcechooser-selector').hasClass(t.options.classPrefix + 'offscreen')) {
+					if ($(this).siblings('.' +`${ t.options.classPrefix}sourcechooser-selector`).hasClass(t.options.classPrefix + 'offscreen')) {
 						player.showSourcechooserSelector();
-						$(this).siblings('.' + t.options.classPrefix + 'sourcechooser-selector')
+						$(this).siblings('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 							.find('input[type=radio]:checked').first().focus();
 					} else {
 						player.hideSourcechooserSelector();
@@ -200,8 +200,8 @@
 		adjustSourcechooserBox: () => {
 			let t = this;
 			// adjust the size of the outer box
-			t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').height(
-				t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector ul').outerHeight(true)
+			t.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector`).height(
+				t.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector ul`).outerHeight(true)
 			);
 		},
 
@@ -213,11 +213,11 @@
 			let t = this;
 
 			if (t.sourcechooserButton === undefined ||
-				!t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').find('input[type=radio]').length) {
+				!t.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector`).find('input[type=radio]').length) {
 				return;
 			}
 
-			this.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector')
+			this.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 			.addClass(t.options.classPrefix + 'offscreen')
 			.attr('aria-expanded', 'false')
 			.attr('aria-hidden', 'true')
@@ -233,11 +233,11 @@
 			let t = this;
 
 			if (t.sourcechooserButton === undefined ||
-				!t.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector').find('input[type=radio]').length) {
+				!t.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector`).find('input[type=radio]').length) {
 				return;
 			}
 
-			this.sourcechooserButton.find('.' + t.options.classPrefix + 'sourcechooser-selector')
+			this.sourcechooserButton.find('.' +`${ t.options.classPrefix}sourcechooser-selector`)
 			.removeClass(t.options.classPrefix + 'offscreen')
 			.attr('aria-expanded', 'true')
 			.attr('aria-hidden', 'false')

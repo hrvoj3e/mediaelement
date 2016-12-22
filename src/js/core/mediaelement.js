@@ -86,7 +86,7 @@ class MediaElement {
 				if (propName !== 'src') {
 
 					let
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1),
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`,
 						getFn = () => {
 							if (renderExists) {
 								return t.mediaElement.renderer[`get${capName}`]();

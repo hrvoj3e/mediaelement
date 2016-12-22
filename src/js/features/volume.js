@@ -55,53 +55,53 @@
 				mute = (mode === 'horizontal') ?
 
 					// horizontal version
-					$('<div class="' +  t.options.classPrefix + 'button ' +
-					                    t.options.classPrefix + 'volume-button' +
-					                    t.options.classPrefix + 'mute">' +
+					$('<div class="' + `${ t.options.classPrefix}button ` +
+					                   `${ t.options.classPrefix}volume-button` +
+					                   `${ t.options.classPrefix}mute">` +
 						'<button type="button" aria-controls="' + t.id + '" ' +
 							'title="' + t.options.muteText + '" ' +
 							'aria-label="' + t.options.muteText +
 						'"></button>' +
 						'</div>' +
-						'<a href="javascript:void(0);" class="' +  t.options.classPrefix + 'horizontal-volume-slider">' + // outer background
-							'<span class="' +  t.options.classPrefix + 'offscreen">' +
+						'<a href="javascript:void(0);" class="' + `${ t.options.classPrefix}horizontal-volume-slider">` + // outer background
+							'<span class="' + `${ t.options.classPrefix}offscreen">` +
 								t.options.allyVolumeControlText +
 							'</span>' +
-							'<div class="' +  t.options.classPrefix + 'horizontal-volume-total">' + // line background
-								'<div class="' +  t.options.classPrefix + 'horizontal-volume-current"></div>' + // current volume
-								'<div class="' +  t.options.classPrefix + 'horizontal-volume-handle"></div>' + // handle
+							'<div class="' + `${ t.options.classPrefix}horizontal-volume-total">` + // line background
+								'<div class="' + `${ t.options.classPrefix}horizontal-volume-current"></div>` + // current volume
+								'<div class="' + `${ t.options.classPrefix}horizontal-volume-handle"></div>` + // handle
 							'</div>' +
 						'</a>'
 					)
 					.appendTo(controls) :
 
 					// vertical version
-					$('<div class="' +  t.options.classPrefix + 'button ' +
-					                    t.options.classPrefix + 'volume-button ' +
-					                    t.options.classPrefix + 'mute">' +
+					$('<div class="' + `${ t.options.classPrefix}button ` +
+					                   `${ t.options.classPrefix}volume-button ` +
+					                   `${ t.options.classPrefix}mute">` +
 						'<button type="button" aria-controls="' + t.id +
 						'" title="' + t.options.muteText +
 						'" aria-label="' + t.options.muteText +
 						'"></button>' +
-						'<a href="javascript:void(0);" class="' +  t.options.classPrefix + 'volume-slider">' + // outer background
-							'<span class="' +  t.options.classPrefix + 'offscreen">' +
+						'<a href="javascript:void(0);" class="' + `${ t.options.classPrefix}volume-slider">` + // outer background
+							'<span class="' + `${ t.options.classPrefix}offscreen">` +
 								t.options.allyVolumeControlText +
 							'</span>' +
-							'<div class="' +  t.options.classPrefix + 'volume-total">' + // line background
-								'<div class="' +  t.options.classPrefix + 'volume-current"></div>' + // current volume
-								'<div class="' +  t.options.classPrefix + 'volume-handle"></div>' + // handle
+							'<div class="' + `${ t.options.classPrefix}volume-total">` + // line background
+								'<div class="' + `${ t.options.classPrefix}volume-current"></div>` + // current volume
+								'<div class="' + `${ t.options.classPrefix}volume-handle"></div>` + // handle
 							'</div>' +
 						'</a>' +
 						'</div>')
 					.appendTo(controls),
-				volumeSlider = t.container.find('.' +  t.options.classPrefix + 'volume-slider, ' +
-				                                '.' +  t.options.classPrefix + 'horizontal-volume-slider'),
-				volumeTotal = t.container.find('.' + t.options.classPrefix + 'volume-total, ' +
-				                               '.' + t.options.classPrefix + 'horizontal-volume-total'),
-				volumeCurrent = t.container.find('.' +  t.options.classPrefix + 'volume-current, ' +
-				                                 '.' +  t.options.classPrefix + 'horizontal-volume-current'),
-				volumeHandle = t.container.find('.' +  t.options.classPrefix + 'volume-handle, ' +
-				                                '.' +  t.options.classPrefix + 'horizontal-volume-handle'),
+				volumeSlider = t.container.find(`.${ t.options.classPrefix}volume-slider, ` +
+				                                `.${ t.options.classPrefix}horizontal-volume-slider`),
+				volumeTotal = t.container.find('.' +`${ t.options.classPrefix}volume-total, ` +
+				                               '.' +`${ t.options.classPrefix}horizontal-volume-total`),
+				volumeCurrent = t.container.find(`.${ t.options.classPrefix}volume-current, ` +
+				                                 `.${ t.options.classPrefix}horizontal-volume-current`),
+				volumeHandle = t.container.find(`.${ t.options.classPrefix}volume-handle, ` +
+				                                `.${ t.options.classPrefix}horizontal-volume-handle`),
 
 				/**
 				 * @private
@@ -121,8 +121,8 @@
 							.attr('title', mejs.i18n.t('mejs.unmute'))
 							.attr('aria-label', mejs.i18n.t('mejs.unmute'));
 					} else {
-						mute.removeClass( t.options.classPrefix + 'unmute')
-							.addClass( t.options.classPrefix + 'mute');
+						mute.removeClass(`${ t.options.classPrefix}unmute`)
+							.addClass(`${ t.options.classPrefix}mute`);
 						mute.children('button')
 							.attr('title', mejs.i18n.t('mejs.mute'))
 							.attr('aria-label', mejs.i18n.t('mejs.mute'));
@@ -205,11 +205,11 @@
 
 			// SLIDER
 			mute
-				.on('mouseenter focusin', function() {
+				.on('mouseenter focusin', () => {
 					volumeSlider.show();
 					mouseIsOver = true;
 				})
-				.on('mouseleave focusout', function() {
+				.on('mouseleave focusout', () => {
 					mouseIsOver = false;
 
 					if (!mouseIsDown && mode === 'vertical') {

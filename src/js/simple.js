@@ -54,17 +54,17 @@ function getStyle (idOrObj, styleProp) {
 
 // Fade effect from scriptiny.com
 let fadeEffect = {
-	init: function (id, flag, target) {
+	init: (id, flag, target) => {
 		this.elem = document.getElementById(id);
 		clearInterval(this.elem.si);
 		this.target = target ? target : flag ? 100 : 0;
 		this.flag = flag || -1;
 		this.alpha = this.elem.style.opacity ? parseFloat(this.elem.style.opacity) * 100 : 0;
-		this.elem.si = setInterval(function () {
+		this.elem.si = setInterval(() => {
 			fadeEffect.tween();
 		}, 5);
 	},
-	tween: function () {
+	tween: () => {
 		if (this.alpha === this.target) {
 			clearInterval(this.elem.si);
 		} else {
@@ -111,7 +111,7 @@ function MediaElementPlayerSimple (idOrObj, options) {
 
 	// Container
 	container.id = id + '_container';
-	container.className = t.options.classPrefix + 'simple-container ' +
+	container.className =`${ t.options.classPrefix}simple-container ` +
 		t.options.classPrefix + 'simple-' + original.tagName.toLowerCase();
 	container.style.width = originalWidth + 'px';
 	container.style.height = originalHeight + 'px';
@@ -125,7 +125,7 @@ function MediaElementPlayerSimple (idOrObj, options) {
 	mediaElement = mejs.MediaElement(original, t.options);
 	t.mediaElement = mediaElement;
 
-	mediaElement.addEventListener('click', function () {
+	mediaElement.addEventListener('click', () => {
 		if (mediaElement.paused) {
 			mediaElement.play();
 		} else {
@@ -156,7 +156,7 @@ function MediaElementPlayerSimple (idOrObj, options) {
 
 MediaElementPlayerSimple.prototype = {
 
-	createUI: function () {
+	createUI: () => {
 
 		let
 			t = this,
@@ -169,31 +169,31 @@ MediaElementPlayerSimple.prototype = {
 			;
 
 		// CONTROLS
-		controls.className = t.options.classPrefix + 'simple-controls';
+		controls.className =`${ t.options.classPrefix}simple-controls`;
 		controls.id = id + '_controls';
 		container.appendChild(controls);
 
-		addEvent(controls, 'mouseover', function () {
+		addEvent(controls, 'mouseover', () => {
 			clearControlsTimeout();
 		});
 
-		mediaElement.addEventListener('play', function () {
+		mediaElement.addEventListener('play', () => {
 			isPlaying = true;
 		});
-		mediaElement.addEventListener('playing', function () {
+		mediaElement.addEventListener('playing', () => {
 			isPlaying = true;
 		});
-		mediaElement.addEventListener('pause', function () {
+		mediaElement.addEventListener('pause', () => {
 			isPlaying = false;
 		});
-		mediaElement.addEventListener('ended', function () {
+		mediaElement.addEventListener('ended', () => {
 			isPlaying = false;
 		});
-		mediaElement.addEventListener('seeked', function () {
+		mediaElement.addEventListener('seeked', () => {
 			isPlaying = true;
 		});
 
-		mediaElement.addEventListener('mouseover', function () {
+		mediaElement.addEventListener('mouseover', () => {
 			clearControlsTimeout();
 			showControls();
 		});
@@ -212,7 +212,7 @@ MediaElementPlayerSimple.prototype = {
 		function startControlsTimeout () {
 			clearControlsTimeout();
 
-			controlsTimeout = setTimeout(function () {
+			controlsTimeout = setTimeout(() => {
 				hideControls();
 			}, 200);
 		}
@@ -232,7 +232,7 @@ MediaElementPlayerSimple.prototype = {
 			fadeEffect.init(id + '_controls', 0);
 		}
 
-		addEvent(window, 'resize', function () {
+		addEvent(window, 'resize', () => {
 			t.resizeControls();
 		});
 
@@ -289,7 +289,7 @@ MediaElementPlayerSimple.prototype = {
 		uiPlayBtn.setAttribute('aria-controls', mediaElement.id);
 		controls.appendChild(uiPlayBtn);
 
-		addEvent(uiPlayBtn, 'click', function () {
+		addEvent(uiPlayBtn, 'click', () => {
 			if (mediaElement.getPaused()) {
 				mediaElement.play();
 			} else {
@@ -298,19 +298,19 @@ MediaElementPlayerSimple.prototype = {
 		});
 
 		// events
-		mediaElement.addEventListener('play', function () {
+		mediaElement.addEventListener('play', () => {
 			uiPlayBtn.className = uiPlayBtn.className.replace(/\s*ui-button-play\s*/gi, '') + ' ui-button-pause';
 			uiPlayBtn.title = options.pauseText;
 			uiPlayBtn.setAttribute('aria-label', options.pauseText);
 		}, false);
 
-		mediaElement.addEventListener('pause', function () {
+		mediaElement.addEventListener('pause', () => {
 			uiPlayBtn.className = uiPlayBtn.className.replace(/\s*ui-button-pause\s*/gi, '') + ' ui-button-play';
 			uiPlayBtn.title = options.playText;
 			uiPlayBtn.setAttribute('aria-label', options.playText);
 		}, false);
 
-		mediaElement.addEventListener('loadstart', function () {
+		mediaElement.addEventListener('loadstart', () => {
 			uiPlayBtn.className = uiPlayBtn.className.replace(/\s*ui-button-pause\s*/gi, '') + ' ui-button-play';
 			uiPlayBtn.title = options.playText;
 			uiPlayBtn.setAttribute('aria-label', options.playText);
@@ -324,11 +324,11 @@ MediaElementPlayerSimple.prototype = {
 		uiMuteBtn.type = 'button';
 		controls.appendChild(uiMuteBtn);
 
-		addEvent(uiMuteBtn, 'click', function () {
+		addEvent(uiMuteBtn, 'click', () => {
 			mediaElement.muted = !mediaElement.muted;
 		});
 
-		mediaElement.addEventListener('volumechange', function () {
+		mediaElement.addEventListener('volumechange', () => {
 			if (mediaElement.muted) {
 				uiMuteBtn.className = uiMuteBtn.className.replace(/ui-button-unmuted/gi, '') + ' ui-button-muted';
 			} else {
@@ -344,7 +344,7 @@ MediaElementPlayerSimple.prototype = {
 		uiCurrentTime.innerHTML = '00:00';
 		controls.appendChild(uiCurrentTime);
 
-		mediaElement.addEventListener('timeupdate', function () {
+		mediaElement.addEventListener('timeupdate', () => {
 
 			let currentTime = mediaElement.currentTime;
 			if (!isNaN(currentTime)) {
@@ -352,7 +352,7 @@ MediaElementPlayerSimple.prototype = {
 			}
 		}, false);
 
-		mediaElement.addEventListener('loadedmetadata', function () {
+		mediaElement.addEventListener('loadedmetadata', () => {
 			uiCurrentTime.innerHTML = mejs.Utils.secondsToTimeCode(0);
 		}, false);
 
@@ -373,22 +373,22 @@ MediaElementPlayerSimple.prototype = {
 		uiTimeBarCurrent.className = 'ui-time-current';
 		uiTimeBarTotal.appendChild(uiTimeBarCurrent);
 
-		mediaElement.addEventListener('timeupdate', function () {
+		mediaElement.addEventListener('timeupdate', () => {
 			let outsideWidth = uiTimeBarTotal.offsetWidth,
 				percent = mediaElement.currentTime / mediaElement.duration;
 
 			uiTimeBarCurrent.style.width = (outsideWidth * percent) + 'px';
 		});
-		mediaElement.addEventListener('loadstart', function () {
+		mediaElement.addEventListener('loadstart', () => {
 			uiTimeBarCurrent.style.width = '0px';
 			uiTimeBarLoaded.style.width = '0px';
 		});
-		mediaElement.addEventListener('loadedmetadata', function () {
+		mediaElement.addEventListener('loadedmetadata', () => {
 			uiTimeBarCurrent.style.width = '0px';
 			uiTimeBarLoaded.style.width = '0px';
 		});
 
-		mediaElement.addEventListener('progress', function () {
+		mediaElement.addEventListener('progress', () => {
 
 			let buffered = mediaElement.buffered,
 				duration = mediaElement.duration,
@@ -403,7 +403,7 @@ MediaElementPlayerSimple.prototype = {
 			}
 		});
 
-		addEvent(uiTimeBarTotal, 'click', function (e) {
+		addEvent(uiTimeBarTotal, 'click', (e) => {
 
 			let
 				paused = mediaElement.paused,
@@ -464,7 +464,7 @@ MediaElementPlayerSimple.prototype = {
 		uiFullscreenBtn.type = 'button';
 		controls.appendChild(uiFullscreenBtn);
 
-		addEvent(uiFullscreenBtn, 'click', function () {
+		addEvent(uiFullscreenBtn, 'click', () => {
 
 			if (isFullscreen) {
 
@@ -500,13 +500,13 @@ MediaElementPlayerSimple.prototype = {
 
 		// EVENTS
 		if (document.webkitCancelFullScreen) {
-			document.addEventListener('webkitfullscreenchange', function (e) {
+			document.addEventListener('webkitfullscreenchange', (e) => {
 				isFullscreen = document.webkitIsFullScreen;
 				adjustForFullscreen();
 
 			});
 		} else if (document.mozCancelFullScreen) {
-			document.addEventListener('mozfullscreenchange', function (e) {
+			document.addEventListener('mozfullscreenchange', (e) => {
 				isFullscreen = document.mozFullScreen;
 				adjustForFullscreen();
 			});

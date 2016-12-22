@@ -34,32 +34,32 @@
 				lastKeyPressTime = 0,
 				startedPaused = false,
 				autoRewindInitial = player.options.autoRewind,
-				tooltip = player.options.enableProgressTooltip ? '<span class="' + t.options.classPrefix + 'time-float">' +
-				'<span class="' + t.options.classPrefix + 'time-float-current">00:00</span>' +
-				'<span class="' + t.options.classPrefix + 'time-float-corner"></span>' +
+				tooltip = player.options.enableProgressTooltip ? '<span class="' +`${ t.options.classPrefix}time-float">` +
+				'<span class="' +`${ t.options.classPrefix}time-float-current">00:00</span>` +
+				'<span class="' +`${ t.options.classPrefix}time-float-corner"></span>` +
 				'</span>' : "";
 
-			$('<div class="' + t.options.classPrefix + 'time-rail">' +
-				'<span class="' + t.options.classPrefix + 'time-total ' +
-				                  t.options.classPrefix + 'time-slider">' +
-				'<span class="' + t.options.classPrefix + 'time-buffering"></span>' +
-				'<span class="' + t.options.classPrefix + 'time-loaded"></span>' +
-				'<span class="' + t.options.classPrefix + 'time-current"></span>' +
-				'<span class="' + t.options.classPrefix + 'time-handle"></span>' +
+			$('<div class="' +`${ t.options.classPrefix}time-rail">` +
+				'<span class="' +`${ t.options.classPrefix}time-total ` +
+				                 `${ t.options.classPrefix}time-slider">` +
+				'<span class="' +`${ t.options.classPrefix}time-buffering"></span>` +
+				'<span class="' +`${ t.options.classPrefix}time-loaded"></span>` +
+				'<span class="' +`${ t.options.classPrefix}time-current"></span>` +
+				'<span class="' +`${ t.options.classPrefix}time-handle"></span>` +
 				tooltip +
 				'</span>' +
 				'</div>')
 			.appendTo(controls);
-			controls.find('.' + t.options.classPrefix + 'time-buffering').hide();
+			controls.find('.' +`${ t.options.classPrefix}time-buffering`).hide();
 
-			t.rail = controls.find('.' + t.options.classPrefix + 'time-rail');
-			t.total = controls.find('.' + t.options.classPrefix + 'time-total');
-			t.loaded = controls.find('.' + t.options.classPrefix + 'time-loaded');
-			t.current = controls.find('.' + t.options.classPrefix + 'time-current');
-			t.handle = controls.find('.' + t.options.classPrefix + 'time-handle');
-			t.timefloat = controls.find('.' + t.options.classPrefix + 'time-float');
-			t.timefloatcurrent = controls.find('.' + t.options.classPrefix + 'time-float-current');
-			t.slider = controls.find('.' + t.options.classPrefix + 'time-slider');
+			t.rail = controls.find('.' +`${ t.options.classPrefix}time-rail`);
+			t.total = controls.find('.' +`${ t.options.classPrefix}time-total`);
+			t.loaded = controls.find('.' +`${ t.options.classPrefix}time-loaded`);
+			t.current = controls.find('.' +`${ t.options.classPrefix}time-current`);
+			t.handle = controls.find('.' +`${ t.options.classPrefix}time-handle`);
+			t.timefloat = controls.find('.' +`${ t.options.classPrefix}time-float`);
+			t.timefloatcurrent = controls.find('.' +`${ t.options.classPrefix}time-float-current`);
+			t.slider = controls.find('.' +`${ t.options.classPrefix}time-slider`);
 
 			/**
 			 *
@@ -218,7 +218,7 @@
 					e.preventDefault();
 					e.stopPropagation();
 				}
-			}).on('click', function(e) {
+			}).on('click', (e) => {
 
 				let paused = media.paused;
 

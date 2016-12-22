@@ -47,7 +47,7 @@ i18n.language = (...args) => {
  * @param {number} pluralParam
  * @return {string}
  */
-i18n.t = (message, pluralParam) => {
+i18n.t = (message, pluralParam = null) => {
 
 	if (typeof message === 'string' && message.length) {
 
@@ -322,7 +322,7 @@ i18n.t = (message, pluralParam) => {
 		// Fetch the localized version of the string
 		if (i18n[language] !== undefined) {
 			str = i18n[language][message];
-			if (typeof pluralParam === 'number') {
+			if (pluralParam !== null && typeof pluralParam === 'number') {
 				pluralForm = i18n[language]['mejs.plural-form'];
 				str = _plural.apply(null, [str, pluralParam, pluralForm]);
 			}
@@ -331,7 +331,7 @@ i18n.t = (message, pluralParam) => {
 		// Fallback to default language if requested uid is not translated
 		if (!str && i18n.en) {
 			str = i18n.en[message];
-			if (typeof pluralParam === 'number') {
+			if (pluralParam !== null && typeof pluralParam === 'number') {
 				pluralForm = i18n.en['mejs.plural-form'];
 				str = _plural.apply(null, [str, pluralParam, pluralForm]);
 
@@ -343,7 +343,7 @@ i18n.t = (message, pluralParam) => {
 		str = str || message;
 
 		// Replace token
-		if (typeof pluralParam === 'number') {
+		if (pluralParam !== null && typeof pluralParam === 'number') {
 			str = str.replace('%1', pluralParam);
 		}
 

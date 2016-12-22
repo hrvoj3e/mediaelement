@@ -5,7 +5,7 @@
  * To activate it, one of the nodes contained in the `<video>` tag must be
  * `<link href="/path/to/action_to_display_content" rel="postroll">`
  */
-(function($) {
+(($) => {
 
 	// Feature configuration
 	$.extend(mejs.MepDefaults, {
@@ -26,7 +26,7 @@
 		 * @param {$} layers
 		 * @param {HTMLElement} media
 		 */
-		buildpostroll: function(player, controls, layers, media) {
+		buildpostroll: (player, controls, layers, media) => {
 			let
 				t = this,
 				postrollTitle = t.options.postrollCloseText ? t.options.postrollCloseText : mejs.i18n.t('mejs.close'),
@@ -34,13 +34,13 @@
 
 			if (postrollLink !== undefined) {
 				player.postroll =
-					$('<div class="' + t.options.classPrefix + 'postroll-layer ' +
-					                   t.options.classPrefix + 'layer">' +
-						'<a class="' + t.options.classPrefix + 'postroll-close" ' +
+					$('<div class="' +`${ t.options.classPrefix}postroll-layer ` +
+					                  `${ t.options.classPrefix}layer">` +
+						'<a class="' +`${ t.options.classPrefix}postroll-close" ` +
 							'onclick="$(this).parent().hide();return false;">' +
 							postrollTitle +
 						'</a>' +
-					'<div class="' + t.options.classPrefix + 'postroll-layer-content"></div></div>')
+					'<div class="' +`${ t.options.classPrefix}postroll-layer-content"></div></div>`)
 						.prependTo(layers).hide();
 
 				t.media.addEventListener('ended', (e) => {
@@ -48,7 +48,7 @@
 						dataType: 'html',
 						url: postrollLink,
 						success: (data, textStatus) => {
-							layers.find('.' + t.options.classPrefix + 'postroll-layer-content').html(data);
+							layers.find('.' +`${ t.options.classPrefix}postroll-layer-content`).html(data);
 						}
 					});
 					player.postroll.show();

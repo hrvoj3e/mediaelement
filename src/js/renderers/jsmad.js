@@ -89,9 +89,9 @@ const JsMadRenderer = {
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName) => {
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				jsmad['get' + capName] = () => {
+				jsmad[`get${capName}`] = () => {
 
 					let value = null;
 
@@ -115,7 +115,7 @@ const JsMadRenderer = {
 					return value;
 				};
 
-				jsmad['set' + capName] = (value) => {
+				jsmad[`set${capName}`] = (value) => {
 
 					if (propName === 'src') {
 

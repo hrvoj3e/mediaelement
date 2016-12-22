@@ -68,9 +68,9 @@ const FacebookRenderer = {
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName)  => {
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				fbWrapper['get' + capName] = () => {
+				fbWrapper[`get${capName}`] = () => {
 
 					if (fbApi !== null) {
 						let value = null;
@@ -115,7 +115,7 @@ const FacebookRenderer = {
 					}
 				};
 
-				fbWrapper['set' + capName] = (value)  => {
+				fbWrapper[`set${capName}`] = (value)  => {
 
 					if (fbApi !== null) {
 
@@ -288,9 +288,9 @@ const FacebookRenderer = {
 
 							if (stackItem.type === 'set') {
 								let propName = stackItem.propName,
-									capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+									capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-								fbWrapper['set' + capName](stackItem.value);
+								fbWrapper[`set${capName}`](stackItem.value);
 							} else if (stackItem.type === 'call') {
 								fbWrapper[stackItem.methodName]();
 							}

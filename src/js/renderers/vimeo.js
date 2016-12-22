@@ -187,9 +187,9 @@ const vimeoIframeRenderer = {
 			props = mejs.html5media.properties,
 			assignGettersSetters = (propName) => {
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				vimeo['get' + capName] = () => {
+				vimeo[`get${capName}`] = () => {
 					if (vimeoPlayer !== null) {
 						let value = null;
 
@@ -234,7 +234,7 @@ const vimeoIframeRenderer = {
 					}
 				};
 
-				vimeo['set' + capName] = (value) => {
+				vimeo[`set${capName}`] = (value) => {
 
 					if (vimeoPlayer !== null) {
 
@@ -369,9 +369,9 @@ const vimeoIframeRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-					vimeo['set' + capName](stackItem.value);
+					vimeo[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					vimeo[stackItem.methodName]();
 				}

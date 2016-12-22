@@ -174,9 +174,9 @@ const DailyMotionIframeRenderer = {
 
 				// add to flash state that we will store
 
-				const capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+				const capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-				dm['get' + capName] = () => {
+				dm[`get${capName}`] = () => {
 					if (dmPlayer !== null) {
 						let value = null;
 
@@ -222,7 +222,7 @@ const DailyMotionIframeRenderer = {
 					}
 				};
 
-				dm['set' + capName] = (value) => {
+				dm[`set${capName}`] = (value) => {
 					if (dmPlayer !== null) {
 
 						switch (propName) {
@@ -317,9 +317,9 @@ const DailyMotionIframeRenderer = {
 
 				if (stackItem.type === 'set') {
 					let propName = stackItem.propName,
-						capName = propName.substring(0, 1).toUpperCase() + propName.substring(1);
+						capName = `${propName.substring(0, 1).toUpperCase()}${propName.substring(1)}`;
 
-					dm['set' + capName](stackItem.value);
+					dm[`set${capName}`](stackItem.value);
 				} else if (stackItem.type === 'call') {
 					dm[stackItem.methodName]();
 				}
