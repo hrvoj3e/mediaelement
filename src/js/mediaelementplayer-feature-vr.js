@@ -16,8 +16,7 @@
 		 * https://developers.google.com/vr/concepts/vrview-web#vr_view
 		 */
 		vr: {
-			image: 'blank.png',
-			preview: 'blank.png',
+			image: '',
 			is_stereo: true,
 			is_autopan_off: true,
 			is_debug: false,
