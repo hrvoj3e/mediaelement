@@ -1,4 +1,4 @@
-import mejs from 'core/mejs';
+import mejs from './core/mejs';
 
 if (typeof jQuery !== 'undefined') {
 	mejs.$ = jQuery;

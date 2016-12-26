@@ -1,7 +1,7 @@
-/*
- *
- * Requires JQuery
- */
+'use strict';
+
+import {config} from '../player';
+
 /**
  * Google Analytics Plugin
  *
@@ -9,80 +9,80 @@
  * on GA to send events properly.
  * @see https://developers.google.com/analytics/devguides/collection/analyticsjs/events
  */
-(($) => {
-
-	// Feature configuration
-	$.extend(mejs.MepDefaults, {
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsTitle: '',
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsCategory: 'Videos',
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsEventPlay: 'Play',
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsEventPause: 'Pause',
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsEventEnded: 'Ended',
-		/**
-		 * @type {String}
-		 */
-		googleAnalyticsEventTime: 'Time'
-	});
 
 
-	$.extend(MediaElementPlayer.prototype, {
+// Feature configuration
+Object.assign(config, {
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsTitle: '',
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsCategory: 'Videos',
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsEventPlay: 'Play',
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsEventPause: 'Pause',
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsEventEnded: 'Ended',
+	/**
+	 * @type {String}
+	 */
+	googleAnalyticsEventTime: 'Time'
+});
 
-		/**
-		 * Feature constructor.
-		 *
-		 * Always has to be prefixed with `build` and the name that will be used in MepDefaults.features list
-		 * @param {MediaElementPlayer} player
-		 * @param {$} controls
-		 * @param {$} layers
-		 * @param {HTMLElement} media
-		 */
-		buildgoogleanalytics: (player, controls, layers, media) => {
 
-			media.addEventListener('play', () => {
-				if (typeof ga !== 'undefined') {
-					ga('send', 'event',
-						player.options.googleAnalyticsCategory,
-						player.options.googleAnalyticsEventPlay,
-						(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
-					);
-				}
-			}, false);
+$.extend(MediaElementPlayer.prototype, {
 
-			media.addEventListener('pause', () => {
-				if (typeof ga !== 'undefined') {
-					ga('send', 'event',
-						player.options.googleAnalyticsCategory,
-						player.options.googleAnalyticsEventPause,
-						(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
-					);
-				}
-			}, false);
+	/**
+	 * Feature constructor.
+	 *
+	 * Always has to be prefixed with `build` and the name that will be used in MepDefaults.features list
+	 * @param {MediaElementPlayer} player
+	 * @param {$} controls
+	 * @param {$} layers
+	 * @param {HTMLElement} media
+	 */
+	buildgoogleanalytics: (player, controls, layers, media) => {
 
-			media.addEventListener('ended', () => {
-				if (typeof ga !== 'undefined') {
-					ga('send', 'event',
-						player.options.googleAnalyticsCategory,
-						player.options.googleAnalyticsEventEnded,
-						(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
-					);
-				}
-			}, false);
-		}
-	});
+		media.addEventListener('play', () => {
+			if (typeof ga !== 'undefined') {
+				ga('send', 'event',
+					player.options.googleAnalyticsCategory,
+					player.options.googleAnalyticsEventPlay,
+					(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
+				);
+			}
+		}, false);
 
-})(mejs.$);
+		media.addEventListener('pause', () => {
+			if (typeof ga !== 'undefined') {
+				ga('send', 'event',
+					player.options.googleAnalyticsCategory,
+					player.options.googleAnalyticsEventPause,
+					(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
+				);
+			}
+		}, false);
+
+		media.addEventListener('ended', () => {
+			if (typeof ga !== 'undefined') {
+				ga('send', 'event',
+					player.options.googleAnalyticsCategory,
+					player.options.googleAnalyticsEventEnded,
+					(player.options.googleAnalyticsTitle === '') ? player.media.currentSrc : player.options.googleAnalyticsTitle
+				);
+			}
+		}, false);
+	}
+});
+
+

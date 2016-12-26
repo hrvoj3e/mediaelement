@@ -75,7 +75,26 @@ module.exports = function(grunt) {
 						'src/js/renderers/flash.js',
 						'src/js/core/i18n.js',
 						'src/js/languages/en.js'
-					]
+					],
+					'tmp/mediaelementplayer.js': [
+						'src/js/library.js',
+						// 'src/js/player.js'
+					].concat(featureSources || [
+						// 'src/js/feature-playpause.js',
+						// 'src/js/features/stop.js',
+						// 'src/js/features/progress.js',
+						// 'src/js/features/time.js',
+						// 'src/js/features/volume.js',
+						// 'src/js/features/fullscreen.js',
+						// 'src/js/features/speed.js',
+						// 'src/js/features/tracks.js',
+						// 'src/js/features/sourcechooser.js',
+						// 'src/js/features/contextmenu.js',
+						// 'src/js/features/skipback.js',
+						// 'src/js/features/jumpforward.js',
+						// 'src/js/features/postroll.js',
+						// 'src/js/features/markers.js'
+					])
 				}
 			}
 		},
@@ -90,24 +109,8 @@ module.exports = function(grunt) {
 			mep: {
 				src: [
 					'src/js/header.js',
-					'src/js/mediaelementplayer-library.js',
-					'src/js/mediaelementplayer-player.js'
-				].concat(featureSources || [
-					'src/js/mediaelementplayer-feature-playpause.js',
-					'src/js/mediaelementplayer-feature-stop.js',
-					'src/js/mediaelementplayer-feature-progress.js',
-					'src/js/mediaelementplayer-feature-time.js',
-					'src/js/mediaelementplayer-feature-volume.js',
-					'src/js/mediaelementplayer-feature-fullscreen.js',
-					'src/js/mediaelementplayer-feature-speed.js',
-					'src/js/mediaelementplayer-feature-tracks.js',
-					'src/js/mediaelementplayer-feature-sourcechooser.js',
-					'src/js/mediaelementplayer-feature-contextmenu.js',
-					'src/js/mediaelementplayer-feature-skipback.js',
-					'src/js/mediaelementplayer-feature-jumpforward.js',
-					'src/js/mediaelementplayer-feature-postroll.js',
-					'src/js/mediaelementplayer-feature-markers.js'
-					]),
+					'tmp/mediaelementplayer.js'
+				],
 				dest: 'build/mediaelementplayer.js'
 			},
 			bundle: {

@@ -1,7 +1,11 @@
-import * as Features from '../utils/constants';
+'use strict';
+
 import window from 'global/window';
 import document from 'global/document';
 import mejs from '../core/mejs';
+import i18n from '../core/i18n';
+import {config} from '../player';
+import * as Features from '../utils/constants';
 import $ from 'jquery';
 
 
@@ -13,7 +17,7 @@ import $ from 'jquery';
  */
 
 // Feature configuration
-$.extend(mejs.MepDefaults, {
+Object.assign(config, {
 	/**
 	 * @type {Boolean}
 	 */
@@ -84,13 +88,11 @@ $.extend(MediaElementPlayer.prototype, {
 		let
 			t = this,
 			hideTimeout = null,
-			fullscreenTitle = t.options.fullscreenText ? t.options.fullscreenText : mejs.i18n.t('mejs.fullscreen'),
+			fullscreenTitle = t.options.fullscreenText ? t.options.fullscreenText : i18n.t('mejs.fullscreen'),
 			fullscreenBtn =
-				$('<div class="' +`${ t.options.classPrefix}button ` +
-					t.options.classPrefix + 'fullscreen-button">' +
-					'<button type="button" aria-controls="' + t.id + '" title="' + fullscreenTitle +
-					'" aria-label="' + fullscreenTitle + '"></button>' +
-					'</div>')
+				$(`<div class="${t.options.classPrefix}button ${t.options.classPrefix}fullscreen-button">
+					<button type="button" aria-controls="${t.id}" title="${fullscreenTitle}" aria-label="${fullscreenTitle}"></button>
+				</div>`)
 				.appendTo(controls)
 				.on('click', () => {
 
@@ -186,7 +188,7 @@ $.extend(MediaElementPlayer.prototype, {
 			t = this,
 			mode = '',
 			isNative = t.media.rendererName !== null && t.media.rendererName.match(/(native|html5)/)
-		;
+			;
 
 		if (Features.HAS_TRUE_NATIVE_FULLSCREEN && isNative) {
 			mode = 'native-native';
@@ -266,29 +268,29 @@ $.extend(MediaElementPlayer.prototype, {
 
 				// over video, but not controls
 				hoverDivs.top
-					.width(containerWidth)
-					.height(fullScreenBtnOffsetTop);
+				.width(containerWidth)
+				.height(fullScreenBtnOffsetTop);
 
 				// over controls, but not the fullscreen button
 				hoverDivs.left
-					.width(fullScreenBtnOffsetLeft)
-					.height(fullScreenBtnHeight)
-					.css({top: fullScreenBtnOffsetTop});
+				.width(fullScreenBtnOffsetLeft)
+				.height(fullScreenBtnHeight)
+				.css({top: fullScreenBtnOffsetTop});
 
 				// after the fullscreen button
 				hoverDivs.right
-					.width(containerWidth - fullScreenBtnOffsetLeft - fullScreenBtnWidth)
-					.height(fullScreenBtnHeight)
-					.css({
-						top: fullScreenBtnOffsetTop,
-						left: fullScreenBtnOffsetLeft + fullScreenBtnWidth
-					});
+				.width(containerWidth - fullScreenBtnOffsetLeft - fullScreenBtnWidth)
+				.height(fullScreenBtnHeight)
+				.css({
+					top: fullScreenBtnOffsetTop,
+					left: fullScreenBtnOffsetLeft + fullScreenBtnWidth
+				});
 
 				// under the fullscreen button
 				hoverDivs.bottom
-					.width(containerWidth)
-					.height(containerHeight - fullScreenBtnHeight - fullScreenBtnOffsetTop)
-					.css({top: fullScreenBtnOffsetTop + fullScreenBtnHeight});
+				.width(containerWidth)
+				.height(containerHeight - fullScreenBtnHeight - fullScreenBtnOffsetTop)
+				.css({top: fullScreenBtnOffsetTop + fullScreenBtnHeight});
 			};
 
 		t.globalBind('resize', () => {
@@ -296,7 +298,7 @@ $.extend(MediaElementPlayer.prototype, {
 		});
 
 		for (i = 0, len = hoverDivNames.length; i < len; i++) {
-			hoverDivs[hoverDivNames[i]] = $('<div class="' +`${ t.options.classPrefix}fullscreen-hover" />`)
+			hoverDivs[hoverDivNames[i]] = $(`<div class="${t.options.classPrefix}fullscreen-hover" />`)
 			.appendTo(t.container).mouseover(restoreControls).hide();
 		}
 
@@ -386,7 +388,7 @@ $.extend(MediaElementPlayer.prototype, {
 		let
 			t = this,
 			isNative = t.media.rendererName !== null && t.media.rendererName.match(/(html5|native)/)
-		;
+			;
 
 		if (Features.IS_IOS && Features.HAS_IOS_FULLSCREEN && typeof t.media.webkitEnterFullscreen === 'function') {
 			t.media.webkitEnterFullscreen();
@@ -394,7 +396,7 @@ $.extend(MediaElementPlayer.prototype, {
 		}
 
 		// set it to not show scroll bars so 100% will work
-		$(document.documentElement).addClass(t.options.classPrefix + 'fullscreen');
+		$(document.documentElement).addClass(`${t.options.classPrefix}fullscreen`);
 
 		// store sizing
 		t.normalHeight = t.container.height();
@@ -438,9 +440,9 @@ $.extend(MediaElementPlayer.prototype, {
 
 		// make full size
 		t.container
-			.addClass(t.options.classPrefix + 'container-fullscreen')
-			.width('100%')
-			.height('100%');
+		.addClass(`${t.options.classPrefix}container-fullscreen`)
+		.width('100%')
+		.height('100%');
 
 		// Only needed for safari 5.1 native full screen, can cause display issues elsewhere
 		// Actually, it seems to be needed for IE8, too
@@ -451,12 +453,12 @@ $.extend(MediaElementPlayer.prototype, {
 
 		if (isNative) {
 			t.$media
-				.width('100%')
-				.height('100%');
+			.width('100%')
+			.height('100%');
 		} else {
 			t.container.find('iframe, embed, object, video')
-				.width('100%')
-				.height('100%');
+			.width('100%')
+			.height('100%');
 		}
 
 		if (t.options.setDimensions) {
@@ -464,22 +466,22 @@ $.extend(MediaElementPlayer.prototype, {
 		}
 
 		t.layers.children('div')
-			.width('100%')
-			.height('100%');
+		.width('100%')
+		.height('100%');
 
 		if (t.fullscreenBtn) {
 			t.fullscreenBtn
-				.removeClass(t.options.classPrefix + 'fullscreen')
-				.addClass(t.options.classPrefix + 'unfullscreen');
+			.removeClass(`${t.options.classPrefix}fullscreen`)
+			.addClass(`${t.options.classPrefix}unfullscreen`);
 		}
 
 		t.setControlsSize();
 		t.isFullScreen = true;
 
 		let zoomFactor = Math.min(screen.width / t.width, screen.height / t.height);
-		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('font-size', zoomFactor * 100 + '%');
-		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('line-height', 'normal');
-		t.container.find('.' +`${ t.options.classPrefix}captions-position`).css('bottom', '45px');
+		t.container.find(`.${t.options.classPrefix}captions-text`).css('font-size', zoomFactor * 100 + '%');
+		t.container.find(`.${t.options.classPrefix}captions-text`).css('line-height', 'normal');
+		t.container.find(`.${t.options.classPrefix}captions-position`).css('bottom', '45px');
 
 		t.container.trigger('enteredfullscreen');
 	},
@@ -492,7 +494,7 @@ $.extend(MediaElementPlayer.prototype, {
 		let
 			t = this,
 			isNative = t.media.rendererName !== null && t.media.rendererName.match(/(native|html5)/)
-		;
+			;
 
 		// Prevent container from attempting to stretch a second time
 		clearTimeout(t.containerSizeTimeout);
@@ -503,41 +505,41 @@ $.extend(MediaElementPlayer.prototype, {
 		}
 
 		// restore scroll bars to document
-		$(document.documentElement).removeClass(t.options.classPrefix + 'fullscreen');
+		$(document.documentElement).removeClass(`${t.options.classPrefix}container-fullscreen`);
 
-		t.container.removeClass(t.options.classPrefix + 'container-fullscreen');
+		t.container.removeClass(`${t.options.classPrefix}container-fullscreen`);
 
 		if (t.options.setDimensions) {
 			t.container
-				.width(t.normalWidth)
-				.height(t.normalHeight);
+			.width(t.normalWidth)
+			.height(t.normalHeight);
 			if (isNative) {
 				t.$media
-					.width(t.normalWidth)
-					.height(t.normalHeight);
+				.width(t.normalWidth)
+				.height(t.normalHeight);
 			} else {
 				t.container.find('iframe, embed, object, video')
-					.width(t.normalWidth)
-					.height(t.normalHeight);
+				.width(t.normalWidth)
+				.height(t.normalHeight);
 			}
 
 			t.media.setSize(t.normalWidth, t.normalHeight);
 
 			t.layers.children('div')
-				.width(t.normalWidth)
-				.height(t.normalHeight);
+			.width(t.normalWidth)
+			.height(t.normalHeight);
 		}
 
 		t.fullscreenBtn
-			.removeClass(t.options.classPrefix + 'unfullscreen')
-			.addClass(t.options.classPrefix + 'fullscreen');
+		.removeClass(`${t.options.classPrefix}unfullscreen`)
+		.addClass(`${t.options.classPrefix}fullscreen`);
 
 		t.setControlsSize();
 		t.isFullScreen = false;
 
-		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('font-size', '');
-		t.container.find('.' +`${ t.options.classPrefix}captions-text`).css('line-height', '');
-		t.container.find('.' +`${ t.options.classPrefix}captions-position`).css('bottom', '');
+		t.container.find(`.${t.options.classPrefix}captions-text`).css('font-size', '');
+		t.container.find(`.${t.options.classPrefix}captions-text`).css('line-height', '');
+		t.container.find(`.${t.options.classPrefix}captions-position`).css('bottom', '');
 
 		t.container.trigger('exitedfullscreen');
 	}

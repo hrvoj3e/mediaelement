@@ -84,6 +84,26 @@ export function isObjectEmpty (instance) {
 	return ((Object.getOwnPropertyNames(instance).length > 0) ? false : true);
 }
 
+export function splitEvents (events, id) {
+
+	let rwindow = /^((after|before)print|(before)?unload|hashchange|message|o(ff|n)line|page(hide|show)|popstate|resize|storage)\b/;
+	// add player ID as an event namespace so it's easier to unbind them all later
+	let ret = {d: [], w: []};
+	forEach((events || '').split(' '), (k, v) => {
+		let eventname = v + '.' + id;
+		if (eventname.indexOf('.') === 0) {
+			ret.d.push(eventname);
+			ret.w.push(eventname);
+		}
+		else {
+			ret[rwindow.test(v) ? 'w' : 'd'].push(eventname);
+		}
+	});
+	ret.d = ret.d.join(' ');
+	ret.w = ret.w.join(' ');
+	return ret;
+}
+
 /**
  *
  * @param {String} className
