@@ -45,13 +45,13 @@ const YouTubeApi = {
 	},
 
 	/**
-	 * Load YouTube API's script on the header of the document
+	 * Load YouTube API script on the header of the document
 	 *
 	 */
 	loadIframeApi: () => {
 		if (!YouTubeApi.isIframeStarted) {
 			let tag = document.createElement('script');
-			tag.src = 'https://www.youtube.com/player_api';
+			tag.src = '//www.youtube.com/player_api';
 			let firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 			YouTubeApi.isIframeStarted = true;

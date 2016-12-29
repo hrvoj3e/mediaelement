@@ -40,7 +40,7 @@ const NativeFlv = {
 		if (NativeFlv.isLoaded) {
 			NativeFlv.createInstance(settings);
 		} else {
-			NativeFlv.loadScript();
+			NativeFlv.loadScript(settings.options.path);
 			NativeFlv.creationQueue.push(settings);
 		}
 	},
@@ -48,8 +48,9 @@ const NativeFlv = {
 	/**
 	 * Load flv.js script on the header of the document
 	 *
+	 * @param {String} path - The local path or URL of the library
 	 */
-	loadScript: () => {
+	loadScript: (path) => {
 		if (!NativeFlv.isMediaStarted) {
 
 			let
@@ -57,7 +58,7 @@ const NativeFlv = {
 				firstScriptTag = document.getElementsByTagName('script')[0],
 				done = false;
 
-			script.src = 'https://cdnjs.cloudflare.com/ajax/libs/flv.js/1.1.0/flv.min.js';
+			script.src = path || '//cdnjs.cloudflare.com/ajax/libs/flv.js/1.1.0/flv.min.js';
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
@@ -111,6 +112,8 @@ const FlvNativeRenderer = {
 		 * @type {Object}
 		 */
 		flv: {
+			// Special config: used to set the local path/URL of flv.js library
+			path: '//cdnjs.cloudflare.com/ajax/libs/flv.js/1.1.0/flv.min.js',
 			cors: true,
 			enableWorker: false,
 			enableStashBuffer: true,

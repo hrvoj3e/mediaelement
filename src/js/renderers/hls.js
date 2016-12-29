@@ -39,7 +39,7 @@ const NativeHls = {
 		if (NativeHls.isLoaded) {
 			NativeHls.createInstance(settings);
 		} else {
-			NativeHls.loadScript();
+			NativeHls.loadScript(settings.options.path);
 			NativeHls.creationQueue.push(settings);
 		}
 	},
@@ -47,8 +47,9 @@ const NativeHls = {
 	/**
 	 * Load hls.js script on the header of the document
 	 *
+	 * @param {String} path - The local path or URL of the library
 	 */
-	loadScript: () => {
+	loadScript: (path) => {
 		if (!NativeHls.isMediaStarted) {
 
 			let
@@ -56,7 +57,7 @@ const NativeHls = {
 				firstScriptTag = document.getElementsByTagName('script')[0],
 				done = false;
 
-			script.src = 'https://cdn.jsdelivr.net/hls.js/latest/hls.min.js';
+			script.src = path || '//cdn.jsdelivr.net/hls.js/latest/hls.min.js';
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
@@ -110,6 +111,8 @@ const HlsNativeRenderer = {
 		 * @type {Object}
 		 */
 		hls: {
+			// Special config: used to set the local path/URL of hls.js library
+			path: '//cdn.jsdelivr.net/hls.js/latest/hls.min.js',
 			autoStartLoad: true,
 			startPosition: -1,
 			capLevelToPlayerSize: false,

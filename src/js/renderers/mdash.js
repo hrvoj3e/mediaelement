@@ -35,16 +35,17 @@ const NativeDash = {
 		if (NativeDash.isLoaded) {
 			NativeDash.createInstance(settings);
 		} else {
-			NativeDash.loadScript();
+			NativeDash.loadScript(settings.options.path);
 			NativeDash.creationQueue.push(settings);
 		}
 	},
 
 	/**
-	 * Load dash.all.min.js script on the header of the document
+	 * Load dash.mediaplayer.js script on the header of the document
 	 *
+	 * @param {String} path - The local path or URL of the library
 	 */
-	loadScript: () => {
+	loadScript: (path) => {
 		if (!NativeDash.isScriptLoaded) {
 
 			let
@@ -52,8 +53,7 @@ const NativeDash = {
 				firstScriptTag = document.getElementsByTagName('script')[0],
 				done = false;
 
-			// script.src = 'https://cdn.dashjs.org/latest/dash.all.min.js';
-			script.src = 'https://cdn.dashjs.org/latest/dash.mediaplayer.min.js';
+			script.src = path || '//cdn.dashjs.org/latest/dash.mediaplayer.min.js';
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
@@ -102,7 +102,11 @@ let DashNativeRenderer = {
 
 	options: {
 		prefix: 'native_mdash',
-		dash: {}
+		dash: {
+			// Special config: used to set the local path/URL of dash.js mediaplayer library
+			path: '//cdn.dashjs.org/latest/dash.mediaplayer.min.js',
+			debug: false
+		}
 	},
 	/**
 	 * Determine if a specific element type can be played with this render
@@ -133,6 +137,7 @@ let DashNativeRenderer = {
 			;
 
 		node = originalNode.cloneNode(true);
+		options = Object.assign(options, mediaElement.options);
 
 		// WRAPPERS for PROPs
 		let
@@ -172,7 +177,7 @@ let DashNativeRenderer = {
 			mediaElement.dashPlayer = dashPlayer = _dashPlayer;
 
 			// By default, console log is off
-			dashPlayer.getDebug().setLogToBrowserConsole(false);
+			dashPlayer.getDebug().setLogToBrowserConsole(options.dash.debug);
 
 			// do call stack
 			for (i = 0, il = stack.length; i < il; i++) {

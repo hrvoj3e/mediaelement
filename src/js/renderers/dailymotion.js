@@ -44,14 +44,14 @@ const DailyMotionApi = {
 	},
 
 	/**
-	 * Load DailyMotion API's script on the header of the document
+	 * Load DailyMotion API script on the header of the document
 	 *
 	 */
 	loadIframeApi: () => {
 		if (!DailyMotionApi.isSDKStarted) {
 			let e = document.createElement('script');
 			e.async = true;
-			e.src = 'https://api.dmcdn.net/all.js';
+			e.src = '//api.dmcdn.net/all.js';
 			let s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(e, s);
 			DailyMotionApi.isSDKStarted = true;

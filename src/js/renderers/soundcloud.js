@@ -43,7 +43,7 @@ const SoundCloudApi = {
 	},
 
 	/**
-	 * Load SoundCloud API's script on the header of the document
+	 * Load SoundCloud API script on the header of the document
 	 *
 	 */
 	loadIframeApi: () => {
@@ -53,7 +53,7 @@ const SoundCloudApi = {
 				script = document.createElement("script"),
 				done = false;
 
-			script.src = 'https://w.soundcloud.com/player/api.js';
+			script.src = '//w.soundcloud.com/player/api.js';
 
 			// Attach handlers for all browsers
 			script.onload = script.onreadystatechange = () => {
