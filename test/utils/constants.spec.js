@@ -8,6 +8,9 @@ export const IS_ANDROID = (UA.match(/android/i) !== null);
 export const IS_IE = (NAV.appName.toLowerCase().indexOf('microsoft') > -1 || NAV.appName.toLowerCase().match(/trident/gi) !== null);
 export const IS_CHROME = (UA.match(/chrome/gi) !== null);
 export const IS_FIREFOX = (UA.match(/firefox/gi) !== null);
+export const IS_SAFARI = (UA.match(/safari/gi) !== null) && !IS_CHROME;
+export const IS_STOCK_ANDROID = (UA.match(/^mozilla\/\d+\.\d+\s\(linux;\su;/gi) !== null);
+
 export const HAS_TOUCH = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
 export const HAS_MSE = ('MediaSource' in window);
 export const SUPPORT_POINTER_EVENTS = (() => {
@@ -39,6 +42,9 @@ for (let i = 0, il = html5Elements.length; i < il; i++) {
 
 // Test if Media Source Extensions are supported by browser
 export const SUPPORTS_MEDIA_TAG = (video.canPlayType !== undefined || HAS_MSE);
+
+// Test if browsers support HLS natively (right now Safari, Android's Chrome and Stock browsers, and MS Edge)
+export const SUPPORTS_NATIVE_HLS = (IS_SAFARI || (IS_ANDROID && (IS_CHROME || IS_STOCK_ANDROID)) || (IS_IE && UA.match(/edge/gi) !== null));
 
 // Detect native JavaScript fullscreen (Safari/Firefox only, Chrome still fails)
 
