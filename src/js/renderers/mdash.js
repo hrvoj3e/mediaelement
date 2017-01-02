@@ -265,9 +265,6 @@ let DashNativeRenderer = {
 		}
 
 		node.className = '';
-		if (!originalNode.paused) {
-			originalNode.pause();
-		}
 
 		originalNode.parentNode.insertBefore(node, originalNode);
 		originalNode.removeAttribute('autoplay');
